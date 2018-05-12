@@ -22,6 +22,7 @@ public class Display extends javax.swing.JFrame {
     private SensorControl sensor;
     private HRSurveillance surveyhr;
     private SPO2Surveillance surveyspo2;
+    private PatientData pat = new PatientData();
     private Display display;
     private static String[] imageList =  {  "/img/alarm_on.png" , "/img/alarm_off.png"};
     Timer timer = new Timer("TaskName");
@@ -1014,7 +1015,7 @@ public class Display extends javax.swing.JFrame {
         String gyear = (String)year.getSelectedItem();
 
         String birthdate = gday + "." + gmonth + "." + gyear;
-        PatientData.addpatient(name, surname, sex, birthdate);
+        pat.addpatient(name, surname, sex, birthdate);
         updatepatient(name, surname, sex, birthdate);
         cng_Patient.setVisible(false);
     }//GEN-LAST:event_savepatient3ActionPerformed

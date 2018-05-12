@@ -13,6 +13,7 @@ public class PatientData_init extends javax.swing.JFrame {
 
     Display display = new Display();
     Setlimitstartup startup = new Setlimitstartup(display);
+    private PatientData pat = new PatientData();
     /**
      * Creates new form PatientData
      */
@@ -240,7 +241,7 @@ public class PatientData_init extends javax.swing.JFrame {
         String gyear = (String)year.getSelectedItem();
 
         String birthdate = gday + "." + gmonth + "." + gyear;
-        PatientData.addpatient(name, surname, sex, birthdate);
+        pat.addpatient(name, surname, sex, birthdate);
         display.updatepatient(name, surname, sex, birthdate);
         display.updatelimit("40", "160","80");
         display.setVisible(true); 
