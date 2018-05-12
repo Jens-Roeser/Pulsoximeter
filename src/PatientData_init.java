@@ -240,10 +240,8 @@ public class PatientData_init extends javax.swing.JFrame {
         String gyear = (String)year.getSelectedItem();
 
         String birthdate = gday + "." + gmonth + "." + gyear;
-        
+        PatientData.addpatient(name, surname, sex, birthdate);
         display.updatepatient(name, surname, sex, birthdate);
-        //this.display.updatepatient(name, surname, sex, birthdate); 
-        // TODO: check age  if/ els values    
         display.updatelimit("40", "160","80");
         display.setVisible(true); 
         setVisible(false);

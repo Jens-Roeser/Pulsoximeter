@@ -1014,7 +1014,7 @@ public class Display extends javax.swing.JFrame {
         String gyear = (String)year.getSelectedItem();
 
         String birthdate = gday + "." + gmonth + "." + gyear;
-
+        PatientData.addpatient(name, surname, sex, birthdate);
         updatepatient(name, surname, sex, birthdate);
         cng_Patient.setVisible(false);
     }//GEN-LAST:event_savepatient3ActionPerformed
