@@ -6,22 +6,37 @@
 import javax.swing.JOptionPane;
 import java.awt.Toolkit;
 import java.awt.event.*;
-import java.awt.TextField;
-import javax.swing.JTextField;
+import javax.swing.JFrame;
+
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
 /**
  *
  * @author Jens
  */
-public class Display extends javax.swing.JFrame implements ActionListener {
+public class Display extends javax.swing.JFrame {
     
-    private LimitHR_lower hrlower;
-    private JTextField hrfield;      
+    private SensorControl sensor;
+    private HRSurveillance surveyhr;
+    private SPO2Surveillance surveyspo2;
+    private Display display;
+    private static String[] imageList =  {  "/img/alarm_on.png" , "/img/alarm_off.png"};
+    Timer timer = new Timer("TaskName");
+    int MINUTES = 5;
+    //Timer timer = new Timer();
+    //int secondspassed = 0;
     /**
      * Creates new form Monitor
      */
     public Display() {
         initComponents();
+    }
+    public Display(Display display){
+       initComponents(); 
+       this.display = display;
     }
 
     /**
@@ -33,44 +48,575 @@ public class Display extends javax.swing.JFrame implements ActionListener {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pulsoxi_panel = new javax.swing.JPanel();
+        ResetLimits = new javax.swing.JFrame();
+        yes = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        decline = new javax.swing.JButton();
+        Setlimitstartup = new javax.swing.JFrame();
+        upper_label = new javax.swing.JLabel();
+        upper_hr = new javax.swing.JTextField();
+        spo2_value = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        lower_hr = new javax.swing.JTextField();
+        lower_label2 = new javax.swing.JLabel();
+        setlimits = new javax.swing.JButton();
+        restoredefault = new javax.swing.JButton();
+        LimitHR_lower = new javax.swing.JFrame();
+        lower_value = new javax.swing.JTextField();
+        lower_label1 = new javax.swing.JLabel();
+        return_lowerHR = new javax.swing.JButton();
+        cancel_lowerHR = new javax.swing.JButton();
+        LimitHR_upper = new javax.swing.JFrame();
+        return_upper = new javax.swing.JButton();
+        cancel1 = new javax.swing.JButton();
+        upper_label1 = new javax.swing.JLabel();
+        upper_value = new javax.swing.JTextField();
+        LimitSPO2 = new javax.swing.JFrame();
+        spo2_val = new javax.swing.JTextField();
+        return_spo2 = new javax.swing.JButton();
+        cancel2 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        cng_Patient = new javax.swing.JFrame();
+        savepatient3 = new javax.swing.JButton();
+        cancel_patient = new javax.swing.JButton();
+        Patient_data_heading3 = new javax.swing.JLabel();
+        name_field3 = new javax.swing.JTextField();
+        name = new javax.swing.JLabel();
+        surname3 = new javax.swing.JLabel();
+        surname_field3 = new javax.swing.JTextField();
+        sex3 = new javax.swing.JLabel();
+        sex_box3 = new javax.swing.JComboBox<>();
+        birthdate3 = new javax.swing.JLabel();
+        day = new javax.swing.JComboBox<>();
+        month = new javax.swing.JComboBox<>();
+        day_lab = new javax.swing.JLabel();
+        month_lab = new javax.swing.JLabel();
+        year_lab = new javax.swing.JLabel();
+        year = new javax.swing.JComboBox<>();
         name_lab = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        name_field = new javax.swing.JTextField();
+        surname_field = new javax.swing.JTextField();
         surname_lab = new javax.swing.JLabel();
+        patient_cng = new javax.swing.JButton();
+        age_field = new javax.swing.JTextField();
         birthday_lab = new javax.swing.JLabel();
         sexlab = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        name_out = new javax.swing.JTextPane();
-        patient_cng = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
+        sex_field = new javax.swing.JTextField();
+        heartrate_out = new javax.swing.JTextField();
         Heart_lab = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        heartrate_out = new javax.swing.JTextPane();
-        SPO2_lab = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        spo2_actout = new javax.swing.JTextPane();
-        uperlim_lab = new javax.swing.JLabel();
-        lowerlim_lab = new javax.swing.JLabel();
-        spo2_lab = new javax.swing.JLabel();
         pulse_lower = new javax.swing.JTextField();
         pulse_upper = new javax.swing.JTextField();
-        spo2_lower = new javax.swing.JTextField();
+        SPO2_lab = new javax.swing.JLabel();
+        spo2_out = new javax.swing.JTextField();
+        spo2 = new javax.swing.JTextField();
+        spo2_lab = new javax.swing.JLabel();
         reset_limit = new javax.swing.JButton();
         alarmbreak = new javax.swing.JButton();
-        close = new javax.swing.JButton();
-        header = new javax.swing.JLabel();
+        header_label = new javax.swing.JLabel();
+        lower_limit = new javax.swing.JLabel();
+        upper_limit = new javax.swing.JLabel();
+        alarm_img = new javax.swing.JLabel();
+
+        ResetLimits.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        ResetLimits.setMinimumSize(new java.awt.Dimension(200, 125));
+        ResetLimits.setResizable(false);
+
+        yes.setText("Ok");
+        yes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yesActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel1.setText("Set all Limits to default?");
+
+        decline.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        decline.setText("decline");
+        decline.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                declineActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout ResetLimitsLayout = new javax.swing.GroupLayout(ResetLimits.getContentPane());
+        ResetLimits.getContentPane().setLayout(ResetLimitsLayout);
+        ResetLimitsLayout.setHorizontalGroup(
+            ResetLimitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ResetLimitsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(ResetLimitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ResetLimitsLayout.createSequentialGroup()
+                        .addComponent(yes, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(decline)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        ResetLimitsLayout.setVerticalGroup(
+            ResetLimitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ResetLimitsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(ResetLimitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(decline)
+                    .addComponent(yes))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        Setlimitstartup.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        Setlimitstartup.setResizable(false);
+
+        upper_label.setText("Insert upper Pulse alarm Limit");
+
+        upper_hr.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
+        upper_hr.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        upper_hr.setText("180");
+        upper_hr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                upper_hrActionPerformed(evt);
+            }
+        });
+
+        spo2_value.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
+        spo2_value.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        spo2_value.setText("90");
+        spo2_value.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                spo2_valueActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Insert SpO2 alarm Limit");
+
+        lower_hr.setBackground(new java.awt.Color(245, 245, 245));
+        lower_hr.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
+        lower_hr.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lower_hr.setText("50");
+        lower_hr.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        lower_hr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lower_hrActionPerformed(evt);
+            }
+        });
+
+        lower_label2.setText("Insert lower Pulse alarm Limit");
+
+        setlimits.setText("save limits");
+        setlimits.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setlimitsActionPerformed(evt);
+            }
+        });
+
+        restoredefault.setText("restore default limits");
+        restoredefault.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                restoredefaultActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout SetlimitstartupLayout = new javax.swing.GroupLayout(Setlimitstartup.getContentPane());
+        Setlimitstartup.getContentPane().setLayout(SetlimitstartupLayout);
+        SetlimitstartupLayout.setHorizontalGroup(
+            SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SetlimitstartupLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(spo2_value, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(SetlimitstartupLayout.createSequentialGroup()
+                            .addGap(27, 27, 27)
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lower_hr, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(SetlimitstartupLayout.createSequentialGroup()
+                            .addGap(20, 20, 20)
+                            .addComponent(lower_label2))))
+                .addGroup(SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(SetlimitstartupLayout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addGroup(SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(upper_hr, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(SetlimitstartupLayout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(upper_label)))
+                        .addContainerGap(25, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SetlimitstartupLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(restoredefault, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(setlimits, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(54, 54, 54))))
+        );
+        SetlimitstartupLayout.setVerticalGroup(
+            SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SetlimitstartupLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(SetlimitstartupLayout.createSequentialGroup()
+                        .addComponent(upper_label)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(upper_hr, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(SetlimitstartupLayout.createSequentialGroup()
+                        .addComponent(lower_label2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lower_hr, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(33, 33, 33)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(spo2_value, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(SetlimitstartupLayout.createSequentialGroup()
+                        .addComponent(setlimits)
+                        .addGap(37, 37, 37)
+                        .addComponent(restoredefault)
+                        .addGap(25, 25, 25)))
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+
+        LimitHR_lower.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        LimitHR_lower.setMinimumSize(new java.awt.Dimension(250, 250));
+        LimitHR_lower.setResizable(false);
+
+        lower_value.setBackground(new java.awt.Color(245, 245, 245));
+        lower_value.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
+        lower_value.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lower_value.setText("50");
+        lower_value.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        lower_value.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lower_valueMouseClicked(evt);
+            }
+        });
+
+        lower_label1.setText("Insert lower Pulse alarm Limit");
+
+        return_lowerHR.setText("Save");
+        return_lowerHR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                return_lowerHRActionPerformed(evt);
+            }
+        });
+
+        cancel_lowerHR.setText("cancel");
+        cancel_lowerHR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancel_lowerHRActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout LimitHR_lowerLayout = new javax.swing.GroupLayout(LimitHR_lower.getContentPane());
+        LimitHR_lower.getContentPane().setLayout(LimitHR_lowerLayout);
+        LimitHR_lowerLayout.setHorizontalGroup(
+            LimitHR_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LimitHR_lowerLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(LimitHR_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(LimitHR_lowerLayout.createSequentialGroup()
+                        .addComponent(return_lowerHR)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cancel_lowerHR))
+                    .addComponent(lower_value, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(LimitHR_lowerLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(lower_label1)))
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+        LimitHR_lowerLayout.setVerticalGroup(
+            LimitHR_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LimitHR_lowerLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(lower_label1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lower_value, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(LimitHR_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cancel_lowerHR)
+                    .addComponent(return_lowerHR))
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+
+        LimitHR_upper.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        LimitHR_upper.setMinimumSize(new java.awt.Dimension(250, 250));
+        LimitHR_upper.setResizable(false);
+
+        return_upper.setText("Save");
+        return_upper.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                return_upperActionPerformed(evt);
+            }
+        });
+
+        cancel1.setText("cancel");
+        cancel1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancel1ActionPerformed(evt);
+            }
+        });
+
+        upper_label1.setText("Insert upper Pulse alarm Limit");
+
+        upper_value.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
+        upper_value.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        upper_value.setText("180");
+        upper_value.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                upper_valueMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout LimitHR_upperLayout = new javax.swing.GroupLayout(LimitHR_upper.getContentPane());
+        LimitHR_upper.getContentPane().setLayout(LimitHR_upperLayout);
+        LimitHR_upperLayout.setHorizontalGroup(
+            LimitHR_upperLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LimitHR_upperLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(LimitHR_upperLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(LimitHR_upperLayout.createSequentialGroup()
+                        .addComponent(return_upper)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cancel1))
+                    .addComponent(upper_value, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(32, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LimitHR_upperLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(upper_label1)
+                .addGap(37, 37, 37))
+        );
+        LimitHR_upperLayout.setVerticalGroup(
+            LimitHR_upperLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LimitHR_upperLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(upper_label1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(upper_value, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(LimitHR_upperLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cancel1)
+                    .addComponent(return_upper))
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+
+        LimitSPO2.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        LimitSPO2.setMinimumSize(new java.awt.Dimension(250, 250));
+        LimitSPO2.setResizable(false);
+
+        spo2_val.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
+        spo2_val.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        spo2_val.setText("90");
+        spo2_val.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                spo2_valMouseClicked(evt);
+            }
+        });
+
+        return_spo2.setText("Save");
+        return_spo2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                return_spo2ActionPerformed(evt);
+            }
+        });
+
+        cancel2.setText("cancel");
+        cancel2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancel2ActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Insert SpO2 alarm Limit");
+
+        javax.swing.GroupLayout LimitSPO2Layout = new javax.swing.GroupLayout(LimitSPO2.getContentPane());
+        LimitSPO2.getContentPane().setLayout(LimitSPO2Layout);
+        LimitSPO2Layout.setHorizontalGroup(
+            LimitSPO2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LimitSPO2Layout.createSequentialGroup()
+                .addContainerGap(32, Short.MAX_VALUE)
+                .addGroup(LimitSPO2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(LimitSPO2Layout.createSequentialGroup()
+                        .addComponent(return_spo2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cancel2))
+                    .addComponent(spo2_val, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25))
+            .addGroup(LimitSPO2Layout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addComponent(jLabel7)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        LimitSPO2Layout.setVerticalGroup(
+            LimitSPO2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LimitSPO2Layout.createSequentialGroup()
+                .addContainerGap(29, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(spo2_val, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(LimitSPO2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(return_spo2)
+                    .addComponent(cancel2))
+                .addGap(25, 25, 25))
+        );
+
+        cng_Patient.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        cng_Patient.setMinimumSize(new java.awt.Dimension(438, 375));
+        cng_Patient.setResizable(false);
+        cng_Patient.setType(java.awt.Window.Type.POPUP);
+
+        savepatient3.setText("save");
+        savepatient3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                savepatient3ActionPerformed(evt);
+            }
+        });
+
+        cancel_patient.setText("cancel");
+        cancel_patient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancel_patientActionPerformed(evt);
+            }
+        });
+
+        Patient_data_heading3.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
+        Patient_data_heading3.setText("Insert Patient data");
+
+        name_field3.setText("insert name");
+        name_field3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                name_field3MouseClicked(evt);
+            }
+        });
+
+        name.setText("Patient name:");
+
+        surname3.setText("Patient surname:");
+
+        surname_field3.setText("instert surname");
+        surname_field3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                surname_field3MouseClicked(evt);
+            }
+        });
+
+        sex3.setText("Patient sex: ");
+
+        sex_box3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "unknown", "male", "female" }));
+        sex_box3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sex_box3ActionPerformed(evt);
+            }
+        });
+
+        birthdate3.setText("Patient birthdate:");
+
+        day.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+
+        month.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+
+        day_lab.setText("Day");
+
+        month_lab.setText("Month");
+
+        year_lab.setText("Year");
+
+        year.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1900" }));
+        year.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yearActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout cng_PatientLayout = new javax.swing.GroupLayout(cng_Patient.getContentPane());
+        cng_Patient.getContentPane().setLayout(cng_PatientLayout);
+        cng_PatientLayout.setHorizontalGroup(
+            cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cng_PatientLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cng_PatientLayout.createSequentialGroup()
+                        .addGroup(cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(name)
+                            .addComponent(surname3)
+                            .addComponent(sex3)
+                            .addComponent(birthdate3))
+                        .addGap(18, 18, 18)
+                        .addGroup(cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(name_field3, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(surname_field3)
+                            .addComponent(sex_box3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(cng_PatientLayout.createSequentialGroup()
+                                .addGroup(cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(cng_PatientLayout.createSequentialGroup()
+                                        .addComponent(day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(cng_PatientLayout.createSequentialGroup()
+                                        .addComponent(day_lab)
+                                        .addGap(36, 36, 36)
+                                        .addComponent(month_lab)))
+                                .addGap(18, 18, 18)
+                                .addGroup(cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(year_lab)
+                                    .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(cng_PatientLayout.createSequentialGroup()
+                                .addComponent(savepatient3, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cancel_patient, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(Patient_data_heading3))
+                .addContainerGap())
+        );
+        cng_PatientLayout.setVerticalGroup(
+            cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cng_PatientLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Patient_data_heading3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(cng_PatientLayout.createSequentialGroup()
+                        .addComponent(name_field3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(surname_field3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(sex_box3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15)
+                        .addGroup(cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(day_lab)
+                            .addComponent(month_lab)
+                            .addComponent(year_lab))
+                        .addGap(3, 3, 3)
+                        .addGroup(cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(cng_PatientLayout.createSequentialGroup()
+                        .addComponent(name)
+                        .addGap(18, 18, 18)
+                        .addComponent(surname3)
+                        .addGap(18, 18, 18)
+                        .addComponent(sex3)
+                        .addGap(15, 15, 15)
+                        .addComponent(birthdate3)))
+                .addGap(18, 18, 18)
+                .addGroup(cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(savepatient3)
+                    .addComponent(cancel_patient))
+                .addGap(29, 29, 29))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         name_lab.setText("Patient name:");
 
+        name_field.setEditable(false);
+
+        surname_field.setEditable(false);
+
         surname_lab.setText("Patient surname:");
-
-        birthday_lab.setText("Patient age:");
-
-        sexlab.setText("Patient sex: ");
-
-        jScrollPane1.setViewportView(name_out);
 
         patient_cng.setText("Change Patient");
         patient_cng.addActionListener(new java.awt.event.ActionListener() {
@@ -79,61 +625,56 @@ public class Display extends javax.swing.JFrame implements ActionListener {
             }
         });
 
+        age_field.setEditable(false);
+
+        birthday_lab.setText("Patient birthdate:");
+
+        sexlab.setText("Patient sex: ");
+
+        sex_field.setEditable(false);
+
+        heartrate_out.setEditable(false);
+        heartrate_out.setFont(new java.awt.Font("Arial", 1, 125)); // NOI18N
+        heartrate_out.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
         Heart_lab.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         Heart_lab.setText("Heart Rate");
 
-        heartrate_out.setEditable(false);
-        heartrate_out.setBackground(new java.awt.Color(240, 240, 240));
-        jScrollPane2.setViewportView(heartrate_out);
-
-        SPO2_lab.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
-        SPO2_lab.setText("SpO2");
-
-        spo2_actout.setEditable(false);
-        spo2_actout.setBackground(new java.awt.Color(240, 240, 240));
-        jScrollPane3.setViewportView(spo2_actout);
-
-        uperlim_lab.setText("Upper pulse limit");
-
-        lowerlim_lab.setText("lower pulse limit");
-
-        spo2_lab.setText("SpO2 Limit");
-
         pulse_lower.setEditable(false);
+        pulse_lower.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
+        pulse_lower.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         pulse_lower.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pulse_lowerMouseClicked(evt);
             }
         });
-        pulse_lower.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pulse_lowerActionPerformed(evt);
-            }
-        });
 
         pulse_upper.setEditable(false);
+        pulse_upper.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
+        pulse_upper.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         pulse_upper.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pulse_upperMouseClicked(evt);
             }
         });
-        pulse_upper.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pulse_upperActionPerformed(evt);
+
+        SPO2_lab.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
+        SPO2_lab.setText("SpO2");
+
+        spo2_out.setEditable(false);
+        spo2_out.setFont(new java.awt.Font("Arial", 1, 125)); // NOI18N
+        spo2_out.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        spo2.setEditable(false);
+        spo2.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
+        spo2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        spo2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                spo2MouseClicked(evt);
             }
         });
 
-        spo2_lower.setEditable(false);
-        spo2_lower.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                spo2_lowerMouseClicked(evt);
-            }
-        });
-        spo2_lower.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                spo2_lowerActionPerformed(evt);
-            }
-        });
+        spo2_lab.setText("SpO2 limit");
 
         reset_limit.setText("reset limits");
         reset_limit.addActionListener(new java.awt.event.ActionListener() {
@@ -143,217 +684,362 @@ public class Display extends javax.swing.JFrame implements ActionListener {
         });
 
         alarmbreak.setText("pause alarm");
-
-        close.setText("Exit");
-        close.addActionListener(new java.awt.event.ActionListener() {
+        alarmbreak.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closeActionPerformed(evt);
+                alarmbreakActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout pulsoxi_panelLayout = new javax.swing.GroupLayout(pulsoxi_panel);
-        pulsoxi_panel.setLayout(pulsoxi_panelLayout);
-        pulsoxi_panelLayout.setHorizontalGroup(
-            pulsoxi_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
-            .addGroup(pulsoxi_panelLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(pulsoxi_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pulsoxi_panelLayout.createSequentialGroup()
-                        .addComponent(Heart_lab, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(54, 54, 54))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pulsoxi_panelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(102, 102, 102)
-                        .addGroup(pulsoxi_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lowerlim_lab, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pulse_lower))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(pulsoxi_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(uperlim_lab, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pulse_upper))
-                        .addGap(81, 81, 81))
-                    .addGroup(pulsoxi_panelLayout.createSequentialGroup()
-                        .addGroup(pulsoxi_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pulsoxi_panelLayout.createSequentialGroup()
-                                .addGap(7, 7, 7)
-                                .addGroup(pulsoxi_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(sexlab)
-                                    .addGroup(pulsoxi_panelLayout.createSequentialGroup()
-                                        .addGroup(pulsoxi_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(birthday_lab)
-                                            .addGroup(pulsoxi_panelLayout.createSequentialGroup()
-                                                .addComponent(name_lab)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jLabel3)))
-                                        .addGap(82, 82, 82)
-                                        .addComponent(surname_lab)))
-                                .addGap(145, 145, 145)
-                                .addComponent(patient_cng))
-                            .addGroup(pulsoxi_panelLayout.createSequentialGroup()
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(pulsoxi_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(pulsoxi_panelLayout.createSequentialGroup()
-                                        .addGap(110, 110, 110)
-                                        .addComponent(spo2_lab))
-                                    .addGroup(pulsoxi_panelLayout.createSequentialGroup()
-                                        .addGap(102, 102, 102)
-                                        .addComponent(spo2_lower, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(63, 63, 63)
-                                .addGroup(pulsoxi_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(alarmbreak, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
-                                    .addComponent(reset_limit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addContainerGap(52, Short.MAX_VALUE))))
-            .addGroup(pulsoxi_panelLayout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addComponent(SPO2_lab)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        pulsoxi_panelLayout.setVerticalGroup(
-            pulsoxi_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pulsoxi_panelLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(pulsoxi_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(name_lab)
-                    .addComponent(jLabel3)
-                    .addComponent(surname_lab)
-                    .addComponent(patient_cng))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(birthday_lab)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sexlab)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(pulsoxi_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pulsoxi_panelLayout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(Heart_lab))
-                    .addGroup(pulsoxi_panelLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pulsoxi_panelLayout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(close)))
-                .addGroup(pulsoxi_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pulsoxi_panelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(SPO2_lab)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 26, Short.MAX_VALUE))
-                    .addGroup(pulsoxi_panelLayout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addGroup(pulsoxi_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(pulsoxi_panelLayout.createSequentialGroup()
-                                .addComponent(lowerlim_lab, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(pulse_lower, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pulsoxi_panelLayout.createSequentialGroup()
-                                .addComponent(uperlim_lab, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(pulse_upper, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(spo2_lab, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pulsoxi_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(pulsoxi_panelLayout.createSequentialGroup()
-                                .addComponent(reset_limit)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(alarmbreak))
-                            .addComponent(spo2_lower, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(92, 92, 92))))
-        );
+        header_label.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
+        header_label.setText("Pulsoximeter Viraloverlord");
 
-        header.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
-        header.setText("Pulsoximeter Vitaloverlord");
+        lower_limit.setText("HR lower limit");
+
+        upper_limit.setText("HR upper limit");
+
+        alarm_img.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/alarm_on.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(header)
-                    .addComponent(pulsoxi_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(sexlab)
+                                    .addComponent(birthday_lab))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(age_field, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                                    .addComponent(name_field)
+                                    .addComponent(sex_field)))
+                            .addComponent(name_lab))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(63, 63, 63)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(spo2_lab)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(spo2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(alarm_img, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(63, 63, 63)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(pulse_lower, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(lower_limit)))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(reset_limit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(patient_cng, javax.swing.GroupLayout.Alignment.TRAILING))))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(upper_limit)
+                                            .addComponent(pulse_upper, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(alarmbreak))))
+                                .addContainerGap())
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(surname_lab)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(surname_field, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Heart_lab)
+                            .addComponent(SPO2_lab)
+                            .addComponent(header_label)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(spo2_out, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                                .addComponent(heartrate_out, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(83, Short.MAX_VALUE)
-                .addComponent(header)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addComponent(header_label)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(name_lab)
+                    .addComponent(surname_lab)
+                    .addComponent(surname_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(name_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(birthday_lab)
+                            .addComponent(age_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(sexlab)
+                            .addComponent(sex_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(patient_cng)))
+                .addGap(73, 73, 73)
+                .addComponent(Heart_lab)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(heartrate_out, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(alarmbreak)
+                            .addComponent(reset_limit))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lower_limit)
+                            .addComponent(upper_limit))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(pulse_lower, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pulse_upper, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(SPO2_lab)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pulsoxi_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(spo2_out, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(spo2_lab)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(spo2, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                            .addComponent(alarm_img, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                .addContainerGap())
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void patient_cngActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patient_cngActionPerformed
-        close();
-        disable_all();
-        PatientData gui_data = new PatientData();
-        gui_data.setVisible(true);
-        // wait for return
-        enable_all();   
-    }//GEN-LAST:event_patient_cngActionPerformed
+    private void yesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yesActionPerformed
+        updatelimit("50", "120", "90");
+        ResetLimits.setVisible(false);
+    }//GEN-LAST:event_yesActionPerformed
 
-    private void pulse_lowerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pulse_lowerActionPerformed
-        //get return insert to Button
-        //pulse_lower.setText("blah");
-    }//GEN-LAST:event_pulse_lowerActionPerformed
+    private void declineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_declineActionPerformed
+        ResetLimits.setVisible(false);
+    }//GEN-LAST:event_declineActionPerformed
 
-    private void pulse_upperActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pulse_upperActionPerformed
-    }//GEN-LAST:event_pulse_upperActionPerformed
+    private void upper_hrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_upper_hrActionPerformed
+        String upperfieldvalue = upper_hr.getText();
+        try {
+            int lowerhr = Integer.parseInt( upperfieldvalue );
+            if (lowerhr < 120 || lowerhr >= 300) {
+                JOptionPane.showMessageDialog(new JFrame(), "Nur Werte zwischen 70 und 100 sind gültig","Warnung",JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        catch( Exception e )
+        {
+            JOptionPane.showMessageDialog(new JFrame(), "Eingegebener Wert ist keine gültige Zahl","Warnung",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_upper_hrActionPerformed
 
-    private void spo2_lowerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_spo2_lowerActionPerformed
-    }//GEN-LAST:event_spo2_lowerActionPerformed
+    private void spo2_valueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_spo2_valueActionPerformed
+        String spo2_val = spo2_value.getText();
+        try {
+            int spo2_int = Integer.parseInt( spo2_val );
+            if (spo2_int < 70 || spo2_int >= 100) {
+                JOptionPane.showMessageDialog(new JFrame(), "Nur Werte zwischen 70 und 100 sind gültig","Warnung",JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        catch( Exception e )
+        {
+            JOptionPane.showMessageDialog(new JFrame(), "Eingegebener Wert ist keine gültige Zahl","Warnung",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_spo2_valueActionPerformed
+
+    private void lower_hrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lower_hrActionPerformed
+        String lowerfiledvalue = lower_hr.getText();
+        try {
+            int lowerhr = Integer.parseInt( lowerfiledvalue );
+            if (lowerhr < 20 || lowerhr >= 120) {
+                JOptionPane.showMessageDialog(new JFrame(), "Nur Werte zwischen 70 und 100 sind gültig","Warnung",JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        catch( Exception e )
+        {
+            JOptionPane.showMessageDialog(new JFrame(), "Eingegebener Wert ist keine gültige Zahl","Warnung",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_lower_hrActionPerformed
+
+    private void setlimitsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setlimitsActionPerformed
+        String lowerfiledvalue = lower_hr.getText();
+        String upperfield = upper_hr.getText();
+        String spo2 = spo2_value.getText();
+
+        boolean ch = check_init(lowerfiledvalue,upperfield,spo2);
+        if (ch == true){
+            updatelimit(lowerfiledvalue,upperfield,spo2);
+        }
+        else{
+            JOptionPane.showMessageDialog(new JFrame(), "Bitte gültige Werte eingeben","Warnung",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_setlimitsActionPerformed
+
+    private void restoredefaultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restoredefaultActionPerformed
+        lower_hr.setText("50");
+        upper_hr.setText("180");
+        spo2_value.setText("90");
+    }//GEN-LAST:event_restoredefaultActionPerformed
+
+    private void lower_valueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lower_valueMouseClicked
+        lower_value.setText("");
+    }//GEN-LAST:event_lower_valueMouseClicked
+
+    private void return_lowerHRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_return_lowerHRActionPerformed
+        String lowerfiledvalue = lower_value.getText();
+        boolean ch = checklowhr(lowerfiledvalue);
+        if (ch == true){
+        updatepulse_lower(lowerfiledvalue);
+        LimitHR_lower.setVisible(false);
+        }
+        else {
+            JOptionPane.showMessageDialog(new JFrame(), "Eingegebene Werte überprüfen","Warnung",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_return_lowerHRActionPerformed
+
+    private void cancel_lowerHRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel_lowerHRActionPerformed
+        LimitHR_lower.setVisible(false);
+    }//GEN-LAST:event_cancel_lowerHRActionPerformed
+
+    private void return_upperActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_return_upperActionPerformed
+        String up_value = upper_value.getText();
+        boolean ch = checkuphr(up_value);
+        if (ch == true){
+        updatepulse_upper( up_value);
+        LimitHR_upper.setVisible(false);
+        }
+        else {
+            JOptionPane.showMessageDialog(new JFrame(), "Eingegebene Werte überprüfen","Warnung",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_return_upperActionPerformed
+
+    private void cancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel1ActionPerformed
+        LimitHR_upper.setVisible(false);
+    }//GEN-LAST:event_cancel1ActionPerformed
+
+    private void upper_valueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_upper_valueMouseClicked
+        upper_value.setText("");
+    }//GEN-LAST:event_upper_valueMouseClicked
+
+    private void spo2_valMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spo2_valMouseClicked
+        spo2_val.setText("");
+    }//GEN-LAST:event_spo2_valMouseClicked
+
+    private void return_spo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_return_spo2ActionPerformed
+        String spo2 = spo2_val.getText();
+        boolean ch = checkspo2(spo2);
+        if (ch == true){
+        updatespo2( spo2 );
+        LimitSPO2.setVisible(false);
+        }
+        else {
+            JOptionPane.showMessageDialog(new JFrame(), "Eingegebene Werte überprüfen","Warnung",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_return_spo2ActionPerformed
+
+    private void cancel2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel2ActionPerformed
+        LimitSPO2.setVisible(false);
+    }//GEN-LAST:event_cancel2ActionPerformed
+
+    private void reset_limitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reset_limitActionPerformed
+        ResetLimits.setVisible(true);
+    }//GEN-LAST:event_reset_limitActionPerformed
 
     private void pulse_lowerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pulse_lowerMouseClicked
-        close();
-        disable_all();
-        LimitHR_lower gui_lowerHR = new LimitHR_lower();
-        gui_lowerHR.setVisible(true);
-        // wait for return
-        enable_all();
+        LimitHR_lower.setVisible(true);
     }//GEN-LAST:event_pulse_lowerMouseClicked
 
     private void pulse_upperMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pulse_upperMouseClicked
-        close();
-        disable_all();
-        LimitHR_upper gui_lowerHR = new LimitHR_upper();
-        gui_lowerHR.setVisible(true);
-        // wait for return
-        enable_all();                  
+        LimitHR_upper.setVisible(true);
     }//GEN-LAST:event_pulse_upperMouseClicked
 
-    private void spo2_lowerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spo2_lowerMouseClicked
-        close();
-        disable_all();
-        LimitSPO2 gui_spo2 = new LimitSPO2();
-        gui_spo2.setVisible(true);
-        // wait for return
-        enable_all();   
-    }//GEN-LAST:event_spo2_lowerMouseClicked
+    private void spo2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spo2MouseClicked
+         LimitSPO2.setVisible(true);
+    }//GEN-LAST:event_spo2MouseClicked
 
-    private void reset_limitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reset_limitActionPerformed
-        disable_all();
-        ResetLimits gui_resetlim = new ResetLimits();
-        gui_resetlim.setVisible(true);
-    }//GEN-LAST:event_reset_limitActionPerformed
+    private void patient_cngActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patient_cngActionPerformed
+        String pat_name = name_field.getText();
+        name_field3.setText(pat_name);
+        String pat_surname = surname_field.getText();
+        surname_field3.setText(pat_surname);
+        
+        String sex = sex_field.getText();
+        // Get Text of Birthdate
+        // seperate with. 
+        // set to combobox.
+        
+        //(String)sex_box3.SetSelectedItem(sex);
+        String gday = (String)day.getSelectedItem();
+        String gmonth = (String)month.getSelectedItem();
+        String gyear = (String)year.getSelectedItem();
+        
+        
+        cng_Patient.setVisible(true);
+    }//GEN-LAST:event_patient_cngActionPerformed
 
-    private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
-        systemclose();
-    }//GEN-LAST:event_closeActionPerformed
+    private void sex_box3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sex_box3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sex_box3ActionPerformed
+
+    private void surname_field3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_surname_field3MouseClicked
+        surname_field3.setText("");
+    }//GEN-LAST:event_surname_field3MouseClicked
+
+    private void name_field3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_name_field3MouseClicked
+        name_field3.setText("");
+    }//GEN-LAST:event_name_field3MouseClicked
+
+    private void cancel_patientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel_patientActionPerformed
+        cng_Patient.setVisible(false);
+    }//GEN-LAST:event_cancel_patientActionPerformed
+
+    private void savepatient3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savepatient3ActionPerformed
+        String name = name_field3.getText();
+        String surname = surname_field3.getText();
+        String sex = (String)sex_box3.getSelectedItem();
+        String gday = (String)day.getSelectedItem();
+        String gmonth = (String)month.getSelectedItem();
+        String gyear = (String)year.getSelectedItem();
+
+        String birthdate = gday + "." + gmonth + "." + gyear;
+
+        updatepatient(name, surname, sex, birthdate);
+        cng_Patient.setVisible(false);
+    }//GEN-LAST:event_savepatient3ActionPerformed
+
+    private void alarmbreakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alarmbreakActionPerformed
+       alarm_img.setIcon(new javax.swing.ImageIcon(getClass().getResource(imageList[1])));
+       surveyhr.alertbreak();
+       surveyspo2.alertbreak();
+       updatepulse (50);
+       updatespo2(90);
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() { // Function runs every 5 MINUTES minutes.
+                alarm_img.setIcon(new javax.swing.ImageIcon(getClass().getResource(imageList[0])));
+                updatepulse (100);
+                updatespo2(50);
+                surveyhr.alertbreak();
+                surveyspo2.alertbreak();
+            }
+        },1000*60*5);    
+    }//GEN-LAST:event_alarmbreakActionPerformed
+
+    private void yearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_yearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -382,49 +1068,89 @@ public class Display extends javax.swing.JFrame implements ActionListener {
         }
         //</editor-fold>
         //</editor-fold>
-
+        new Display().setVisible(true);        
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Setlimitstartup setlimit = new Setlimitstartup();
-                setlimit.setVisible(true);
-                
-                // wait for return
+            public void run() {    
                 new Display().setVisible(true);
-                //disable_all();
+                SensorControl.start(); 
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Heart_lab;
+    private javax.swing.JFrame LimitHR_lower;
+    private javax.swing.JFrame LimitHR_upper;
+    private javax.swing.JFrame LimitSPO2;
+    private javax.swing.JLabel Patient_data_heading3;
+    private javax.swing.JFrame ResetLimits;
     private javax.swing.JLabel SPO2_lab;
+    private javax.swing.JFrame Setlimitstartup;
+    private javax.swing.JTextField age_field;
+    private javax.swing.JLabel alarm_img;
     private javax.swing.JButton alarmbreak;
+    private javax.swing.JLabel birthdate3;
     private javax.swing.JLabel birthday_lab;
-    private javax.swing.JButton close;
-    private javax.swing.JLabel header;
-    private javax.swing.JTextPane heartrate_out;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel lowerlim_lab;
+    private javax.swing.JButton cancel1;
+    private javax.swing.JButton cancel2;
+    private javax.swing.JButton cancel_lowerHR;
+    private javax.swing.JButton cancel_patient;
+    private javax.swing.JFrame cng_Patient;
+    private javax.swing.JComboBox<String> day;
+    private javax.swing.JLabel day_lab;
+    private javax.swing.JButton decline;
+    private javax.swing.JLabel header_label;
+    private javax.swing.JTextField heartrate_out;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JTextField lower_hr;
+    private javax.swing.JLabel lower_label1;
+    private javax.swing.JLabel lower_label2;
+    private javax.swing.JLabel lower_limit;
+    private javax.swing.JTextField lower_value;
+    private javax.swing.JComboBox<String> month;
+    private javax.swing.JLabel month_lab;
+    private javax.swing.JLabel name;
+    private javax.swing.JTextField name_field;
+    private javax.swing.JTextField name_field3;
     private javax.swing.JLabel name_lab;
-    private javax.swing.JTextPane name_out;
     private javax.swing.JButton patient_cng;
     private javax.swing.JTextField pulse_lower;
     private javax.swing.JTextField pulse_upper;
-    private javax.swing.JPanel pulsoxi_panel;
     private javax.swing.JButton reset_limit;
+    private javax.swing.JButton restoredefault;
+    private javax.swing.JButton return_lowerHR;
+    private javax.swing.JButton return_spo2;
+    private javax.swing.JButton return_upper;
+    private javax.swing.JButton savepatient3;
+    private javax.swing.JButton setlimits;
+    private javax.swing.JLabel sex3;
+    private javax.swing.JComboBox<String> sex_box3;
+    private javax.swing.JTextField sex_field;
     private javax.swing.JLabel sexlab;
-    private javax.swing.JTextPane spo2_actout;
+    private javax.swing.JTextField spo2;
     private javax.swing.JLabel spo2_lab;
-    private javax.swing.JTextField spo2_lower;
+    private javax.swing.JTextField spo2_out;
+    private javax.swing.JTextField spo2_val;
+    private javax.swing.JTextField spo2_value;
+    private javax.swing.JLabel surname3;
+    private javax.swing.JTextField surname_field;
+    private javax.swing.JTextField surname_field3;
     private javax.swing.JLabel surname_lab;
-    private javax.swing.JLabel uperlim_lab;
+    private javax.swing.JTextField upper_hr;
+    private javax.swing.JLabel upper_label;
+    private javax.swing.JLabel upper_label1;
+    private javax.swing.JLabel upper_limit;
+    private javax.swing.JTextField upper_value;
+    private javax.swing.JComboBox<String> year;
+    private javax.swing.JLabel year_lab;
+    private javax.swing.JButton yes;
     // End of variables declaration//GEN-END:variables
     
+    //*********************** general Properties *****************************//
     private void close()
     {
         Display gui_monitor = new Display();
@@ -433,26 +1159,154 @@ public class Display extends javax.swing.JFrame implements ActionListener {
     private void systemclose(){
         WindowEvent winCloseing = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winCloseing);
+        SensorControl.end();
     }
     private void disable_all(){
         pulse_lower.setEnabled(false);
         pulse_upper.setEnabled(false);
-        spo2_lower.setEnabled(false);
+        spo2.setEnabled(false);
         patient_cng.setEnabled(false);
     }
     private void enable_all(){
         pulse_lower.setEnabled(true);
         pulse_upper.setEnabled(true);
-        spo2_lower.setEnabled(true);
+        spo2.setEnabled(true);
         patient_cng.setEnabled(true);
     }
-
-    public void updatehr(LimitHR_lower hrlower){
-        this.hrlower = hrlower;
-        this.hrfield = hrlower.savelowerhr();
+    
+    //***************************** Update Block'*****************************//    
+    protected void updatelimit(String lower_hr, String upper_hr, String spo2_val){
+        pulse_lower.setText(lower_hr);
+        pulse_upper.setText(upper_hr);
+        spo2.setText(spo2_val);
+        this.surveyhr = new HRSurveillance(lower_hr,upper_hr);
+        this.surveyspo2 = new SPO2Surveillance(spo2_val);
     }
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected void updatepulse_lower(String lower_hr){        
+        pulse_lower.setText(lower_hr);
+        surveyhr.updatelowerhr(lower_hr);
+    }
+    protected void updatepulse_upper (String upper_hr){
+        pulse_upper.setText(upper_hr);
+        surveyhr.updateupperhr(upper_hr);
+    }
+    protected void updatespo2(String spo2_val){
+        spo2.setText(spo2_val); 
+        surveyspo2.updatespo2(spo2_val);
+    }
+    protected void updatepatient(String name, String surname, String sex, String age){
+        name_field.setText(name);
+        surname_field.setText(surname);
+        sex_field.setText(sex);
+        age_field.setText(age);
+    }
+    protected void updatepulse (int currenthr){
+        heartrate_out.setText(Integer.toString(currenthr));
+        surveyhr.alerthr(currenthr);
+    }
+    protected void updatespo2(int currentspo2){
+        spo2_out.setText(Integer.toString(currentspo2));
+        surveyspo2.alertspo2(currentspo2);
+    }
+    
+    //*************************** Check Block ********************************//    
+    protected boolean check_init(String uphr, String lowhr, String spo2){
+        try {
+            int lowerhr = Integer.parseInt( lowhr );
+            
+            if (lowerhr < 20 || lowerhr > 160) {
+                return false;
+            }
+            int upperhr = Integer.parseInt( uphr );
+            if (upperhr < 60 || upperhr > 300) {
+                return false;
+            }  
+            int spo2_int = Integer.parseInt( spo2 );
+            if (spo2_int < 60 || spo2_int >= 100) {
+                return false;
+            }
+            if (upperhr <= lowerhr){
+                JOptionPane.showMessageDialog(new JFrame(), "Obere Grenze muss höher als die untere Grenze sein","Warnung",JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            return true;
+        }
+        catch ( Exception e ){
+            return false;
+        }
+    }
+    
+    private  boolean checklowhr(String low_value){               
+        try
+        {
+            int low_int = Integer.parseInt( low_value );
+            if (low_int < 20 || low_int > 160) {
+                JOptionPane.showMessageDialog(new JFrame(), "Nur Werte zwischen 30 und 120 sind gültig","Warnung",JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            else {       
+                return true;
+            }
+        }
+        catch( Exception e )
+        {    
+            JOptionPane.showMessageDialog(new JFrame(), "Eingegebener Wert ist keine gültige Zahl","Warnung",JOptionPane.ERROR_MESSAGE);
+            return false;
+        } 
+    }
+        
+    private  boolean checkuphr(String up_value){               
+        try
+        {
+            int up_int = Integer.parseInt( up_value );
+            if (up_int < 60 || up_int > 300) {
+                JOptionPane.showMessageDialog(new JFrame(), "Nur Werte zwischen 120 und 300 sind gültig","Warnung",JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            else {       
+                return true;
+            }
+        }
+        catch( Exception e )
+        {    
+            JOptionPane.showMessageDialog(new JFrame(), "Eingegebener Wert ist keine gültige Zahl","Warnung",JOptionPane.ERROR_MESSAGE);
+            return false;
+        } 
+    }
+    
+        private boolean checkspo2(String spo2_value){               
+        try
+        {
+            int low_int = Integer.parseInt( spo2_value );
+            if (low_int < 50 || low_int > 100) {
+                JOptionPane.showMessageDialog(new JFrame(), "Nur Werte zwischen 50 und 100 sind gültig","Warnung",JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            else {       
+                return true;
+            }
+        }
+        catch( Exception e )
+        {    
+            JOptionPane.showMessageDialog(new JFrame(), "Eingegebener Wert ist keine gültige Zahl","Warnung",JOptionPane.ERROR_MESSAGE);
+            return false;
+        } 
+    }
+        
+    protected boolean checkname(String name){               
+        if (name.contains("[0-9]+")==true){
+            JOptionPane.showMessageDialog(new JFrame(), "Name darf keine Zahlen enthalten","Warnung",JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    //*************************** alarm Block ********************************//
+    private void alarmhr(){
+        // TODO: Text Output 
+    }
+    private void alarmspo2(){
+        // TODO: Text output
     }
 }
