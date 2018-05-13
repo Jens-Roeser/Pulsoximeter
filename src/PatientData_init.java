@@ -46,6 +46,7 @@ public class PatientData_init extends javax.swing.JFrame {
         month_lab = new javax.swing.JLabel();
         year = new javax.swing.JComboBox<>();
         year_lab = new javax.swing.JLabel();
+        load = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -61,21 +62,11 @@ public class PatientData_init extends javax.swing.JFrame {
                 name_fieldMouseClicked(evt);
             }
         });
-        name_field.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                name_fieldActionPerformed(evt);
-            }
-        });
 
         surname_field.setText("instert surname");
         surname_field.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 surname_fieldMouseClicked(evt);
-            }
-        });
-        surname_field.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                surname_fieldActionPerformed(evt);
             }
         });
 
@@ -84,11 +75,6 @@ public class PatientData_init extends javax.swing.JFrame {
         sex3.setText("Patient sex: ");
 
         sex_box3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "unknown", "male", "female" }));
-        sex_box3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sex_box3ActionPerformed(evt);
-            }
-        });
 
         birthdate3.setText("Patient birthdate:");
 
@@ -123,13 +109,20 @@ public class PatientData_init extends javax.swing.JFrame {
 
         year_lab.setText("Year");
 
+        load.setText("load");
+        load.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(name3)
@@ -137,41 +130,43 @@ public class PatientData_init extends javax.swing.JFrame {
                             .addComponent(sex3)
                             .addComponent(birthdate3))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(savepatient3, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cancel_patient, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(name_field, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(surname_field, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(sex_box3, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(surname_field, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(sex_box3, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(day_lab)
-                                        .addGap(36, 36, 36))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(month_lab))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(year_lab))
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                        .addComponent(day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(10, 10, 10)
+                                            .addComponent(month_lab)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(year_lab))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(savepatient3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(load, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(cancel_patient, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(name_field)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(Patient_data_heading3)))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(Patient_data_heading3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(name3)
                     .addComponent(name_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -199,7 +194,8 @@ public class PatientData_init extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(savepatient3)
-                    .addComponent(cancel_patient))
+                    .addComponent(cancel_patient)
+                    .addComponent(load))
                 .addContainerGap())
         );
 
@@ -210,24 +206,12 @@ public class PatientData_init extends javax.swing.JFrame {
         name_field.setText("");
     }//GEN-LAST:event_name_fieldMouseClicked
 
-    private void name_fieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_name_fieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_name_fieldActionPerformed
-
     private void surname_fieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_surname_fieldMouseClicked
         surname_field.setText("");
     }//GEN-LAST:event_surname_fieldMouseClicked
 
-    private void surname_fieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_surname_fieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_surname_fieldActionPerformed
-
-    private void sex_box3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sex_box3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_sex_box3ActionPerformed
-
     private void cancel_patientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel_patientActionPerformed
-        display.updatepatient("X", "X", "X", "X");
+        display.updatepatient("X", "X", "X", "X", 0);
         startup.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_cancel_patientActionPerformed
@@ -241,8 +225,8 @@ public class PatientData_init extends javax.swing.JFrame {
         String gyear = (String)year.getSelectedItem();
 
         String birthdate = gday + "." + gmonth + "." + gyear;
-        pat.addpatient(name, surname, sex, birthdate);
-        display.updatepatient(name, surname, sex, birthdate);
+        int age = pat.addpatient(name, surname, sex, birthdate);
+        display.updatepatient(name, surname, sex, birthdate, age);
         display.updatelimit("40", "160","80");
         display.setVisible(true); 
         setVisible(false);
@@ -251,6 +235,10 @@ public class PatientData_init extends javax.swing.JFrame {
     private void yearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_yearActionPerformed
+
+    private void loadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadActionPerformed
+        pat.loadpatient();
+    }//GEN-LAST:event_loadActionPerformed
 
     /**
      * @param args the command line arguments
@@ -294,6 +282,7 @@ public class PatientData_init extends javax.swing.JFrame {
     private javax.swing.JButton cancel_patient;
     private javax.swing.JComboBox<String> day;
     private javax.swing.JLabel day_lab;
+    private javax.swing.JButton load;
     private javax.swing.JComboBox<String> month;
     private javax.swing.JLabel month_lab;
     private javax.swing.JLabel name3;

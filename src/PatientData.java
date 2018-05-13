@@ -6,6 +6,8 @@
 import java.sql.*;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import static javax.swing.text.html.HTML.Tag.SELECT;
 /**
@@ -13,21 +15,27 @@ import static javax.swing.text.html.HTML.Tag.SELECT;
  * @author Jens
  */
 public class PatientData {
-    int age;
+    private int age;
+    private Connection conn;
+    private PreparedStatement pst;
+    private PreparedStatement r_out;
+    private Statement stat;
+    private ResultSet res;
+    private Date date = new Date();
+    private String dateString;
+    private int maxid;
     
     PatientData(){
+        this.conn = null;
+        this.pst = null;
+        this.r_out = null;
+        this.stat = null;
+        this.res = null;
+        dateString = null;
     }
 
 
-    protected void addpatient(String name, String surname, String sex, String birthdate) {
-        Connection conn = null;
-        PreparedStatement pst = null;
-        PreparedStatement r_out = null;
-        Statement stat = null;
-        ResultSet res = null;
-        Date date = new Date();
-        String dateString = null;
-        
+    protected int addpatient(String name, String surname, String sex, String birthdate) {        
         SimpleDateFormat data = new SimpleDateFormat("dd.MM.yyyy");
         String date_form = data.format(date);
         
@@ -55,29 +63,66 @@ public class PatientData {
             age = (Integer.parseInt(act[2]) - Integer.parseInt(birth[2]));
         }
         
-       try{
+       try{    
             //Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/Patient", "Menodar","Student311");
+            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/Patient", "Menodar", "Student311");
             stat = conn.createStatement();
-            ResultSet last_ID = stat.executeQuery("SELECT * FROM Patients");
-    
+            ResultSet rs = stat.executeQuery("SELECT MAX(ID) as maxid FROM Patient");
+            if(rs.next()) { 
+                maxid = rs.getInt("maxid"); 
+            }
+        
             pst = conn.prepareStatement("insert into Patient values (?,?,?,?,?,?)");
             pst.setString(1, name);
             pst.setString(2, surname);
             pst.setString(3, sex);
             pst.setString(4, birthdate);
             pst.setInt(5, age);
-            pst.setInt(6, 8);
+            pst.setInt(6, (maxid +1));
             int i = pst.executeUpdate();
-            if (i < 0){
+            if (i > 0){
                 JOptionPane.showMessageDialog(null, "Patient saved");
             }
             else{
                 JOptionPane.showMessageDialog(null, "Patient saving failed");
             }
-       }
+        }
        catch(Exception e){
            JOptionPane.showMessageDialog(null, "Patient saving failed");
        }
+       return age;
+    }
+    protected void loadpatient(){
+        try {
+            //Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/Patient", "Menodar", "Student311");
+            
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM Patient");
+            if(rs.next()) { 
+                // TODO: select get all DAta from Table (array List)
+                // Return List to COmbobox to select. 
+                int id = rs.getInt("ID"); 
+                String str1 = rs.getString("second_column_name");
+            }
+            conn.close();
+            
+            //stat = conn.createStatement();
+            int i = pst.executeUpdate();
+            if (i > 0){
+                JOptionPane.showMessageDialog(null, "Patient saved");
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Patient saving failed");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Patient loading failed");
+        }
+    }
+    protected void changepatient(){
+        
+    }
+    protected void deletepatient(){
+        
     }
 }

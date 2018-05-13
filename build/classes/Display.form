@@ -811,7 +811,7 @@
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="age_field" pref="121" max="32767" attributes="0"/>
+                                  <Component id="birth_field" pref="121" max="32767" attributes="0"/>
                                   <Component id="name_field" max="32767" attributes="0"/>
                                   <Component id="sex_field" max="32767" attributes="0"/>
                               </Group>
@@ -842,11 +842,8 @@
                                               </Group>
                                           </Group>
                                           <Group type="102" alignment="1" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="reset_limit" alignment="1" min="-2" pref="91" max="-2" attributes="0"/>
-                                                  <Component id="patient_cng" alignment="1" min="-2" max="-2" attributes="0"/>
-                                              </Group>
+                                              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                                              <Component id="reset_limit" min="-2" pref="91" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -860,10 +857,26 @@
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                              <Component id="surname_lab" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="surname_field" min="-2" pref="116" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="patient_cng" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="surname_lab" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="age" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="surname_field" pref="116" max="32767" attributes="0"/>
+                                          <Component id="age_field" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -896,25 +909,20 @@
                   <Component id="surname_field" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="name_field" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="birthday_lab" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="age_field" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="sexlab" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="sex_field" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="patient_cng" min="-2" max="-2" attributes="0"/>
-                  </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="birthday_lab" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="birth_field" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="age" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="age_field" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="sexlab" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="sex_field" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="patient_cng" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
               <Component id="Heart_lab" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -984,7 +992,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="patient_cngActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="age_field">
+    <Component class="javax.swing.JTextField" name="birth_field">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
       </Properties>
@@ -1119,6 +1127,13 @@
           <Image iconType="3" name="/img/alarm_on.png"/>
         </Property>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="age">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="age"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="age_field">
     </Component>
   </SubComponents>
 </Form>

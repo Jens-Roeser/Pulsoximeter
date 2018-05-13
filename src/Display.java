@@ -99,7 +99,7 @@ public class Display extends javax.swing.JFrame {
         surname_field = new javax.swing.JTextField();
         surname_lab = new javax.swing.JLabel();
         patient_cng = new javax.swing.JButton();
-        age_field = new javax.swing.JTextField();
+        birth_field = new javax.swing.JTextField();
         birthday_lab = new javax.swing.JLabel();
         sexlab = new javax.swing.JLabel();
         sex_field = new javax.swing.JTextField();
@@ -117,6 +117,8 @@ public class Display extends javax.swing.JFrame {
         lower_limit = new javax.swing.JLabel();
         upper_limit = new javax.swing.JLabel();
         alarm_img = new javax.swing.JLabel();
+        age = new javax.swing.JLabel();
+        age_field = new javax.swing.JTextField();
 
         ResetLimits.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         ResetLimits.setMinimumSize(new java.awt.Dimension(200, 125));
@@ -626,7 +628,7 @@ public class Display extends javax.swing.JFrame {
             }
         });
 
-        age_field.setEditable(false);
+        birth_field.setEditable(false);
 
         birthday_lab.setText("Patient birthdate:");
 
@@ -700,6 +702,8 @@ public class Display extends javax.swing.JFrame {
 
         alarm_img.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/alarm_on.png"))); // NOI18N
 
+        age.setText("age");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -715,7 +719,7 @@ public class Display extends javax.swing.JFrame {
                                     .addComponent(birthday_lab))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(age_field, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                                    .addComponent(birth_field, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
                                     .addComponent(name_field)
                                     .addComponent(sex_field)))
                             .addComponent(name_lab))
@@ -738,10 +742,8 @@ public class Display extends javax.swing.JFrame {
                                                     .addComponent(pulse_lower, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addComponent(lower_limit)))
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(reset_limit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(patient_cng, javax.swing.GroupLayout.Alignment.TRAILING))))
+                                                .addGap(22, 22, 22)
+                                                .addComponent(reset_limit, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(upper_limit)
@@ -750,9 +752,19 @@ public class Display extends javax.swing.JFrame {
                                 .addContainerGap())
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(surname_lab)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(surname_field, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(patient_cng)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(surname_lab)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(age)
+                                                .addGap(74, 74, 74)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(surname_field, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                                            .addComponent(age_field))))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -775,20 +787,18 @@ public class Display extends javax.swing.JFrame {
                     .addComponent(surname_lab)
                     .addComponent(surname_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(name_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(birthday_lab)
-                            .addComponent(age_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(sexlab)
-                            .addComponent(sex_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(patient_cng)))
-                .addGap(73, 73, 73)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(birthday_lab)
+                    .addComponent(birth_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(age)
+                    .addComponent(age_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sexlab)
+                    .addComponent(sex_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(patient_cng))
+                .addGap(71, 71, 71)
                 .addComponent(Heart_lab)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -1015,8 +1025,8 @@ public class Display extends javax.swing.JFrame {
         String gyear = (String)year.getSelectedItem();
 
         String birthdate = gday + "." + gmonth + "." + gyear;
-        pat.addpatient(name, surname, sex, birthdate);
-        updatepatient(name, surname, sex, birthdate);
+        int age = pat.addpatient(name, surname, sex, birthdate);
+        updatepatient(name, surname, sex, birthdate, age);
         cng_Patient.setVisible(false);
     }//GEN-LAST:event_savepatient3ActionPerformed
 
@@ -1089,9 +1099,11 @@ public class Display extends javax.swing.JFrame {
     private javax.swing.JFrame ResetLimits;
     private javax.swing.JLabel SPO2_lab;
     private javax.swing.JFrame Setlimitstartup;
+    private javax.swing.JLabel age;
     private javax.swing.JTextField age_field;
     private javax.swing.JLabel alarm_img;
     private javax.swing.JButton alarmbreak;
+    private javax.swing.JTextField birth_field;
     private javax.swing.JLabel birthdate3;
     private javax.swing.JLabel birthday_lab;
     private javax.swing.JButton cancel1;
@@ -1195,11 +1207,12 @@ public class Display extends javax.swing.JFrame {
         spo2.setText(spo2_val); 
         surveyspo2.updatespo2(spo2_val);
     }
-    protected void updatepatient(String name, String surname, String sex, String age){
+    protected void updatepatient(String name, String surname, String sex, String birth, int age ){
         name_field.setText(name);
         surname_field.setText(surname);
         sex_field.setText(sex);
-        age_field.setText(age);
+        birth_field.setText(birth);
+        age_field.setText(Integer.toString(age));
     }
     protected void updatepulse (int currenthr){
         heartrate_out.setText(Integer.toString(currenthr));
