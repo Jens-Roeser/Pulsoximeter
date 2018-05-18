@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.sql.*;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import static javax.swing.text.html.HTML.Tag.SELECT;
 /**
  *
  * @author Jens
@@ -24,7 +26,7 @@ public class PatientData {
     private Date date = new Date();
     private String dateString;
     private int maxid;
-    
+        
     PatientData(){
         this.conn = null;
         this.pst = null;
@@ -43,26 +45,46 @@ public class PatientData {
         String[] birth = birthdate.split("\\.");
         
         int month = (Integer.parseInt(act[1]) - Integer.parseInt(birth[1]));
+        // month bigger 0 means birthday was already
         if (month > 0){
             int act_int = Integer.parseInt(act[2]);
             int birth_int = Integer.parseInt(birth[2]);
-            age = (act_int - birth_int -1);
+            age = (act_int - birth_int);
         }
         else if (month == 0){
              int day = (Integer.parseInt(act[0]) - Integer.parseInt(birth[0]));
              if (day > 0){
                 int act_int = Integer.parseInt(act[2]);
                 int birth_int = Integer.parseInt(birth[2]);
-                age = (act_int - birth_int -1);
+                age = (act_int - birth_int);
              }
+             //no birthday
+             else if (day < 0){
+                 age = (Integer.parseInt(act[2]) - Integer.parseInt(birth[2]) - 1);
+             }
+             // birthday is today 
              else {
                  age = (Integer.parseInt(act[2]) - Integer.parseInt(birth[2]));
              }
         }
         else if (month < 0){
-            age = (Integer.parseInt(act[2]) - Integer.parseInt(birth[2]));
+            age = (Integer.parseInt(act[2]) - Integer.parseInt(birth[2]) - 1);
         }
+        String dir = System.getProperty("user.dir");
+        String path = dir + "blah";
+        File f = new File((dir + "blah"));
         
+        // Stream to file 
+        String fileName = "patientdata.txt";
+        try {
+            PrintWriter outputStream = new PrintWriter(fileName);
+            outputStream.println();
+            outputStream.close();
+            //System.out.println();
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(PatientData.class.getName()).log(Level.SEVERE, null, ex);
+        }
        try{    
             //Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:derby://localhost:1527/Patient", "Menodar", "Student311");
@@ -119,6 +141,7 @@ public class PatientData {
             JOptionPane.showMessageDialog(null, "Patient loading failed");
         }
     }
+    
     protected void changepatient(){
         
     }

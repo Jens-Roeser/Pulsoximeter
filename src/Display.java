@@ -6,11 +6,13 @@
 import javax.swing.JOptionPane;
 import java.awt.Toolkit;
 import java.awt.event.*;
+import java.util.Calendar;
 import javax.swing.JFrame;
 
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.swing.ComboBoxModel;
 
 /**
 /**
@@ -27,15 +29,16 @@ public class Display extends javax.swing.JFrame {
     private static String[] imageList =  {  "/img/alarm_on.png" , "/img/alarm_off.png"};
     Timer timer = new Timer("TaskName");
     int MINUTES = 5;
-    //Timer timer = new Timer();
-    //int secondspassed = 0;
+    private ComboBoxModel <String> birthYear; //currentYear is an int variable
     /**
      * Creates new form Monitor
      */
     public Display() {
+        initCombobox();
         initComponents();
     }
     public Display(Display display){
+       initCombobox();
        initComponents(); 
        this.display = display;
     }
@@ -525,12 +528,7 @@ public class Display extends javax.swing.JFrame {
 
         year_lab.setText("Year");
 
-        year.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1900" }));
-        year.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                yearActionPerformed(evt);
-            }
-        });
+        year.setModel(birthYear);
 
         javax.swing.GroupLayout cng_PatientLayout = new javax.swing.GroupLayout(cng_Patient.getContentPane());
         cng_Patient.getContentPane().setLayout(cng_PatientLayout);
@@ -1048,10 +1046,6 @@ public class Display extends javax.swing.JFrame {
         },1000*60*5);    
     }//GEN-LAST:event_alarmbreakActionPerformed
 
-    private void yearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_yearActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -1164,6 +1158,20 @@ public class Display extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     
     //*********************** general Properties *****************************//
+    
+     private void initCombobox() {
+    int inc = 1900;
+    int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+    int dif = currentYear-inc;
+    String[] years = new String[dif + 1];
+        
+    for(int i = 0;i < dif +1;i++){
+        years [i] = Integer.toString(inc);
+        inc++;
+    }
+        birthYear = new javax.swing.DefaultComboBoxModel<>(years);
+    }
+    
     private void close()
     {
         Display gui_monitor = new Display();

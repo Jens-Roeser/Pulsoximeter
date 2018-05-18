@@ -5,6 +5,8 @@
  */
 import java.awt.List;
 import java.util.ArrayList;
+import java.util.Calendar;
+import javax.swing.ComboBoxModel;
 /**
  *
  * @author Jens
@@ -14,10 +16,12 @@ public class PatientData_init extends javax.swing.JFrame {
     Display display = new Display();
     Setlimitstartup startup = new Setlimitstartup(display);
     private PatientData pat = new PatientData();
+    private ComboBoxModel <String> birthYear; //currentYear is an int variable
     /**
      * Creates new form PatientData
      */
     public PatientData_init() {
+        initCombobox();
         initComponents();
     }
 
@@ -39,7 +43,7 @@ public class PatientData_init extends javax.swing.JFrame {
         sex_box3 = new javax.swing.JComboBox<>();
         birthdate3 = new javax.swing.JLabel();
         cancel_patient = new javax.swing.JButton();
-        savepatient3 = new javax.swing.JButton();
+        savepatient = new javax.swing.JButton();
         day = new javax.swing.JComboBox<>();
         day_lab = new javax.swing.JLabel();
         month = new javax.swing.JComboBox<>();
@@ -85,10 +89,10 @@ public class PatientData_init extends javax.swing.JFrame {
             }
         });
 
-        savepatient3.setText("save");
-        savepatient3.addActionListener(new java.awt.event.ActionListener() {
+        savepatient.setText("save");
+        savepatient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                savepatient3ActionPerformed(evt);
+                savepatientActionPerformed(evt);
             }
         });
 
@@ -100,12 +104,7 @@ public class PatientData_init extends javax.swing.JFrame {
 
         month_lab.setText("Month");
 
-        year.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1900" }));
-        year.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                yearActionPerformed(evt);
-            }
-        });
+        year.setModel(birthYear);
 
         year_lab.setText("Year");
 
@@ -150,7 +149,7 @@ public class PatientData_init extends javax.swing.JFrame {
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                             .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(savepatient3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(savepatient, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
                                     .addComponent(load, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
@@ -193,7 +192,7 @@ public class PatientData_init extends javax.swing.JFrame {
                             .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(savepatient3)
+                    .addComponent(savepatient)
                     .addComponent(cancel_patient)
                     .addComponent(load))
                 .addContainerGap())
@@ -216,7 +215,7 @@ public class PatientData_init extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_cancel_patientActionPerformed
 
-    private void savepatient3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savepatient3ActionPerformed
+    private void savepatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savepatientActionPerformed
         String name = name_field.getText();
         String surname = surname_field.getText();
         String sex = (String)sex_box3.getSelectedItem();
@@ -227,14 +226,23 @@ public class PatientData_init extends javax.swing.JFrame {
         String birthdate = gday + "." + gmonth + "." + gyear;
         int age = pat.addpatient(name, surname, sex, birthdate);
         display.updatepatient(name, surname, sex, birthdate, age);
-        display.updatelimit("40", "160","80");
+        
+        if (age <= 1){
+            display.updatelimit("120", "190","90");
+        }
+        else if (age > 1 && age <= 6){
+            display.updatelimit("90", "150","90");
+        }
+        else if (age > 6 && age <= 16){
+            display.updatelimit("70", "110","90");
+        }
+        else if (age > 16){
+            display.updatelimit("50", "100","90");
+        }
+        
         display.setVisible(true); 
         setVisible(false);
-    }//GEN-LAST:event_savepatient3ActionPerformed
-
-    private void yearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_yearActionPerformed
+    }//GEN-LAST:event_savepatientActionPerformed
 
     private void loadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadActionPerformed
         pat.loadpatient();
@@ -287,7 +295,7 @@ public class PatientData_init extends javax.swing.JFrame {
     private javax.swing.JLabel month_lab;
     private javax.swing.JLabel name3;
     private javax.swing.JTextField name_field;
-    private javax.swing.JButton savepatient3;
+    private javax.swing.JButton savepatient;
     private javax.swing.JLabel sex3;
     private javax.swing.JComboBox<String> sex_box3;
     private javax.swing.JLabel surname3;
@@ -295,4 +303,16 @@ public class PatientData_init extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> year;
     private javax.swing.JLabel year_lab;
     // End of variables declaration//GEN-END:variables
+
+    private void initCombobox() {
+        int inc = 1900;
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        int dif = currentYear-inc;
+	String[] years = new String[dif + 1];
+        
+	for(int i = 0;i < dif +1;i++){
+            years [i] = Integer.toString(inc);
+            inc++;
+	}
+        birthYear = new javax.swing.DefaultComboBoxModel<>(years);}
 }
