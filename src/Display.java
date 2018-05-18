@@ -20,27 +20,28 @@ import javax.swing.ComboBoxModel;
  * @author Jens
  */
 public class Display extends javax.swing.JFrame {
-    
+
     private SensorControl sensor;
     private HRSurveillance surveyhr;
     private SPO2Surveillance surveyspo2;
     private PatientData pat = new PatientData();
-    private Display display;
+    private static Display display = new Display();
     private static String[] imageList =  {  "/img/alarm_on.png" , "/img/alarm_off.png"};
     Timer timer = new Timer("TaskName");
     int MINUTES = 5;
     private ComboBoxModel <String> birthYear; //currentYear is an int variable
+    
+    // state patient
+    // patientinit == 1: initial Patient
+    // patientinit == 0: patient Change
+    private boolean patientinit = true;
+    
     /**
      * Creates new form Monitor
      */
     public Display() {
         initCombobox();
         initComponents();
-    }
-    public Display(Display display){
-       initCombobox();
-       initComponents(); 
-       this.display = display;
     }
 
     /**
@@ -58,10 +59,10 @@ public class Display extends javax.swing.JFrame {
         decline = new javax.swing.JButton();
         Setlimitstartup = new javax.swing.JFrame();
         upper_label = new javax.swing.JLabel();
-        upper_hr = new javax.swing.JTextField();
-        spo2_value = new javax.swing.JTextField();
+        uplim_ini = new javax.swing.JTextField();
+        spo2_ini = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        lower_hr = new javax.swing.JTextField();
+        lowlim_ini = new javax.swing.JTextField();
         lower_label2 = new javax.swing.JLabel();
         setlimits = new javax.swing.JButton();
         restoredefault = new javax.swing.JButton();
@@ -80,17 +81,17 @@ public class Display extends javax.swing.JFrame {
         return_spo2 = new javax.swing.JButton();
         cancel2 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        cng_Patient = new javax.swing.JFrame();
-        savepatient3 = new javax.swing.JButton();
+        Patient_UI = new javax.swing.JFrame();
+        savepatient = new javax.swing.JButton();
         cancel_patient = new javax.swing.JButton();
         Patient_data_heading3 = new javax.swing.JLabel();
-        name_field3 = new javax.swing.JTextField();
+        name_field = new javax.swing.JTextField();
         name = new javax.swing.JLabel();
-        surname3 = new javax.swing.JLabel();
-        surname_field3 = new javax.swing.JTextField();
-        sex3 = new javax.swing.JLabel();
-        sex_box3 = new javax.swing.JComboBox<>();
-        birthdate3 = new javax.swing.JLabel();
+        surname = new javax.swing.JLabel();
+        surname_field = new javax.swing.JTextField();
+        sex = new javax.swing.JLabel();
+        sex_box = new javax.swing.JComboBox<>();
+        birthdate = new javax.swing.JLabel();
         day = new javax.swing.JComboBox<>();
         month = new javax.swing.JComboBox<>();
         day_lab = new javax.swing.JLabel();
@@ -98,14 +99,14 @@ public class Display extends javax.swing.JFrame {
         year_lab = new javax.swing.JLabel();
         year = new javax.swing.JComboBox<>();
         name_lab = new javax.swing.JLabel();
-        name_field = new javax.swing.JTextField();
-        surname_field = new javax.swing.JTextField();
+        name_disp = new javax.swing.JTextField();
+        surname_disp = new javax.swing.JTextField();
         surname_lab = new javax.swing.JLabel();
         patient_cng = new javax.swing.JButton();
-        birth_field = new javax.swing.JTextField();
+        birth_disp = new javax.swing.JTextField();
         birthday_lab = new javax.swing.JLabel();
         sexlab = new javax.swing.JLabel();
-        sex_field = new javax.swing.JTextField();
+        sex_disp = new javax.swing.JTextField();
         heartrate_out = new javax.swing.JTextField();
         Heart_lab = new javax.swing.JLabel();
         pulse_lower = new javax.swing.JTextField();
@@ -172,38 +173,57 @@ public class Display extends javax.swing.JFrame {
         );
 
         Setlimitstartup.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        Setlimitstartup.setMinimumSize(new java.awt.Dimension(400, 350));
         Setlimitstartup.setResizable(false);
 
         upper_label.setText("Insert upper Pulse alarm Limit");
 
-        upper_hr.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
-        upper_hr.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        upper_hr.setText("180");
-        upper_hr.addActionListener(new java.awt.event.ActionListener() {
+        uplim_ini.setBackground(new java.awt.Color(250, 250, 250));
+        uplim_ini.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
+        uplim_ini.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        uplim_ini.setText("160");
+        uplim_ini.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                uplim_iniMouseClicked(evt);
+            }
+        });
+        uplim_ini.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                upper_hrActionPerformed(evt);
+                uplim_iniActionPerformed(evt);
             }
         });
 
-        spo2_value.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
-        spo2_value.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        spo2_value.setText("90");
-        spo2_value.addActionListener(new java.awt.event.ActionListener() {
+        spo2_ini.setEditable(false);
+        spo2_ini.setBackground(new java.awt.Color(250, 250, 250));
+        spo2_ini.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
+        spo2_ini.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        spo2_ini.setText("90");
+        spo2_ini.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                spo2_iniMouseClicked(evt);
+            }
+        });
+        spo2_ini.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                spo2_valueActionPerformed(evt);
+                spo2_iniActionPerformed(evt);
             }
         });
 
         jLabel2.setText("Insert SpO2 alarm Limit");
 
-        lower_hr.setBackground(new java.awt.Color(245, 245, 245));
-        lower_hr.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
-        lower_hr.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        lower_hr.setText("50");
-        lower_hr.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        lower_hr.addActionListener(new java.awt.event.ActionListener() {
+        lowlim_ini.setBackground(new java.awt.Color(250, 250, 250));
+        lowlim_ini.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
+        lowlim_ini.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lowlim_ini.setText("50");
+        lowlim_ini.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        lowlim_ini.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lowlim_iniMouseClicked(evt);
+            }
+        });
+        lowlim_ini.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lower_hrActionPerformed(evt);
+                lowlim_iniActionPerformed(evt);
             }
         });
 
@@ -228,59 +248,49 @@ public class Display extends javax.swing.JFrame {
         SetlimitstartupLayout.setHorizontalGroup(
             SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SetlimitstartupLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(spo2_value, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(SetlimitstartupLayout.createSequentialGroup()
-                            .addGap(27, 27, 27)
-                            .addComponent(jLabel2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lower_hr, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(SetlimitstartupLayout.createSequentialGroup()
-                            .addGap(20, 20, 20)
-                            .addComponent(lower_label2))))
+                .addContainerGap()
                 .addGroup(SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(SetlimitstartupLayout.createSequentialGroup()
-                        .addGap(78, 78, 78)
+                        .addGroup(SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(spo2_ini, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lowlim_ini, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lower_label2, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(18, 18, 18)
                         .addGroup(SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(upper_hr, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(SetlimitstartupLayout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addComponent(upper_label)))
-                        .addContainerGap(25, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SetlimitstartupLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(restoredefault, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(setlimits, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(54, 54, 54))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SetlimitstartupLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(upper_label)
+                                    .addComponent(uplim_ini, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(setlimits, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(restoredefault, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(SetlimitstartupLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         SetlimitstartupLayout.setVerticalGroup(
             SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SetlimitstartupLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(SetlimitstartupLayout.createSequentialGroup()
-                        .addComponent(upper_label)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(upper_hr, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(SetlimitstartupLayout.createSequentialGroup()
-                        .addComponent(lower_label2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lower_hr, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(33, 33, 33)
+                .addContainerGap()
+                .addGroup(SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lower_label2)
+                    .addComponent(upper_label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lowlim_ini, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(uplim_ini, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(SetlimitstartupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(spo2_value, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spo2_ini, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(SetlimitstartupLayout.createSequentialGroup()
                         .addComponent(setlimits)
-                        .addGap(37, 37, 37)
+                        .addGap(18, 18, 18)
                         .addComponent(restoredefault)
-                        .addGap(25, 25, 25)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                        .addGap(24, 24, 24)))
+                .addContainerGap())
         );
 
         LimitHR_lower.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -467,15 +477,15 @@ public class Display extends javax.swing.JFrame {
                 .addGap(25, 25, 25))
         );
 
-        cng_Patient.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        cng_Patient.setMinimumSize(new java.awt.Dimension(438, 375));
-        cng_Patient.setResizable(false);
-        cng_Patient.setType(java.awt.Window.Type.POPUP);
+        Patient_UI.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        Patient_UI.setMinimumSize(new java.awt.Dimension(438, 375));
+        Patient_UI.setResizable(false);
+        Patient_UI.setType(java.awt.Window.Type.POPUP);
 
-        savepatient3.setText("save");
-        savepatient3.addActionListener(new java.awt.event.ActionListener() {
+        savepatient.setText("save");
+        savepatient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                savepatient3ActionPerformed(evt);
+                savepatientActionPerformed(evt);
             }
         });
 
@@ -489,34 +499,34 @@ public class Display extends javax.swing.JFrame {
         Patient_data_heading3.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
         Patient_data_heading3.setText("Insert Patient data");
 
-        name_field3.setText("insert name");
-        name_field3.addMouseListener(new java.awt.event.MouseAdapter() {
+        name_field.setText("insert name");
+        name_field.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                name_field3MouseClicked(evt);
+                name_fieldMouseClicked(evt);
             }
         });
 
         name.setText("Patient name:");
 
-        surname3.setText("Patient surname:");
+        surname.setText("Patient surname:");
 
-        surname_field3.setText("instert surname");
-        surname_field3.addMouseListener(new java.awt.event.MouseAdapter() {
+        surname_field.setText("instert surname");
+        surname_field.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                surname_field3MouseClicked(evt);
+                surname_fieldMouseClicked(evt);
             }
         });
 
-        sex3.setText("Patient sex: ");
+        sex.setText("Patient sex: ");
 
-        sex_box3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "unknown", "male", "female" }));
-        sex_box3.addActionListener(new java.awt.event.ActionListener() {
+        sex_box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "unknown", "male", "female" }));
+        sex_box.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sex_box3ActionPerformed(evt);
+                sex_boxActionPerformed(evt);
             }
         });
 
-        birthdate3.setText("Patient birthdate:");
+        birthdate.setText("Patient birthdate:");
 
         day.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
 
@@ -530,80 +540,80 @@ public class Display extends javax.swing.JFrame {
 
         year.setModel(birthYear);
 
-        javax.swing.GroupLayout cng_PatientLayout = new javax.swing.GroupLayout(cng_Patient.getContentPane());
-        cng_Patient.getContentPane().setLayout(cng_PatientLayout);
-        cng_PatientLayout.setHorizontalGroup(
-            cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cng_PatientLayout.createSequentialGroup()
+        javax.swing.GroupLayout Patient_UILayout = new javax.swing.GroupLayout(Patient_UI.getContentPane());
+        Patient_UI.getContentPane().setLayout(Patient_UILayout);
+        Patient_UILayout.setHorizontalGroup(
+            Patient_UILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Patient_UILayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cng_PatientLayout.createSequentialGroup()
-                        .addGroup(cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(Patient_UILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Patient_UILayout.createSequentialGroup()
+                        .addGroup(Patient_UILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(name)
-                            .addComponent(surname3)
-                            .addComponent(sex3)
-                            .addComponent(birthdate3))
+                            .addComponent(surname)
+                            .addComponent(sex)
+                            .addComponent(birthdate))
                         .addGap(18, 18, 18)
-                        .addGroup(cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(name_field3, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(surname_field3)
-                            .addComponent(sex_box3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(cng_PatientLayout.createSequentialGroup()
-                                .addGroup(cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(cng_PatientLayout.createSequentialGroup()
+                        .addGroup(Patient_UILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(name_field, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(surname_field)
+                            .addComponent(sex_box, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(Patient_UILayout.createSequentialGroup()
+                                .addGroup(Patient_UILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(Patient_UILayout.createSequentialGroup()
                                         .addComponent(day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(cng_PatientLayout.createSequentialGroup()
+                                    .addGroup(Patient_UILayout.createSequentialGroup()
                                         .addComponent(day_lab)
                                         .addGap(36, 36, 36)
                                         .addComponent(month_lab)))
                                 .addGap(18, 18, 18)
-                                .addGroup(cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(Patient_UILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(year_lab)
                                     .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(cng_PatientLayout.createSequentialGroup()
-                                .addComponent(savepatient3, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(Patient_UILayout.createSequentialGroup()
+                                .addComponent(savepatient, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(cancel_patient, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(Patient_data_heading3))
                 .addContainerGap())
         );
-        cng_PatientLayout.setVerticalGroup(
-            cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cng_PatientLayout.createSequentialGroup()
+        Patient_UILayout.setVerticalGroup(
+            Patient_UILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Patient_UILayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Patient_data_heading3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(cng_PatientLayout.createSequentialGroup()
-                        .addComponent(name_field3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(Patient_UILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Patient_UILayout.createSequentialGroup()
+                        .addComponent(name_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(surname_field3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(surname_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(sex_box3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(sex_box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(15, 15, 15)
-                        .addGroup(cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(Patient_UILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(day_lab)
                             .addComponent(month_lab)
                             .addComponent(year_lab))
                         .addGap(3, 3, 3)
-                        .addGroup(cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(Patient_UILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(cng_PatientLayout.createSequentialGroup()
+                    .addGroup(Patient_UILayout.createSequentialGroup()
                         .addComponent(name)
                         .addGap(18, 18, 18)
-                        .addComponent(surname3)
+                        .addComponent(surname)
                         .addGap(18, 18, 18)
-                        .addComponent(sex3)
+                        .addComponent(sex)
                         .addGap(15, 15, 15)
-                        .addComponent(birthdate3)))
+                        .addComponent(birthdate)))
                 .addGap(18, 18, 18)
-                .addGroup(cng_PatientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(savepatient3)
+                .addGroup(Patient_UILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(savepatient)
                     .addComponent(cancel_patient))
                 .addGap(29, 29, 29))
         );
@@ -613,9 +623,10 @@ public class Display extends javax.swing.JFrame {
 
         name_lab.setText("Patient name:");
 
-        name_field.setEditable(false);
+        name_disp.setBackground(new java.awt.Color(245, 245, 245));
 
-        surname_field.setEditable(false);
+        surname_disp.setEditable(false);
+        surname_disp.setBackground(new java.awt.Color(245, 245, 245));
 
         surname_lab.setText("Patient surname:");
 
@@ -626,15 +637,18 @@ public class Display extends javax.swing.JFrame {
             }
         });
 
-        birth_field.setEditable(false);
+        birth_disp.setEditable(false);
+        birth_disp.setBackground(new java.awt.Color(245, 245, 245));
 
         birthday_lab.setText("Patient birthdate:");
 
         sexlab.setText("Patient sex: ");
 
-        sex_field.setEditable(false);
+        sex_disp.setEditable(false);
+        sex_disp.setBackground(new java.awt.Color(245, 245, 245));
 
         heartrate_out.setEditable(false);
+        heartrate_out.setBackground(new java.awt.Color(245, 245, 245));
         heartrate_out.setFont(new java.awt.Font("Arial", 1, 125)); // NOI18N
         heartrate_out.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
@@ -642,6 +656,7 @@ public class Display extends javax.swing.JFrame {
         Heart_lab.setText("Heart Rate");
 
         pulse_lower.setEditable(false);
+        pulse_lower.setBackground(new java.awt.Color(245, 245, 245));
         pulse_lower.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
         pulse_lower.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         pulse_lower.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -651,6 +666,7 @@ public class Display extends javax.swing.JFrame {
         });
 
         pulse_upper.setEditable(false);
+        pulse_upper.setBackground(new java.awt.Color(245, 245, 245));
         pulse_upper.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
         pulse_upper.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         pulse_upper.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -663,10 +679,12 @@ public class Display extends javax.swing.JFrame {
         SPO2_lab.setText("SpO2");
 
         spo2_out.setEditable(false);
+        spo2_out.setBackground(new java.awt.Color(245, 245, 245));
         spo2_out.setFont(new java.awt.Font("Arial", 1, 125)); // NOI18N
         spo2_out.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         spo2.setEditable(false);
+        spo2.setBackground(new java.awt.Color(245, 245, 245));
         spo2.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
         spo2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         spo2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -677,7 +695,8 @@ public class Display extends javax.swing.JFrame {
 
         spo2_lab.setText("SpO2 limit");
 
-        reset_limit.setText("reset limits");
+        reset_limit.setText("restore default");
+        reset_limit.setActionCommand("restore default");
         reset_limit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 reset_limitActionPerformed(evt);
@@ -698,9 +717,13 @@ public class Display extends javax.swing.JFrame {
 
         upper_limit.setText("HR upper limit");
 
+        alarm_img.setBackground(new java.awt.Color(245, 245, 245));
         alarm_img.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/alarm_on.png"))); // NOI18N
 
         age.setText("age");
+
+        age_field.setEditable(false);
+        age_field.setBackground(new java.awt.Color(245, 245, 245));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -713,16 +736,16 @@ public class Display extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(sexlab)
-                                    .addComponent(birthday_lab))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(birth_field, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
-                                    .addComponent(name_field)
-                                    .addComponent(sex_field)))
-                            .addComponent(name_lab))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(sexlab)
+                                            .addComponent(birthday_lab))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(birth_disp, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                                            .addComponent(name_disp)
+                                            .addComponent(sex_disp)))
+                                    .addComponent(name_lab))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(63, 63, 63)
@@ -731,28 +754,18 @@ public class Display extends javax.swing.JFrame {
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(spo2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
-                                                .addComponent(alarm_img, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(alarm_img, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(layout.createSequentialGroup()
-                                                .addGap(63, 63, 63)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(pulse_lower, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(lower_limit)))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addGap(22, 22, 22)
-                                                .addComponent(reset_limit, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(upper_limit)
-                                            .addComponent(pulse_upper, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(alarmbreak))))
-                                .addContainerGap())
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(patient_cng)
+                                                    .addComponent(lower_limit))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(upper_limit)
+                                                    .addComponent(pulse_upper, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(alarmbreak, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addComponent(surname_lab)
@@ -761,18 +774,19 @@ public class Display extends javax.swing.JFrame {
                                                 .addComponent(age)
                                                 .addGap(74, 74, 74)))
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(surname_field, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
-                                            .addComponent(age_field))))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(patient_cng, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(surname_disp, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                                            .addComponent(age_field)))))
                             .addComponent(Heart_lab)
                             .addComponent(SPO2_lab)
                             .addComponent(header_label)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(spo2_out, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
                                 .addComponent(heartrate_out, javax.swing.GroupLayout.Alignment.LEADING)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(reset_limit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(346, 346, 346))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -783,28 +797,28 @@ public class Display extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(name_lab)
                     .addComponent(surname_lab)
-                    .addComponent(surname_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(name_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(surname_disp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(name_disp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(birthday_lab)
-                    .addComponent(birth_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(birth_disp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(age)
                     .addComponent(age_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sexlab)
-                    .addComponent(sex_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sex_disp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(patient_cng))
-                .addGap(71, 71, 71)
+                .addGap(30, 30, 30)
+                .addComponent(reset_limit)
+                .addGap(18, 18, 18)
                 .addComponent(Heart_lab)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(heartrate_out, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(alarmbreak)
-                            .addComponent(reset_limit))
+                        .addComponent(alarmbreak)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lower_limit)
@@ -832,7 +846,7 @@ public class Display extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void yesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yesActionPerformed
-        updatelimit("50", "120", "90");
+        updatelimit("50", "160", "90");
         ResetLimits.setVisible(false);
     }//GEN-LAST:event_yesActionPerformed
 
@@ -840,8 +854,8 @@ public class Display extends javax.swing.JFrame {
         ResetLimits.setVisible(false);
     }//GEN-LAST:event_declineActionPerformed
 
-    private void upper_hrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_upper_hrActionPerformed
-        String upperfieldvalue = upper_hr.getText();
+    private void uplim_iniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uplim_iniActionPerformed
+        String upperfieldvalue = uplim_ini.getText();
         try {
             int lowerhr = Integer.parseInt( upperfieldvalue );
             if (lowerhr < 120 || lowerhr >= 300) {
@@ -852,10 +866,10 @@ public class Display extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(new JFrame(), "Eingegebener Wert ist keine gültige Zahl","Warnung",JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_upper_hrActionPerformed
+    }//GEN-LAST:event_uplim_iniActionPerformed
 
-    private void spo2_valueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_spo2_valueActionPerformed
-        String spo2_val = spo2_value.getText();
+    private void spo2_iniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_spo2_iniActionPerformed
+        String spo2_val = spo2_ini.getText();
         try {
             int spo2_int = Integer.parseInt( spo2_val );
             if (spo2_int < 70 || spo2_int >= 100) {
@@ -866,10 +880,10 @@ public class Display extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(new JFrame(), "Eingegebener Wert ist keine gültige Zahl","Warnung",JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_spo2_valueActionPerformed
+    }//GEN-LAST:event_spo2_iniActionPerformed
 
-    private void lower_hrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lower_hrActionPerformed
-        String lowerfiledvalue = lower_hr.getText();
+    private void lowlim_iniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lowlim_iniActionPerformed
+        String lowerfiledvalue = lowlim_ini.getText();
         try {
             int lowerhr = Integer.parseInt( lowerfiledvalue );
             if (lowerhr < 20 || lowerhr >= 120) {
@@ -880,16 +894,18 @@ public class Display extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(new JFrame(), "Eingegebener Wert ist keine gültige Zahl","Warnung",JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_lower_hrActionPerformed
+    }//GEN-LAST:event_lowlim_iniActionPerformed
 
     private void setlimitsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setlimitsActionPerformed
-        String lowerfiledvalue = lower_hr.getText();
-        String upperfield = upper_hr.getText();
-        String spo2 = spo2_value.getText();
+        String lowerfiledvalue = lowlim_ini.getText();
+        String upperfield = uplim_ini.getText();
+        String spo2 = spo2_ini.getText();
 
         boolean ch = check_init(lowerfiledvalue,upperfield,spo2);
         if (ch == true){
             updatelimit(lowerfiledvalue,upperfield,spo2);
+            display.Setlimitstartup.setVisible(false);
+            display.setVisible(true);
         }
         else{
             JOptionPane.showMessageDialog(new JFrame(), "Bitte gültige Werte eingeben","Warnung",JOptionPane.ERROR_MESSAGE);
@@ -897,9 +913,9 @@ public class Display extends javax.swing.JFrame {
     }//GEN-LAST:event_setlimitsActionPerformed
 
     private void restoredefaultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restoredefaultActionPerformed
-        lower_hr.setText("50");
-        upper_hr.setText("180");
-        spo2_value.setText("90");
+        lowlim_ini.setText("50");
+        uplim_ini.setText("160");
+        spo2_ini.setText("90");        
     }//GEN-LAST:event_restoredefaultActionPerformed
 
     private void lower_valueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lower_valueMouseClicked
@@ -966,10 +982,6 @@ public class Display extends javax.swing.JFrame {
         ResetLimits.setVisible(true);
     }//GEN-LAST:event_reset_limitActionPerformed
 
-    private void pulse_lowerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pulse_lowerMouseClicked
-        LimitHR_lower.setVisible(true);
-    }//GEN-LAST:event_pulse_lowerMouseClicked
-
     private void pulse_upperMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pulse_upperMouseClicked
         LimitHR_upper.setVisible(true);
     }//GEN-LAST:event_pulse_upperMouseClicked
@@ -979,45 +991,44 @@ public class Display extends javax.swing.JFrame {
     }//GEN-LAST:event_spo2MouseClicked
 
     private void patient_cngActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patient_cngActionPerformed
-        String pat_name = name_field.getText();
-        name_field3.setText(pat_name);
-        String pat_surname = surname_field.getText();
-        surname_field3.setText(pat_surname);
-        
-        String sex = sex_field.getText();
-        // Get Text of Birthdate
-        // seperate with. 
-        // set to combobox.
-        
-        //(String)sex_box3.SetSelectedItem(sex);
+        String pat_name = name_disp.getText();
+        name_field.setText(pat_name);
+        String pat_surname = surname_disp.getText();
+        surname_field.setText(pat_surname);
+        String sex = sex_disp.getText();
         String gday = (String)day.getSelectedItem();
         String gmonth = (String)month.getSelectedItem();
         String gyear = (String)year.getSelectedItem();
-        
-        
-        cng_Patient.setVisible(true);
+        display.setVisible(false);
+        Patient_UI.setVisible(true);
     }//GEN-LAST:event_patient_cngActionPerformed
 
-    private void sex_box3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sex_box3ActionPerformed
+    private void sex_boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sex_boxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_sex_box3ActionPerformed
+    }//GEN-LAST:event_sex_boxActionPerformed
 
-    private void surname_field3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_surname_field3MouseClicked
-        surname_field3.setText("");
-    }//GEN-LAST:event_surname_field3MouseClicked
+    private void surname_fieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_surname_fieldMouseClicked
+        surname_field.setText("");
+    }//GEN-LAST:event_surname_fieldMouseClicked
 
-    private void name_field3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_name_field3MouseClicked
-        name_field3.setText("");
-    }//GEN-LAST:event_name_field3MouseClicked
+    private void name_fieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_name_fieldMouseClicked
+        name_field.setText("");
+    }//GEN-LAST:event_name_fieldMouseClicked
 
     private void cancel_patientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel_patientActionPerformed
-        cng_Patient.setVisible(false);
+        // if patient is initial
+        if (patientinit == true){
+            display.Patient_UI.setVisible(false);
+            display.Setlimitstartup.setVisible(true);
+            updatepatient("X", "X", "X", "X", 0);
+            patientinit = false;
+        }
     }//GEN-LAST:event_cancel_patientActionPerformed
 
-    private void savepatient3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savepatient3ActionPerformed
-        String name = name_field3.getText();
-        String surname = surname_field3.getText();
-        String sex = (String)sex_box3.getSelectedItem();
+    private void savepatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savepatientActionPerformed
+        String name = name_field.getText();
+        String surname = surname_field.getText();
+        String sex = (String)sex_box.getSelectedItem();
         String gday = (String)day.getSelectedItem();
         String gmonth = (String)month.getSelectedItem();
         String gyear = (String)year.getSelectedItem();
@@ -1025,8 +1036,26 @@ public class Display extends javax.swing.JFrame {
         String birthdate = gday + "." + gmonth + "." + gyear;
         int age = pat.addpatient(name, surname, sex, birthdate);
         updatepatient(name, surname, sex, birthdate, age);
-        cng_Patient.setVisible(false);
-    }//GEN-LAST:event_savepatient3ActionPerformed
+        display.setVisible(true);
+        // if patient is initial
+        if (patientinit == true){
+            if (age <= 1){
+                display.updatelimit("120", "190","90");
+            }
+            else if (age > 1 && age <= 6){
+                display.updatelimit("90", "150","90");
+            }
+            else if (age > 6 && age <= 16){
+                display.updatelimit("70", "110","90");
+            }
+            else if (age > 16){
+                display.updatelimit("50", "100","90");
+            }
+            patientinit = false;
+        }
+        Patient_UI.setVisible(false);
+        display.setVisible(true);
+    }//GEN-LAST:event_savepatientActionPerformed
 
     private void alarmbreakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alarmbreakActionPerformed
        alarm_img.setIcon(new javax.swing.ImageIcon(getClass().getResource(imageList[1])));
@@ -1045,6 +1074,22 @@ public class Display extends javax.swing.JFrame {
             }
         },1000*60*5);    
     }//GEN-LAST:event_alarmbreakActionPerformed
+
+    private void lowlim_iniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lowlim_iniMouseClicked
+        lowlim_ini.setText("");
+    }//GEN-LAST:event_lowlim_iniMouseClicked
+
+    private void spo2_iniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spo2_iniMouseClicked
+        spo2_ini.setText("");
+    }//GEN-LAST:event_spo2_iniMouseClicked
+
+    private void uplim_iniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uplim_iniMouseClicked
+        uplim_ini.setText("");
+    }//GEN-LAST:event_uplim_iniMouseClicked
+
+    private void pulse_lowerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pulse_lowerMouseClicked
+        LimitHR_lower.setVisible(true);
+    }//GEN-LAST:event_pulse_lowerMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1073,13 +1118,12 @@ public class Display extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-        new Display().setVisible(true);        
+        display.Patient_UI.setVisible(true);
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {    
-                new Display().setVisible(true);
-                SensorControl.start(); 
+            public void run() {
+                SensorControl.start();
             }
         });
     }
@@ -1089,6 +1133,7 @@ public class Display extends javax.swing.JFrame {
     private javax.swing.JFrame LimitHR_lower;
     private javax.swing.JFrame LimitHR_upper;
     private javax.swing.JFrame LimitSPO2;
+    private javax.swing.JFrame Patient_UI;
     private javax.swing.JLabel Patient_data_heading3;
     private javax.swing.JFrame ResetLimits;
     private javax.swing.JLabel SPO2_lab;
@@ -1097,14 +1142,13 @@ public class Display extends javax.swing.JFrame {
     private javax.swing.JTextField age_field;
     private javax.swing.JLabel alarm_img;
     private javax.swing.JButton alarmbreak;
-    private javax.swing.JTextField birth_field;
-    private javax.swing.JLabel birthdate3;
+    private javax.swing.JTextField birth_disp;
+    private javax.swing.JLabel birthdate;
     private javax.swing.JLabel birthday_lab;
     private javax.swing.JButton cancel1;
     private javax.swing.JButton cancel2;
     private javax.swing.JButton cancel_lowerHR;
     private javax.swing.JButton cancel_patient;
-    private javax.swing.JFrame cng_Patient;
     private javax.swing.JComboBox<String> day;
     private javax.swing.JLabel day_lab;
     private javax.swing.JButton decline;
@@ -1113,16 +1157,16 @@ public class Display extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField lower_hr;
     private javax.swing.JLabel lower_label1;
     private javax.swing.JLabel lower_label2;
     private javax.swing.JLabel lower_limit;
     private javax.swing.JTextField lower_value;
+    private javax.swing.JTextField lowlim_ini;
     private javax.swing.JComboBox<String> month;
     private javax.swing.JLabel month_lab;
     private javax.swing.JLabel name;
+    private javax.swing.JTextField name_disp;
     private javax.swing.JTextField name_field;
-    private javax.swing.JTextField name_field3;
     private javax.swing.JLabel name_lab;
     private javax.swing.JButton patient_cng;
     private javax.swing.JTextField pulse_lower;
@@ -1132,22 +1176,22 @@ public class Display extends javax.swing.JFrame {
     private javax.swing.JButton return_lowerHR;
     private javax.swing.JButton return_spo2;
     private javax.swing.JButton return_upper;
-    private javax.swing.JButton savepatient3;
+    private javax.swing.JButton savepatient;
     private javax.swing.JButton setlimits;
-    private javax.swing.JLabel sex3;
-    private javax.swing.JComboBox<String> sex_box3;
-    private javax.swing.JTextField sex_field;
+    private javax.swing.JLabel sex;
+    private javax.swing.JComboBox<String> sex_box;
+    private javax.swing.JTextField sex_disp;
     private javax.swing.JLabel sexlab;
     private javax.swing.JTextField spo2;
+    private javax.swing.JTextField spo2_ini;
     private javax.swing.JLabel spo2_lab;
     private javax.swing.JTextField spo2_out;
     private javax.swing.JTextField spo2_val;
-    private javax.swing.JTextField spo2_value;
-    private javax.swing.JLabel surname3;
+    private javax.swing.JLabel surname;
+    private javax.swing.JTextField surname_disp;
     private javax.swing.JTextField surname_field;
-    private javax.swing.JTextField surname_field3;
     private javax.swing.JLabel surname_lab;
-    private javax.swing.JTextField upper_hr;
+    private javax.swing.JTextField uplim_ini;
     private javax.swing.JLabel upper_label;
     private javax.swing.JLabel upper_label1;
     private javax.swing.JLabel upper_limit;
@@ -1216,10 +1260,10 @@ public class Display extends javax.swing.JFrame {
         surveyspo2.updatespo2(spo2_val);
     }
     protected void updatepatient(String name, String surname, String sex, String birth, int age ){
-        name_field.setText(name);
-        surname_field.setText(surname);
-        sex_field.setText(sex);
-        birth_field.setText(birth);
+        name_disp.setText(name);
+        surname_disp.setText(surname);
+        sex_disp.setText(sex);
+        birth_disp.setText(birth);
         age_field.setText(Integer.toString(age));
     }
     protected void updatepulse (int currenthr){
@@ -1232,7 +1276,7 @@ public class Display extends javax.swing.JFrame {
     }
     
     //*************************** Check Block ********************************//    
-    protected boolean check_init(String uphr, String lowhr, String spo2){
+    protected boolean check_init(String lowhr, String uphr, String spo2){
         try {
             int lowerhr = Integer.parseInt( lowhr );
             

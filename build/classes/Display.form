@@ -76,84 +76,72 @@
     <Container class="javax.swing.JFrame" name="Setlimitstartup">
       <Properties>
         <Property name="defaultCloseOperation" type="int" value="2"/>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[400, 350]"/>
+        </Property>
         <Property name="resizable" type="boolean" value="false"/>
       </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                          <Component id="spo2_value" alignment="1" min="-2" pref="168" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="30" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                          <Component id="lower_hr" alignment="0" min="-2" pref="168" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="lower_label2" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="spo2_ini" alignment="1" min="-2" pref="168" max="-2" attributes="0"/>
+                              <Component id="lowlim_ini" alignment="1" min="-2" pref="168" max="-2" attributes="0"/>
+                              <Component id="lower_label2" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="upper_hr" alignment="0" min="-2" pref="168" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                                  <Component id="upper_label" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="upper_label" min="-2" max="-2" attributes="0"/>
+                                      <Component id="uplim_ini" min="-2" pref="168" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
+                              <Component id="setlimits" alignment="1" max="32767" attributes="0"/>
+                              <Component id="restoredefault" alignment="1" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="25" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="restoredefault" alignment="0" max="32767" attributes="0"/>
-                              <Component id="setlimits" alignment="0" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="upper_label" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="upper_hr" min="-2" pref="122" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="lower_label2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lower_hr" min="-2" pref="122" max="-2" attributes="0"/>
-                      </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lower_label2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="upper_label" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lowlim_ini" alignment="3" min="-2" pref="122" max="-2" attributes="0"/>
+                      <Component id="uplim_ini" alignment="3" min="-2" pref="122" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="spo2_value" alignment="1" min="-2" pref="122" max="-2" attributes="0"/>
+                      <Component id="spo2_ini" alignment="1" min="-2" pref="122" max="-2" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="setlimits" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="restoredefault" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="25" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -164,20 +152,28 @@
             <Property name="text" type="java.lang.String" value="Insert upper Pulse alarm Limit"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="upper_hr">
+        <Component class="javax.swing.JTextField" name="uplim_ini">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="fa" green="fa" red="fa" type="rgb"/>
+            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="48" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="180"/>
+            <Property name="text" type="java.lang.String" value="160"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="upper_hrActionPerformed"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="uplim_iniMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="uplim_iniActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="spo2_value">
+        <Component class="javax.swing.JTextField" name="spo2_ini">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="fa" green="fa" red="fa" type="rgb"/>
+            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="48" style="0"/>
             </Property>
@@ -185,7 +181,8 @@
             <Property name="text" type="java.lang.String" value="90"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="spo2_valueActionPerformed"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="spo2_iniMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="spo2_iniActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
@@ -193,10 +190,10 @@
             <Property name="text" type="java.lang.String" value="Insert SpO2 alarm Limit"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="lower_hr">
+        <Component class="javax.swing.JTextField" name="lowlim_ini">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f5" green="f5" red="f5" type="rgb"/>
+              <Color blue="fa" green="fa" red="fa" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="48" style="0"/>
@@ -208,7 +205,8 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lower_hrActionPerformed"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lowlim_iniMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lowlim_iniActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lower_label2">
@@ -491,7 +489,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JFrame" name="cng_Patient">
+    <Container class="javax.swing.JFrame" name="Patient_UI">
       <Properties>
         <Property name="defaultCloseOperation" type="int" value="2"/>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -512,15 +510,15 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="name" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="surname3" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="sex3" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="birthdate3" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="surname" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="sex" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="birthdate" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="name_field3" alignment="1" max="32767" attributes="0"/>
-                              <Component id="surname_field3" alignment="0" max="32767" attributes="0"/>
-                              <Component id="sex_box3" alignment="0" max="32767" attributes="0"/>
+                              <Component id="name_field" alignment="1" max="32767" attributes="0"/>
+                              <Component id="surname_field" alignment="0" max="32767" attributes="0"/>
+                              <Component id="sex_box" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
@@ -542,7 +540,7 @@
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="savepatient3" min="-2" pref="127" max="-2" attributes="0"/>
+                                  <Component id="savepatient" min="-2" pref="127" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="cancel_patient" min="-2" pref="127" max="-2" attributes="0"/>
                               </Group>
@@ -562,11 +560,11 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="name_field3" min="-2" max="-2" attributes="0"/>
+                          <Component id="name_field" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="surname_field3" min="-2" max="-2" attributes="0"/>
+                          <Component id="surname_field" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="sex_box3" min="-2" max="-2" attributes="0"/>
+                          <Component id="sex_box" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="day_lab" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -583,16 +581,16 @@
                       <Group type="102" attributes="0">
                           <Component id="name" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="surname3" min="-2" max="-2" attributes="0"/>
+                          <Component id="surname" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="sex3" min="-2" max="-2" attributes="0"/>
+                          <Component id="sex" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                          <Component id="birthdate3" min="-2" max="-2" attributes="0"/>
+                          <Component id="birthdate" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="savepatient3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="savepatient" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cancel_patient" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
@@ -601,12 +599,12 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="savepatient3">
+        <Component class="javax.swing.JButton" name="savepatient">
           <Properties>
             <Property name="text" type="java.lang.String" value="save"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="savepatient3ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="savepatientActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="cancel_patient">
@@ -625,12 +623,12 @@
             <Property name="text" type="java.lang.String" value="Insert Patient data"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="name_field3">
+        <Component class="javax.swing.JTextField" name="name_field">
           <Properties>
             <Property name="text" type="java.lang.String" value="insert name"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="name_field3MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="name_fieldMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="name">
@@ -638,25 +636,25 @@
             <Property name="text" type="java.lang.String" value="Patient name:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="surname3">
+        <Component class="javax.swing.JLabel" name="surname">
           <Properties>
             <Property name="text" type="java.lang.String" value="Patient surname:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="surname_field3">
+        <Component class="javax.swing.JTextField" name="surname_field">
           <Properties>
             <Property name="text" type="java.lang.String" value="instert surname"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="surname_field3MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="surname_fieldMouseClicked"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="sex3">
+        <Component class="javax.swing.JLabel" name="sex">
           <Properties>
             <Property name="text" type="java.lang.String" value="Patient sex: "/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="sex_box3">
+        <Component class="javax.swing.JComboBox" name="sex_box">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="3">
@@ -667,13 +665,13 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sex_box3ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sex_boxActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JLabel" name="birthdate3">
+        <Component class="javax.swing.JLabel" name="birthdate">
           <Properties>
             <Property name="text" type="java.lang.String" value="Patient birthdate:"/>
           </Properties>
@@ -795,29 +793,29 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="sexlab" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="birthday_lab" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="birth_field" pref="121" max="32767" attributes="0"/>
-                                  <Component id="name_field" max="32767" attributes="0"/>
-                                  <Component id="sex_field" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Component id="name_lab" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="sexlab" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="birthday_lab" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="birth_disp" pref="121" max="32767" attributes="0"/>
+                                          <Component id="name_disp" max="32767" attributes="0"/>
+                                          <Component id="sex_disp" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Component id="name_lab" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="63" pref="63" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="spo2_lab" min="-2" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
@@ -825,37 +823,22 @@
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Component id="alarm_img" min="-2" pref="90" max="-2" attributes="0"/>
                                           </Group>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <EmptySpace min="63" pref="63" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="pulse_lower" min="-2" pref="90" max="-2" attributes="0"/>
                                                   <Component id="lower_limit" min="-2" max="-2" attributes="0"/>
                                               </Group>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="upper_limit" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="pulse_upper" min="-2" pref="90" max="-2" attributes="0"/>
+                                              </Group>
                                           </Group>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                                              <Component id="reset_limit" min="-2" pref="91" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="upper_limit" min="-2" max="-2" attributes="0"/>
-                                          <Component id="pulse_upper" min="-2" pref="90" max="-2" attributes="0"/>
-                                          <Component id="alarmbreak" min="-2" max="-2" attributes="0"/>
+                                          <Component id="alarmbreak" alignment="0" min="-2" pref="199" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                              </Group>
-                              <EmptySpace min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="patient_cng" min="-2" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="1" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="1" attributes="0">
                                               <Component id="surname_lab" min="-2" max="-2" attributes="0"/>
@@ -867,17 +850,13 @@
                                           </Group>
                                       </Group>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="surname_field" pref="116" max="32767" attributes="0"/>
+                                          <Component id="patient_cng" max="32767" attributes="0"/>
+                                          <Component id="surname_disp" pref="116" max="32767" attributes="0"/>
                                           <Component id="age_field" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                      </Group>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="Heart_lab" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="SPO2_lab" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="header_label" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -887,6 +866,10 @@
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="reset_limit" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="346" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -901,32 +884,31 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="name_lab" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="surname_lab" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="surname_field" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="name_field" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="surname_disp" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="name_disp" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="birthday_lab" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="birth_field" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="birth_disp" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="age" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="age_field" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="sexlab" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="sex_field" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="sex_disp" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="patient_cng" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+              <Component id="reset_limit" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="Heart_lab" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="heartrate_out" alignment="1" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="alarmbreak" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="reset_limit" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="alarmbreak" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lower_limit" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -964,14 +946,19 @@
         <Property name="text" type="java.lang.String" value="Patient name:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="name_field">
+    <Component class="javax.swing.JTextField" name="name_disp">
       <Properties>
-        <Property name="editable" type="boolean" value="false"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="f5" green="f5" red="f5" type="rgb"/>
+        </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="surname_field">
+    <Component class="javax.swing.JTextField" name="surname_disp">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="f5" green="f5" red="f5" type="rgb"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="surname_lab">
@@ -987,9 +974,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="patient_cngActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="birth_field">
+    <Component class="javax.swing.JTextField" name="birth_disp">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="f5" green="f5" red="f5" type="rgb"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="birthday_lab">
@@ -1002,14 +992,20 @@
         <Property name="text" type="java.lang.String" value="Patient sex: "/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="sex_field">
+    <Component class="javax.swing.JTextField" name="sex_disp">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="f5" green="f5" red="f5" type="rgb"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="heartrate_out">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="f5" green="f5" red="f5" type="rgb"/>
+        </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="125" style="1"/>
         </Property>
@@ -1027,6 +1023,9 @@
     <Component class="javax.swing.JTextField" name="pulse_lower">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="f5" green="f5" red="f5" type="rgb"/>
+        </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="48" style="0"/>
         </Property>
@@ -1039,6 +1038,9 @@
     <Component class="javax.swing.JTextField" name="pulse_upper">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="f5" green="f5" red="f5" type="rgb"/>
+        </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="48" style="0"/>
         </Property>
@@ -1059,6 +1061,9 @@
     <Component class="javax.swing.JTextField" name="spo2_out">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="f5" green="f5" red="f5" type="rgb"/>
+        </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="125" style="1"/>
         </Property>
@@ -1068,6 +1073,9 @@
     <Component class="javax.swing.JTextField" name="spo2">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="f5" green="f5" red="f5" type="rgb"/>
+        </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="48" style="0"/>
         </Property>
@@ -1084,7 +1092,8 @@
     </Component>
     <Component class="javax.swing.JButton" name="reset_limit">
       <Properties>
-        <Property name="text" type="java.lang.String" value="reset limits"/>
+        <Property name="text" type="java.lang.String" value="restore default"/>
+        <Property name="actionCommand" type="java.lang.String" value="restore default"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reset_limitActionPerformed"/>
@@ -1118,6 +1127,9 @@
     </Component>
     <Component class="javax.swing.JLabel" name="alarm_img">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="f5" green="f5" red="f5" type="rgb"/>
+        </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/img/alarm_on.png"/>
         </Property>
@@ -1129,6 +1141,12 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="age_field">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="f5" green="f5" red="f5" type="rgb"/>
+        </Property>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

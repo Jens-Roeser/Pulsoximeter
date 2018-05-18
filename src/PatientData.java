@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -70,21 +71,7 @@ public class PatientData {
         else if (month < 0){
             age = (Integer.parseInt(act[2]) - Integer.parseInt(birth[2]) - 1);
         }
-        String dir = System.getProperty("user.dir");
-        String path = dir + "blah";
-        File f = new File((dir + "blah"));
         
-        // Stream to file 
-        String fileName = "patientdata.txt";
-        try {
-            PrintWriter outputStream = new PrintWriter(fileName);
-            outputStream.println();
-            outputStream.close();
-            //System.out.println();
-            
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(PatientData.class.getName()).log(Level.SEVERE, null, ex);
-        }
        try{    
             //Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:derby://localhost:1527/Patient", "Menodar", "Student311");
