@@ -13,19 +13,23 @@ import javax.swing.JOptionPane;
  */
 class Displayalert {
     
+    Display disp = new Display();
+    
     Displayalert(){
         
     }
     
     public void spo2alert(){
-            JOptionPane.showMessageDialog(null, "spo2 Wert zu niedrig", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+        disp.alertspo2();
     }
     
     public void upper_hralarm(){
-            JOptionPane.showMessageDialog(null, "Puls zu hoch", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+        boolean up = true;
+        disp.alerthr(up);
     }
     
     public void lower_hralarm(){
-            JOptionPane.showMessageDialog(null, "Puls zu niedrig", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+        boolean up = false;
+        disp.alerthr(up);
     }  
 }
