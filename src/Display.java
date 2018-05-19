@@ -19,19 +19,23 @@ import javax.swing.ComboBoxModel;
  * @author Jens
  */
 public class Display extends javax.swing.JFrame {
-
+	// Instances off all classes
     private SensorControl sensor;
     private HRSurveillance surveyhr;
     private SPO2Surveillance surveyspo2;
     private PatientData pat = new PatientData();
-    private static Display display = new Display();
+    protected static Display display = new Display();
+    
+// Image for alert break needed
     private static String[] imageList =  {  "/img/alarm_on.png" , "/img/alarm_off.png"};
     private Timer timer = new Timer("TaskName");
     private int MINUTES = 5;
-    private ComboBoxModel <String> birthYear; //currentYear is an int variable
-    private boolean disable = false;
     
-    // state patient
+    // Birthyear for Combobox
+    private ComboBoxModel <String> birthYear; //currentYear is an int variable
+    
+// states 
+    private boolean disable = false;
     // patientinit == 1: initial Patient
     // patientinit == 0: patient Change
     private boolean patientinit = true;
@@ -855,290 +859,13 @@ public class Display extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void yesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yesActionPerformed
-        enable_all();
-        updatelimit("50", "160", "90");
-        ResetLimits.setVisible(false);
-    }//GEN-LAST:event_yesActionPerformed
-
-    private void declineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_declineActionPerformed
-        enable_all();
-        ResetLimits.setVisible(false);
-    }//GEN-LAST:event_declineActionPerformed
-
-    private void uplim_iniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uplim_iniActionPerformed
-        String upperfieldvalue = uplim_ini.getText();
-        try {
-            int lowerhr = Integer.parseInt( upperfieldvalue );
-            if (lowerhr < 120 || lowerhr >= 300) {
-                JOptionPane.showMessageDialog(new JFrame(), "Nur Werte zwischen 70 und 100 sind gültig","Warnung",JOptionPane.ERROR_MESSAGE);
-            }
-        }
-        catch( Exception e )
-        {
-            JOptionPane.showMessageDialog(new JFrame(), "Eingegebener Wert ist keine gültige Zahl","Warnung",JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_uplim_iniActionPerformed
-
-    private void spo2_iniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_spo2_iniActionPerformed
-        String spo2_val = spo2_ini.getText();
-        try {
-            int spo2_int = Integer.parseInt( spo2_val );
-            if (spo2_int < 70 || spo2_int >= 100) {
-                JOptionPane.showMessageDialog(new JFrame(), "Nur Werte zwischen 70 und 100 sind gültig","Warnung",JOptionPane.ERROR_MESSAGE);
-            }
-        }
-        catch( Exception e )
-        {
-            JOptionPane.showMessageDialog(new JFrame(), "Eingegebener Wert ist keine gültige Zahl","Warnung",JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_spo2_iniActionPerformed
-
-    private void lowlim_iniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lowlim_iniActionPerformed
-        String lowerfiledvalue = lowlim_ini.getText();
-        try {
-            int lowerhr = Integer.parseInt( lowerfiledvalue );
-            if (lowerhr < 20 || lowerhr >= 120) {
-                JOptionPane.showMessageDialog(new JFrame(), "Nur Werte zwischen 70 und 100 sind gültig","Warnung",JOptionPane.ERROR_MESSAGE);
-            }
-        }
-        catch( Exception e )
-        {
-            JOptionPane.showMessageDialog(new JFrame(), "Eingegebener Wert ist keine gültige Zahl","Warnung",JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_lowlim_iniActionPerformed
-
-    private void setlimitsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setlimitsActionPerformed
-        String lowerfiledvalue = lowlim_ini.getText();
-        String upperfield = uplim_ini.getText();
-        String spo2 = spo2_ini.getText();
-
-        boolean ch = check_init(lowerfiledvalue,upperfield,spo2);
-        if (ch == true){
-            updatelimit(lowerfiledvalue,upperfield,spo2);
-            display.Setlimitstartup.setVisible(false);
-            display.setVisible(true);
-        }
-        else{
-            JOptionPane.showMessageDialog(new JFrame(), "Bitte gültige Werte eingeben","Warnung",JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_setlimitsActionPerformed
-
-    private void restoredefaultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restoredefaultActionPerformed
-        lowlim_ini.setText("50");
-        uplim_ini.setText("160");
-        spo2_ini.setText("90");        
-    }//GEN-LAST:event_restoredefaultActionPerformed
-
-    private void lower_valueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lower_valueMouseClicked
-        lower_value.setText("");
-    }//GEN-LAST:event_lower_valueMouseClicked
-
-    private void return_lowerHRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_return_lowerHRActionPerformed
-        enable_all();
-        String lowerfiledvalue = lower_value.getText();
-        boolean ch = checklowhr(lowerfiledvalue);
-        if (ch == true){
-        updatepulse_lower(lowerfiledvalue);
-        LimitHR_lower.setVisible(false);
-        }
-        else {
-            JOptionPane.showMessageDialog(new JFrame(), "Eingegebene Werte überprüfen","Warnung",JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_return_lowerHRActionPerformed
-
-    private void cancel_lowerHRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel_lowerHRActionPerformed
-        enable_all();
-        LimitHR_lower.setVisible(false);
-    }//GEN-LAST:event_cancel_lowerHRActionPerformed
-
-    private void return_upperActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_return_upperActionPerformed
-        enable_all();
-        String up_value = upper_value.getText();
-        boolean ch = checkuphr(up_value);
-        if (ch == true){
-        updatepulse_upper( up_value);
-        LimitHR_upper.setVisible(false);
-        }
-        else {
-            JOptionPane.showMessageDialog(new JFrame(), "Eingegebene Werte überprüfen","Warnung",JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_return_upperActionPerformed
-
-    private void cancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel1ActionPerformed
-        enable_all();
-        LimitHR_upper.setVisible(false);
-    }//GEN-LAST:event_cancel1ActionPerformed
-
-    private void upper_valueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_upper_valueMouseClicked
-        upper_value.setText("");
-    }//GEN-LAST:event_upper_valueMouseClicked
-
-    private void spo2_valMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spo2_valMouseClicked
-        spo2_val.setText("");
-    }//GEN-LAST:event_spo2_valMouseClicked
-
-    private void return_spo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_return_spo2ActionPerformed
-        enable_all();
-        String spo2 = spo2_val.getText();
-        boolean ch = checkspo2(spo2);
-        if (ch == true){
-        updatespo2( spo2 );
-        LimitSPO2.setVisible(false);
-        }
-        else {
-            JOptionPane.showMessageDialog(new JFrame(), "Eingegebene Werte überprüfen","Warnung",JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_return_spo2ActionPerformed
-
-    private void cancel2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel2ActionPerformed
-        enable_all();
-        LimitSPO2.setVisible(false);
-    }//GEN-LAST:event_cancel2ActionPerformed
-
-    private void reset_limitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reset_limitActionPerformed
-        disable_all();
-        ResetLimits.setVisible(true);
-    }//GEN-LAST:event_reset_limitActionPerformed
-
-    private void pulse_upperMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pulse_upperMouseClicked
-        if (disable == false){
-            disable_all(); 
-            String lower = pulse_upper.getText();
-            upper_value.setText(lower);
-            LimitHR_upper.setVisible(true);
-        }
-    }//GEN-LAST:event_pulse_upperMouseClicked
-
-    private void spo2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spo2MouseClicked
-        if (disable == false){
-            disable_all();        
-            String lower = spo2.getText();
-            spo2_val.setText(lower); 
-            LimitSPO2.setVisible(true);
-        }
-    }//GEN-LAST:event_spo2MouseClicked
-
-    private void patient_cngActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patient_cngActionPerformed
-        updatepulse(200);
-        updatespo2(50);
-        disable_all();
-        String pat_name = name_disp.getText();
-        name_field.setText(pat_name);
-        String pat_surname = surname_disp.getText();
-        surname_field.setText(pat_surname);
-        String sex = sex_disp.getText();
-        String gday = (String)day.getSelectedItem();
-        String gmonth = (String)month.getSelectedItem();
-        String gyear = (String)year.getSelectedItem();
-        Patient_UI.setVisible(true);
-    }//GEN-LAST:event_patient_cngActionPerformed
-
-    private void sex_boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sex_boxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_sex_boxActionPerformed
-
-    private void surname_fieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_surname_fieldMouseClicked
-        surname_field.setText("");
-    }//GEN-LAST:event_surname_fieldMouseClicked
-
-    private void name_fieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_name_fieldMouseClicked
-        name_field.setText("");
-    }//GEN-LAST:event_name_fieldMouseClicked
-
-    private void cancel_patientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel_patientActionPerformed
-        // if patient is initial
-        if (patientinit == true){ 
-            display.Patient_UI.setVisible(false);
-            display.Setlimitstartup.setVisible(true);
-            updatepatient("X", "X", "X", "X", 0);
-            patientinit = false;
-        }
-        else{
-            Patient_UI.setVisible(false);
-            display.setVisible(true);
-        }
-        enable_all();
-    }//GEN-LAST:event_cancel_patientActionPerformed
-
-    private void savepatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savepatientActionPerformed
-        
-        String name = name_field.getText();
-        String surname = surname_field.getText();
-        String sex = (String)sex_box.getSelectedItem();
-        String gday = (String)day.getSelectedItem();
-        String gmonth = (String)month.getSelectedItem();
-        String gyear = (String)year.getSelectedItem();
-
-        String birthdate = gday + "." + gmonth + "." + gyear;
-        int age = pat.addpatient(name, surname, sex, birthdate);
-        updatepatient(name, surname, sex, birthdate, age);
-        display.setVisible(true);
-        // if patient is initial
-        if (patientinit == true){
-            if (age <= 1){
-                display.updatelimit("120", "190","90");
-            }
-            else if (age > 1 && age <= 6){
-                display.updatelimit("90", "150","90");
-            }
-            else if (age > 6 && age <= 16){
-                display.updatelimit("70", "110","90");
-            }
-            else if (age > 16){
-                display.updatelimit("50", "100","90");
-            }
-            patientinit = false;
-        }
-        enable_all();
-        Patient_UI.setVisible(false);
-    }//GEN-LAST:event_savepatientActionPerformed
-
-    private void alarmbreakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alarmbreakActionPerformed
-       alarm_img.setIcon(new javax.swing.ImageIcon(getClass().getResource(imageList[1])));
-       alarmbreak.setEnabled(false);
-       surveyhr.alertbreak();
-       surveyspo2.alertbreak();
-       updatepulse(200);
-       updatespo2(50);
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() { // Function runs every 5 MINUTES minutes.
-                alarm_img.setIcon(new javax.swing.ImageIcon(getClass().getResource(imageList[0])));
-                alarmbreak.setEnabled(true);
-                surveyhr.alertbreak();
-                surveyspo2.alertbreak();
-            }
-        },1000*60*5);    
-    }//GEN-LAST:event_alarmbreakActionPerformed
-
-    private void lowlim_iniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lowlim_iniMouseClicked
-        lowlim_ini.setText("");
-    }//GEN-LAST:event_lowlim_iniMouseClicked
-
-    private void spo2_iniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spo2_iniMouseClicked
-        spo2_ini.setText("");
-    }//GEN-LAST:event_spo2_iniMouseClicked
-
-    private void uplim_iniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uplim_iniMouseClicked
-        uplim_ini.setText("");
-    }//GEN-LAST:event_uplim_iniMouseClicked
-
-    private void pulse_lowerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pulse_lowerMouseClicked
-        if (disable == false){
-            disable_all();
-            String lower = pulse_lower.getText();
-            lower_value.setText(lower);
-            LimitHR_lower.setVisible(true);
-        }
-    }//GEN-LAST:event_pulse_lowerMouseClicked
-
-    /**
+    
+	//-----------------------------------Main Function --------------------//
+	/**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+		/* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -1168,10 +895,11 @@ public class Display extends javax.swing.JFrame {
             public void run() {
                 SensorControl.start();
             }
-        });
-    }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+        });	
+	}
+			
+//------------------------------- Java GUI properties declaration-------------------------------------//
+	 // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField HR_alert;
     private javax.swing.JLabel Heart_lab;
     private javax.swing.JFrame LimitHR_lower;
@@ -1245,32 +973,327 @@ public class Display extends javax.swing.JFrame {
     private javax.swing.JLabel year_lab;
     private javax.swing.JButton yes;
     // End of variables declaration//GEN-END:variables
-    
-    //*********************** general Properties *****************************//
-    
-     private void initCombobox() {
-    int inc = 1900;
-    int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-    int dif = currentYear-inc;
-    String[] years = new String[dif + 1];
+
+	
+//--------------------------------------------- Patient Functions --------------------------------------------------------//
+	private void sex_boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sex_boxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sex_boxActionPerformed
+
+    private void surname_fieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_surname_fieldMouseClicked
+        surname_field.setText("");
+    }//GEN-LAST:event_surname_fieldMouseClicked
+
+    private void name_fieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_name_fieldMouseClicked
+        name_field.setText("");
+    }//GEN-LAST:event_name_fieldMouseClicked
+	 
+	private void savepatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savepatientActionPerformed
         
-    for(int i = 0;i < dif +1;i++){
-        years [i] = Integer.toString(inc);
-        inc++;
-    }
+        String name = name_field.getText();
+        String surname = surname_field.getText();
+        String sex = (String)sex_box.getSelectedItem();
+        String gday = (String)day.getSelectedItem();
+        String gmonth = (String)month.getSelectedItem();
+        String gyear = (String)year.getSelectedItem();
+
+        String birthdate = gday + "." + gmonth + "." + gyear;
+        int age = pat.addpatient(name, surname, sex, birthdate);
+        updatepatient(name, surname, sex, birthdate, age);
+        display.setVisible(true);
+        // if patient is initial
+        if (patientinit == true){
+            if (age <= 1){
+                display.updatelimit("120", "190","90");
+            }
+            else if (age > 1 && age <= 6){
+                display.updatelimit("90", "150","90");
+            }
+            else if (age > 6 && age <= 16){
+                display.updatelimit("70", "110","90");
+            }
+            else if (age > 16){
+                display.updatelimit("50", "100","90");
+            }
+            patientinit = false;
+        }
+        enable_all();
+        Patient_UI.setVisible(false);
+    }//GEN-LAST:event_savepatientActionPerformed
+	
+	private void cancel_patientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel_patientActionPerformed
+        // if patient is initial
+        if (patientinit == true){ 
+            display.Patient_UI.setVisible(false);
+            display.Setlimitstartup.setVisible(true);
+            updatepatient("X", "X", "X", "X", 0);
+            patientinit = false;
+        }
+        else{
+            Patient_UI.setVisible(false);
+            display.setVisible(true);
+        }
+        enable_all();
+    }//GEN-LAST:event_cancel_patientActionPerformed
+	
+	private void patient_cngActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patient_cngActionPerformed
+        updatepulse(200);
+        updatespo2(50);
+        disable_all();
+        String pat_name = name_disp.getText();
+        name_field.setText(pat_name);
+        String pat_surname = surname_disp.getText();
+        surname_field.setText(pat_surname);
+        String sex = sex_disp.getText();
+        String gday = (String)day.getSelectedItem();
+        String gmonth = (String)month.getSelectedItem();
+        String gyear = (String)year.getSelectedItem();
+        Patient_UI.setVisible(true);
+    }//GEN-LAST:event_patient_cngActionPerformed
+	
+//---------------------------------------------- Initial Limits ----------------------------------------------------------//
+	// TODO: cheks in extra Methode aufrufen
+	private void lowlim_iniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lowlim_iniActionPerformed
+        String lowerfiledvalue = lowlim_ini.getText();
+        try {
+            int lowerhr = Integer.parseInt( lowerfiledvalue );
+            if (lowerhr < 20 || lowerhr >= 120) {
+                JOptionPane.showMessageDialog(new JFrame(), "Nur Werte zwischen 70 und 100 sind gültig","Warnung",JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        catch( Exception e )
+        {
+            JOptionPane.showMessageDialog(new JFrame(), "Eingegebener Wert ist keine gültige Zahl","Warnung",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_lowlim_iniActionPerformed
+	
+	private void uplim_iniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uplim_iniActionPerformed
+        String upperfieldvalue = uplim_ini.getText();
+        try {
+            int lowerhr = Integer.parseInt( upperfieldvalue );
+            if (lowerhr < 120 || lowerhr >= 300) {
+                JOptionPane.showMessageDialog(new JFrame(), "Nur Werte zwischen 70 und 100 sind gültig","Warnung",JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        catch( Exception e )
+        {
+            JOptionPane.showMessageDialog(new JFrame(), "Eingegebener Wert ist keine gültige Zahl","Warnung",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_uplim_iniActionPerformed
+	
+	private void spo2_iniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_spo2_iniActionPerformed
+        String spo2_val = spo2_ini.getText();
+        try {
+            int spo2_int = Integer.parseInt( spo2_val );
+            if (spo2_int < 70 || spo2_int >= 100) {
+                JOptionPane.showMessageDialog(new JFrame(), "Nur Werte zwischen 70 und 100 sind gültig","Warnung",JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        catch( Exception e )
+        {
+            JOptionPane.showMessageDialog(new JFrame(), "Eingegebener Wert ist keine gültige Zahl","Warnung",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_spo2_iniActionPerformed
+	
+    private void restoredefaultActionPerformed(java.awt.event.ActionEvent evt) {
+		// restore default is only text output here
+        lowlim_ini.setText("50");
+        uplim_ini.setText("160");
+        spo2_ini.setText("90");        
+    }    
+	private void setlimitsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setlimitsActionPerformed
+        String lowerfiledvalue = lowlim_ini.getText();
+        String upperfield = uplim_ini.getText();
+        String spo2 = spo2_ini.getText();
+
+        boolean ch = check_init(lowerfiledvalue,upperfield,spo2);
+        if (ch == true){
+            updatelimit(lowerfiledvalue,upperfield,spo2);
+            display.Setlimitstartup.setVisible(false);
+            display.setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(new JFrame(), "Bitte gültige Werte eingeben","Warnung",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_setlimitsActionPerformed
+    	
+	
+//--------------------------------------------- Reset Limit functions ----------------------------------------------------//
+    private void reset_limitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reset_limitActionPerformed
+        disable_all();
+        ResetLimits.setVisible(true);
+    }//GEN-LAST:event_reset_limitActionPerformed
+	
+	private void yesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yesActionPerformed
+        enable_all();
+        updatelimit("50", "160", "90");
+        ResetLimits.setVisible(false);
+    }//GEN-LAST:event_yesActionPerformed
+	
+    private void declineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_declineActionPerformed
+        enable_all();
+        ResetLimits.setVisible(false);
+    }//GEN-LAST:event_declineActionPerformed
+
+
+	
+//----------------------------------------------- Set Limits ------------------------------------------------------------//
+	// lower
+	private void pulse_lowerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pulse_lowerMouseClicked
+        if (disable == false){
+            disable_all();
+            String lower = pulse_lower.getText();
+            lower_value.setText(lower);
+            LimitHR_lower.setVisible(true);
+        }
+    }//GEN-LAST:event_pulse_lowerMouseClicked
+	
+	private void lower_valueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lower_valueMouseClicked
+        lower_value.setText("");
+    }//GEN-LAST:event_lower_valueMouseClicked
+	
+	private void return_lowerHRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_return_lowerHRActionPerformed
+        enable_all();
+        String lowerfiledvalue = lower_value.getText();
+        boolean ch = checklowhr(lowerfiledvalue);
+        if (ch == true){
+        updatepulse_lower(lowerfiledvalue);
+        LimitHR_lower.setVisible(false);
+        }
+        else {
+            JOptionPane.showMessageDialog(new JFrame(), "Eingegebene Werte überprüfen","Warnung",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_return_lowerHRActionPerformed
+
+    private void cancel_lowerHRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel_lowerHRActionPerformed
+        enable_all();
+        LimitHR_lower.setVisible(false);
+    }//GEN-LAST:event_cancel_lowerHRActionPerformed
+	
+	// upper
+    private void pulse_upperMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pulse_upperMouseClicked
+        if (disable == false){
+            disable_all(); 
+            String lower = pulse_upper.getText();
+            upper_value.setText(lower);
+            LimitHR_upper.setVisible(true);
+        }
+    }//GEN-LAST:event_pulse_upperMouseClicked
+	
+	private void upper_valueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_upper_valueMouseClicked
+        upper_value.setText("");
+    }//GEN-LAST:event_upper_valueMouseClicked
+	
+	private void return_upperActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_return_upperActionPerformed
+        enable_all();
+        String up_value = upper_value.getText();
+        boolean ch = checkuphr(up_value);
+        if (ch == true){
+        updatepulse_upper( up_value);
+        LimitHR_upper.setVisible(false);
+        }
+        else {
+            JOptionPane.showMessageDialog(new JFrame(), "Eingegebene Werte überprüfen","Warnung",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_return_upperActionPerformed
+
+    private void cancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel1ActionPerformed
+        enable_all();
+        LimitHR_upper.setVisible(false);
+    }//GEN-LAST:event_cancel1ActionPerformed
+	
+	// spo2
+    private void spo2_valMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spo2_valMouseClicked
+        spo2_val.setText("");
+    }//GEN-LAST:event_spo2_valMouseClicked
+	
+	private void return_spo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_return_spo2ActionPerformed
+        enable_all();
+        String spo2 = spo2_val.getText();
+        boolean ch = checkspo2(spo2);
+        if (ch == true){
+        updatespo2( spo2 );
+        LimitSPO2.setVisible(false);
+        }
+        else {
+            JOptionPane.showMessageDialog(new JFrame(), "Eingegebene Werte überprüfen","Warnung",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_return_spo2ActionPerformed
+
+    private void cancel2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel2ActionPerformed
+        enable_all();
+        LimitSPO2.setVisible(false);
+    }//GEN-LAST:event_cancel2ActionPerformed
+	
+	private void spo2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spo2MouseClicked
+        if (disable == false){
+            disable_all();        
+            String lower = spo2.getText();
+            spo2_val.setText(lower); 
+            LimitSPO2.setVisible(true);
+        }
+    }//GEN-LAST:event_spo2MouseClicked
+
+	
+//------------------------------------------------------- Alert functions ------------------------------------------------//
+	private void alarmbreakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alarmbreakActionPerformed
+       alarm_img.setIcon(new javax.swing.ImageIcon(getClass().getResource(imageList[1])));
+       alarmbreak.setEnabled(false);
+       surveyhr.alertbreak();
+       surveyspo2.alertbreak();
+       updatepulse(200);
+       updatespo2(50);
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() { // Function runs every 5 MINUTES minutes.
+                alarm_img.setIcon(new javax.swing.ImageIcon(getClass().getResource(imageList[0])));
+                alarmbreak.setEnabled(true);
+                surveyhr.alertbreak();
+                surveyspo2.alertbreak();
+            }
+        },1000*60*5);    
+    }//GEN-LAST:event_alarmbreakActionPerformed
+	
+
+    //----- Nötig??-----//
+	private void lowlim_iniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lowlim_iniMouseClicked
+        lowlim_ini.setText("");
+    }//GEN-LAST:event_lowlim_iniMouseClicked
+
+    private void spo2_iniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spo2_iniMouseClicked
+        spo2_ini.setText("");
+    }//GEN-LAST:event_spo2_iniMouseClicked
+        
+	private void uplim_iniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uplim_iniMouseClicked
+        uplim_ini.setText("");
+    }//GEN-LAST:event_uplim_iniMouseClicked
+
+    
+//----------------------------------------------------- general Properties -----------------------------------------------//
+    private void initCombobox() {
+		int inc = 1900;
+		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+		int dif = currentYear-inc;
+		String[] years = new String[dif + 1];
+        
+		for(int i = 0;i < dif +1;i++){
+			years [i] = Integer.toString(inc);
+			inc++;
+		}
         birthYear = new javax.swing.DefaultComboBoxModel<>(years);
     }
     
-    private void close()
-    {
+    private void close(){
         Display gui_monitor = new Display();
         gui_monitor.setVisible(false);
     }
+	
     private void systemclose(){
         WindowEvent winCloseing = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winCloseing);
         SensorControl.end();
     }
+	
     private void disable_all(){
         disable = true;
         pulse_lower.setEnabled(false);
@@ -1279,6 +1302,7 @@ public class Display extends javax.swing.JFrame {
         patient_cng.setEnabled(false);
         reset_limit.setEnabled(false);
     }
+	
     private void enable_all(){
         disable = false;
         pulse_lower.setEnabled(true);
@@ -1288,7 +1312,8 @@ public class Display extends javax.swing.JFrame {
         reset_limit.setEnabled(true);
     }
     
-    //***************************** Update Block'*****************************//    
+
+//----------------------------------------------------- Update Block ----------------------------------------------------//    
     protected void updatelimit(String lower_hr, String upper_hr, String spo2_val){
         pulse_lower.setText(lower_hr);
         pulse_upper.setText(upper_hr);
@@ -1296,18 +1321,22 @@ public class Display extends javax.swing.JFrame {
         this.surveyhr = new HRSurveillance(lower_hr,upper_hr);
         this.surveyspo2 = new SPO2Surveillance(spo2_val);
     }
+	
     protected void updatepulse_lower(String lower_hr){        
         pulse_lower.setText(lower_hr);
         surveyhr.updatelowerhr(lower_hr);
     }
+	
     protected void updatepulse_upper (String upper_hr){
         pulse_upper.setText(upper_hr);
         surveyhr.updateupperhr(upper_hr);
     }
+	
     protected void updatespo2(String spo2_val){
         spo2.setText(spo2_val); 
         surveyspo2.updatespo2(spo2_val);
     }
+	
     protected void updatepatient(String name, String surname, String sex, String birth, int age ){
         name_disp.setText(name);
         surname_disp.setText(surname);
@@ -1315,16 +1344,19 @@ public class Display extends javax.swing.JFrame {
         birth_disp.setText(birth);
         age_field.setText(Integer.toString(age));
     }
+	
     protected void updatepulse (int currenthr){
         heartrate_out.setText(Integer.toString(currenthr));
         surveyhr.alerthr(currenthr);
     }
+	
     protected void updatespo2(int currentspo2){
         spo2_out.setText(Integer.toString(currentspo2));
         surveyspo2.alertspo2(currentspo2);
     }
     
-    //*************************** Check Block ********************************//    
+    
+//---------------------------------------------------- Check Block -----------------------------------------------------//    
     protected boolean check_init(String lowhr, String uphr, String spo2){
         try {
             int lowerhr = Integer.parseInt( lowhr );
@@ -1389,7 +1421,7 @@ public class Display extends javax.swing.JFrame {
         } 
     }
     
-        private boolean checkspo2(String spo2_value){               
+    private boolean checkspo2(String spo2_value){               
         try
         {
             int low_int = Integer.parseInt( spo2_value );
@@ -1417,7 +1449,9 @@ public class Display extends javax.swing.JFrame {
             return true;
         }
     }
-    //*************************** alarm Block ********************************//
+	
+	
+//--------------------------------------------------- alarm Block ------------------------------------------------------//
     protected void alerthr(boolean up){
         if (up == true){
             HR_alert.setText("Test");
@@ -1430,6 +1464,7 @@ public class Display extends javax.swing.JFrame {
         }
         //HR_alert.setBackground(Color.RED);
     }
+	
     protected void alertspo2(){
         spo2_alert.setText("spo2 Wert zu niedrig");
         //spo2_alert.setBackground(Color.RED);

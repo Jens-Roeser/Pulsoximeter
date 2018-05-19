@@ -67,67 +67,9 @@ public class PatientData {
             age = (Integer.parseInt(act[2]) - Integer.parseInt(birth[2]) - 1);
         }
         
-       try{    
-            //Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/Patient", "Menodar", "Student311");
-            stat = conn.createStatement();
-            ResultSet rs = stat.executeQuery("SELECT MAX(ID) as maxid FROM Patient");
-            if(rs.next()) { 
-                maxid = rs.getInt("maxid"); 
-            }
-        
-            pst = conn.prepareStatement("insert into Patient values (?,?,?,?,?,?)");
-            pst.setString(1, name);
-            pst.setString(2, surname);
-            pst.setString(3, sex);
-            pst.setString(4, birthdate);
-            pst.setInt(5, age);
-            pst.setInt(6, (maxid +1));
-            int i = pst.executeUpdate();
-            if (i > 0){
-                JOptionPane.showMessageDialog(null, "Patient saved");
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "Patient saving failed");
-            }
-        }
-       catch(Exception e){
-           JOptionPane.showMessageDialog(null, "Patient saving failed");
-       }
        return age;
-    }
-    protected void loadpatient(){
-        try {
-            //Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/Patient", "Menodar", "Student311");
-            
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM Patient");
-            if(rs.next()) { 
-                // TODO: select get all DAta from Table (array List)
-                // Return List to COmbobox to select. 
-                int id = rs.getInt("ID"); 
-                String str1 = rs.getString("second_column_name");
-            }
-            conn.close();
-            
-            //stat = conn.createStatement();
-            int i = pst.executeUpdate();
-            if (i > 0){
-                JOptionPane.showMessageDialog(null, "Patient saved");
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "Patient saving failed");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Patient loading failed");
-        }
     }
     
     protected void changepatient(){
-        
-    }
-    protected void deletepatient(){
-        
     }
 }
