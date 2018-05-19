@@ -19,12 +19,15 @@ import javax.swing.ComboBoxModel;
  * @author Jens
  */
 public class Display extends javax.swing.JFrame {
-	// Instances off all classes
-    private SensorControl sensor;
-    private HRSurveillance surveyhr;
-    private SPO2Surveillance surveyspo2;
-    private PatientData pat = new PatientData();
-    protected static Display display = new Display();
+    public static Display display;
+    private static SensorControl sensor;
+    private static HRSurveillance surveyhr;
+    private static SPO2Surveillance surveyspo2;
+    private static PatientData pat;
+    private static NetworkAlert net;
+    private static ResetLimits lim;
+    private static SoundAlert sound;
+    private static Displayalert disp;
     
 // Image for alert break needed
     private static String[] imageList =  {  "/img/alarm_on.png" , "/img/alarm_off.png"};
@@ -301,7 +304,6 @@ public class Display extends javax.swing.JFrame {
 
         LimitHR_lower.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         LimitHR_lower.setMinimumSize(new java.awt.Dimension(350, 350));
-        LimitHR_lower.setPreferredSize(new java.awt.Dimension(350, 350));
         LimitHR_lower.setResizable(false);
 
         lower_value.setBackground(new java.awt.Color(245, 245, 245));
@@ -363,7 +365,6 @@ public class Display extends javax.swing.JFrame {
 
         LimitHR_upper.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         LimitHR_upper.setMinimumSize(new java.awt.Dimension(350, 350));
-        LimitHR_upper.setPreferredSize(new java.awt.Dimension(350, 350));
         LimitHR_upper.setResizable(false);
 
         return_upper.setText("Save");
@@ -418,13 +419,12 @@ public class Display extends javax.swing.JFrame {
                 .addGroup(LimitHR_upperLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cancel1)
                     .addComponent(return_upper))
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         LimitSPO2.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         LimitSPO2.setMinimumSize(new java.awt.Dimension(350, 350));
         LimitSPO2.setUndecorated(true);
-        LimitSPO2.setPreferredSize(new java.awt.Dimension(350, 350));
         LimitSPO2.setResizable(false);
 
         spo2_val.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
@@ -525,11 +525,6 @@ public class Display extends javax.swing.JFrame {
         sex.setText("Patient sex: ");
 
         sex_box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "unknown", "male", "female" }));
-        sex_box.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sex_boxActionPerformed(evt);
-            }
-        });
 
         birthdate.setText("Patient birthdate:");
 
@@ -594,11 +589,7 @@ public class Display extends javax.swing.JFrame {
                 .addGroup(Patient_UILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Patient_UILayout.createSequentialGroup()
                         .addComponent(name_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(surname_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(sex_box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15)
+                        .addGap(91, 91, 91)
                         .addGroup(Patient_UILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(day_lab)
                             .addComponent(month_lab)
@@ -611,10 +602,14 @@ public class Display extends javax.swing.JFrame {
                     .addGroup(Patient_UILayout.createSequentialGroup()
                         .addComponent(name)
                         .addGap(18, 18, 18)
-                        .addComponent(surname)
+                        .addGroup(Patient_UILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(surname)
+                            .addComponent(surname_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(sex)
-                        .addGap(15, 15, 15)
+                        .addGroup(Patient_UILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(sex)
+                            .addComponent(sex_box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
                         .addComponent(birthdate)))
                 .addGap(18, 18, 18)
                 .addGroup(Patient_UILayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -865,7 +860,7 @@ public class Display extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-		/* Set the Nimbus look and feel */
+	/* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -888,6 +883,15 @@ public class Display extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        display = new Display();
+        surveyhr = new HRSurveillance(display);
+        sensor = new SensorControl();
+        surveyspo2 = new SPO2Surveillance(display);
+        pat = new PatientData();
+        net = new NetworkAlert(display);
+        lim = new ResetLimits(display);
+        sound = new SoundAlert(display);
+        disp = new Displayalert(display);
         display.Patient_UI.setVisible(true);
         
         /* Create and display the form */
@@ -899,7 +903,7 @@ public class Display extends javax.swing.JFrame {
 	}
 			
 //------------------------------- Java GUI properties declaration-------------------------------------//
-	 // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField HR_alert;
     private javax.swing.JLabel Heart_lab;
     private javax.swing.JFrame LimitHR_lower;
@@ -975,11 +979,6 @@ public class Display extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
 	
-//--------------------------------------------- Patient Functions --------------------------------------------------------//
-	private void sex_boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sex_boxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_sex_boxActionPerformed
-
     private void surname_fieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_surname_fieldMouseClicked
         surname_field.setText("");
     }//GEN-LAST:event_surname_fieldMouseClicked
@@ -989,7 +988,7 @@ public class Display extends javax.swing.JFrame {
     }//GEN-LAST:event_name_fieldMouseClicked
 	 
 	private void savepatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savepatientActionPerformed
-        
+      
         String name = name_field.getText();
         String surname = surname_field.getText();
         String sex = (String)sex_box.getSelectedItem();
@@ -1005,15 +1004,28 @@ public class Display extends javax.swing.JFrame {
         if (patientinit == true){
             if (age <= 1){
                 display.updatelimit("120", "190","90");
+                surveyhr.updatelowerhr("120");
+                surveyhr.updateupperhr("190");
+                surveyspo2.updatespo2("90");
+                
             }
             else if (age > 1 && age <= 6){
                 display.updatelimit("90", "150","90");
+                surveyhr.updatelowerhr("90");
+                surveyhr.updateupperhr("150");
+                surveyspo2.updatespo2("90");
             }
             else if (age > 6 && age <= 16){
                 display.updatelimit("70", "110","90");
+                surveyhr.updatelowerhr("70");
+                surveyhr.updateupperhr("110");
+                surveyspo2.updatespo2("90");
             }
             else if (age > 16){
                 display.updatelimit("50", "100","90");
+                surveyhr.updatelowerhr("50");
+                surveyhr.updateupperhr("100");
+                surveyspo2.updatespo2("90");
             }
             patientinit = false;
         }
@@ -1241,8 +1253,8 @@ public class Display extends javax.swing.JFrame {
        alarmbreak.setEnabled(false);
        surveyhr.alertbreak();
        surveyspo2.alertbreak();
-       updatepulse(200);
-       updatespo2(50);
+       updatepulse(120);
+       updatespo2(90);
         timer.schedule(new TimerTask() {
             @Override
             public void run() { // Function runs every 5 MINUTES minutes.
@@ -1318,8 +1330,9 @@ public class Display extends javax.swing.JFrame {
         pulse_lower.setText(lower_hr);
         pulse_upper.setText(upper_hr);
         spo2.setText(spo2_val);
-        this.surveyhr = new HRSurveillance(lower_hr,upper_hr);
-        this.surveyspo2 = new SPO2Surveillance(spo2_val);
+        surveyhr.updatelowerhr(lower_hr);
+        surveyhr.updateupperhr(upper_hr);
+        surveyspo2.updatespo2(spo2_val);
     }
 	
     protected void updatepulse_lower(String lower_hr){        
@@ -1387,8 +1400,8 @@ public class Display extends javax.swing.JFrame {
         try
         {
             int low_int = Integer.parseInt( low_value );
-            if (low_int < 20 || low_int > 160) {
-                JOptionPane.showMessageDialog(new JFrame(), "Nur Werte zwischen 30 und 120 sind gültig","Warnung",JOptionPane.ERROR_MESSAGE);
+            if (low_int < 30 || low_int > 160) {
+                JOptionPane.showMessageDialog(new JFrame(), "Nur Werte zwischen 30 und 160 sind gültig","Warnung",JOptionPane.ERROR_MESSAGE);
                 return false;
             }
             else {       
@@ -1407,7 +1420,7 @@ public class Display extends javax.swing.JFrame {
         {
             int up_int = Integer.parseInt( up_value );
             if (up_int < 60 || up_int > 300) {
-                JOptionPane.showMessageDialog(new JFrame(), "Nur Werte zwischen 120 und 300 sind gültig","Warnung",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(new JFrame(), "Nur Werte zwischen 60 und 300 sind gültig","Warnung",JOptionPane.ERROR_MESSAGE);
                 return false;
             }
             else {       
@@ -1454,19 +1467,30 @@ public class Display extends javax.swing.JFrame {
 //--------------------------------------------------- alarm Block ------------------------------------------------------//
     protected void alerthr(boolean up){
         if (up == true){
-            HR_alert.setText("Test");
-            String lower = pulse_lower.getText();
-            lower_value.setText(lower);
-            //HR_alert.setText("Puls zu hoch");
+            display.HR_alert.setText("Puls zu hoch");
         }
         else {
-            HR_alert.setText("Puls zu niedrig");
+            display.HR_alert.setText("Puls zu niedrig");
         }
-        //HR_alert.setBackground(Color.RED);
+        display.HR_alert.setBackground(Color.RED);
+    }
+    
+    protected void noalerthr (boolean up){
+        if (up == true){
+            display.HR_alert.setText("");
+        }
+        else {
+            display.HR_alert.setText("");
+        }
+        display.HR_alert.setBackground(Color.WHITE);
     }
 	
     protected void alertspo2(){
-        spo2_alert.setText("spo2 Wert zu niedrig");
-        //spo2_alert.setBackground(Color.RED);
+        display.spo2_alert.setText("spo2 Wert zu niedrig");
+        display.spo2_alert.setBackground(Color.RED);
+    }
+    protected void noalertspo2(){
+        display.spo2_alert.setText("");
+        display.spo2_alert.setBackground(Color.WHITE);
     }
 }

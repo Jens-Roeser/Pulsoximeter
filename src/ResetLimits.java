@@ -15,10 +15,12 @@ import javax.swing.JTextField;
  */
 public class ResetLimits extends javax.swing.JFrame {
     private JTextField resetfield = new JTextField();     
+    private final Display display;
     /**
      * Creates new form ResetLimits
      */
-    public ResetLimits() {
+    public ResetLimits(Display display) {
+        this.display = display;
         initComponents();
     }
 
@@ -123,7 +125,6 @@ public class ResetLimits extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ResetLimits().setVisible(true);
             }
         });
     }

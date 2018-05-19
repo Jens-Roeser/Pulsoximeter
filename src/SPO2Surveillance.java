@@ -16,12 +16,10 @@ public class SPO2Surveillance {
     // Alarmstate false == not paused
     // Alarmstate true == paused
     private boolean alarmstate = false;
-    private SoundAlert sound = new SoundAlert();
-    private NetworkAlert network = new NetworkAlert();
-    private Displayalert text = new Displayalert();
+    private Displayalert text;
     
-    SPO2Surveillance(String spo2){
-        this.spo2_int = Integer.parseInt(spo2);
+    SPO2Surveillance(Display display){
+        text = new Displayalert(display);
     }
     protected void resetdefault(String spo2){
         this.spo2_int = Integer.parseInt(spo2);
@@ -31,9 +29,15 @@ public class SPO2Surveillance {
         this.spo2_int = Integer.parseInt(spo2);
     }
     protected void alertspo2 (int spo2){
-       if (spo2 < spo2_int && alarmstate == true){
+        if (spo2 < spo2_int){
            text.spo2alert();
-    }
+           if (alarmstate == true){
+           // TODO: sound and Network
+           }
+        }
+        else if (spo2 > spo2_int){
+           text.nospo2();
+        }
     } 
     protected void alertbreak(){
         if (alarmstate == true){

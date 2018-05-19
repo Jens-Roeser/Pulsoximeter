@@ -15,7 +15,7 @@ class Displayalert {
     
     Display disp = new Display();
     
-    Displayalert(){
+    Displayalert(Display display){
         
     }
     
@@ -31,5 +31,19 @@ class Displayalert {
     public void lower_hralarm(){
         boolean up = false;
         disp.alerthr(up);
+    }  
+    
+    public void nospo2(){
+        disp.noalertspo2();
+    }
+    
+    public void noupper_hr(){
+        boolean up = true;
+        disp.noalerthr(up);
+    }
+    
+    public void nolower_hr(){
+        boolean up = false;
+        disp.noalerthr(up);
     }  
 }

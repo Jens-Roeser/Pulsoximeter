@@ -12,9 +12,11 @@ import javax.swing.JOptionPane;
  * @author Jens
  */
 class NetworkAlert {
+
+    private final Display display;
     
-    NetworkAlert(){
-        
+    NetworkAlert(Display display){
+        this.display = display;
     }
     
     public void spo2alert(){

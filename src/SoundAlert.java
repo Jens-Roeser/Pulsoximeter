@@ -12,9 +12,11 @@ import javax.swing.JOptionPane;
  * @author Jens
  */
 class SoundAlert {
+
+    private final Display display;
     
-    SoundAlert(){
-    
+    SoundAlert(Display display){
+        this.display = display;
     }
     
     public void spo2alert(){
