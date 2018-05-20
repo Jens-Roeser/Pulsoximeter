@@ -1,0 +1,16 @@
+Sat May 12 13:04:41 CEST 2018 : Apache Derby Network Server 10.11.1.2 - (1629631) wurde gestartet und ist bereit, Verbindungen auf Port 1527 zu akzeptieren.
+----------------------------------------------------------------
+Sat May 12 13:04:41 CEST 2018:
+Booten von Derby-Version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): Instanz a816c00e-0163-5406-2e01-ffff8b78582a
+für Datenbankverzeichnis J:\SEMP\Pulsoximeter\DB\Patient mit Class Loader sun.misc.Launcher$AppClassLoader@1d44bcfa
+Geladen aus file:/C:/Program%20Files/Java/jdk1.8.0_171/db/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_171-b11
+user.dir=C:\Program Files\Java\jdk1.8.0_171\db
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=J:\SEMP\Pulsoximeter\DB
+Datenbank-Class Loader wurde gestartet - derby.database.classpath=''
+----------------------------------------------------------------
+Sat May 12 14:16:58 CEST 2018: Derby-Engine wird heruntergefahren
