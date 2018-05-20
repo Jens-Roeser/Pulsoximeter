@@ -711,7 +711,7 @@ public class Display extends javax.swing.JFrame {
         });
 
         header_label.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
-        header_label.setText("Pulsoximeter Viraloverlord");
+        header_label.setText("Pulsoximeter Vitaloverlord");
 
         lower_limit.setText("HR lower limit");
 
