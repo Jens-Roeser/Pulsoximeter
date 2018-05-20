@@ -1165,12 +1165,12 @@ public class Display extends javax.swing.JFrame {
     }//GEN-LAST:event_lower_valueMouseClicked
 	
 	private void return_lowerHRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_return_lowerHRActionPerformed
-        enable_all();
         String lowerfiledvalue = lower_value.getText();
         boolean ch = checklowhr(lowerfiledvalue);
         if (ch == true){
-        updatepulse_lower(lowerfiledvalue);
-        LimitHR_lower.setVisible(false);
+            enable_all();
+            updatepulse_lower(lowerfiledvalue);
+            LimitHR_lower.setVisible(false);
         }
         else {
             JOptionPane.showMessageDialog(new JFrame(), "Eingegebene Werte überprüfen","Warnung",JOptionPane.ERROR_MESSAGE);
@@ -1188,7 +1188,7 @@ public class Display extends javax.swing.JFrame {
             disable_all(); 
             String lower = pulse_upper.getText();
             upper_value.setText(lower);
-            LimitHR_upper.setVisible(true);
+            LimitHR_upper.setVisible(true); 
         }
     }//GEN-LAST:event_pulse_upperMouseClicked
 	
@@ -1197,12 +1197,12 @@ public class Display extends javax.swing.JFrame {
     }//GEN-LAST:event_upper_valueMouseClicked
 	
 	private void return_upperActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_return_upperActionPerformed
-        enable_all();
         String up_value = upper_value.getText();
         boolean ch = checkuphr(up_value);
         if (ch == true){
-        updatepulse_upper( up_value);
-        LimitHR_upper.setVisible(false);
+            enable_all();
+            updatepulse_upper( up_value);
+            LimitHR_upper.setVisible(false);
         }
         else {
             JOptionPane.showMessageDialog(new JFrame(), "Eingegebene Werte überprüfen","Warnung",JOptionPane.ERROR_MESSAGE);
@@ -1220,12 +1220,12 @@ public class Display extends javax.swing.JFrame {
     }//GEN-LAST:event_spo2_valMouseClicked
 	
 	private void return_spo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_return_spo2ActionPerformed
-        enable_all();
         String spo2 = spo2_val.getText();
         boolean ch = checkspo2(spo2);
         if (ch == true){
-        updatespo2( spo2 );
-        LimitSPO2.setVisible(false);
+            enable_all();
+            updatespo2( spo2 );
+            LimitSPO2.setVisible(false);
         }
         else {
             JOptionPane.showMessageDialog(new JFrame(), "Eingegebene Werte überprüfen","Warnung",JOptionPane.ERROR_MESSAGE);
@@ -1263,7 +1263,8 @@ public class Display extends javax.swing.JFrame {
                 surveyhr.alertbreak();
                 surveyspo2.alertbreak();
             }
-        },1000*60*5);    
+        },1000*60*5);
+        // TODO timecheck
     }//GEN-LAST:event_alarmbreakActionPerformed
 	
 
@@ -1283,15 +1284,15 @@ public class Display extends javax.swing.JFrame {
     
 //----------------------------------------------------- general Properties -----------------------------------------------//
     private void initCombobox() {
-		int inc = 1900;
-		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-		int dif = currentYear-inc;
-		String[] years = new String[dif + 1];
+	int inc = 1900;
+	int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+	int dif = currentYear-inc;
+	String[] years = new String[dif + 1];
         
-		for(int i = 0;i < dif +1;i++){
-			years [i] = Integer.toString(inc);
-			inc++;
-		}
+	for(int i = 0;i < dif +1;i++){
+            years [i] = Integer.toString(inc);
+            inc++;
+	}
         birthYear = new javax.swing.DefaultComboBoxModel<>(years);
     }
     
@@ -1397,11 +1398,15 @@ public class Display extends javax.swing.JFrame {
     }
     
     private  boolean checklowhr(String low_value){               
-        try
-        {
+        try{
+            int up_int = Integer.parseInt(pulse_upper.getText());
             int low_int = Integer.parseInt( low_value );
             if (low_int < 30 || low_int > 160) {
                 JOptionPane.showMessageDialog(new JFrame(), "Nur Werte zwischen 30 und 160 sind gültig","Warnung",JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            else if (low_int >= up_int){
+                JOptionPane.showMessageDialog(new JFrame(), "Unteres Limit muss tiefer als oberes Limit sein","Warnung",JOptionPane.ERROR_MESSAGE);
                 return false;
             }
             else {       
@@ -1416,11 +1421,15 @@ public class Display extends javax.swing.JFrame {
     }
         
     private  boolean checkuphr(String up_value){               
-        try
-        {
+        try{
+            int low_int = Integer.parseInt(pulse_lower.getText());
             int up_int = Integer.parseInt( up_value );
             if (up_int < 60 || up_int > 300) {
                 JOptionPane.showMessageDialog(new JFrame(), "Nur Werte zwischen 60 und 300 sind gültig","Warnung",JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            else if (up_int <= low_int){
+                JOptionPane.showMessageDialog(new JFrame(), "Oberes Limit muss höher als unteres Limit sein","Warnung",JOptionPane.ERROR_MESSAGE);
                 return false;
             }
             else {       
@@ -1435,8 +1444,7 @@ public class Display extends javax.swing.JFrame {
     }
     
     private boolean checkspo2(String spo2_value){               
-        try
-        {
+        try{
             int low_int = Integer.parseInt( spo2_value );
             if (low_int < 50 || low_int > 100) {
                 JOptionPane.showMessageDialog(new JFrame(), "Nur Werte zwischen 50 und 100 sind gültig","Warnung",JOptionPane.ERROR_MESSAGE);
