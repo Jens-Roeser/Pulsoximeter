@@ -1501,4 +1501,12 @@ public class Display extends javax.swing.JFrame {
         display.spo2_alert.setText("");
         display.spo2_alert.setBackground(Color.WHITE);
     }
+    
+//-------------------------- get Variables for testing ----------------------//
+    public String getspo2(){
+        String spo2 = display.spo2.getText();
+        return spo2;
+    }
+    //        this.display.pulse_lower.getText();
+    //    this.display.pulse_upper.getText();
 }
