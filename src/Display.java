@@ -884,9 +884,7 @@ public class Display extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         display = new Display();
-        surveyhr = new HRSurveillance(display);
         sensor = new SensorControl();
-        surveyspo2 = new SPO2Surveillance(display);
         pat = new PatientData();
         net = new NetworkAlert(display);
         lim = new ResetLimits(display);
@@ -1004,6 +1002,8 @@ public class Display extends javax.swing.JFrame {
         if (patientinit == true){
             if (age <= 1){
                 display.updatelimit("120", "190","90");
+                instancesurvey();
+                instancespo2();
                 surveyhr.updatelowerhr("120");
                 surveyhr.updateupperhr("190");
                 surveyspo2.updatespo2("90");
@@ -1011,18 +1011,24 @@ public class Display extends javax.swing.JFrame {
             }
             else if (age > 1 && age <= 6){
                 display.updatelimit("90", "150","90");
+                instancesurvey();
+                instancespo2();
                 surveyhr.updatelowerhr("90");
                 surveyhr.updateupperhr("150");
                 surveyspo2.updatespo2("90");
             }
             else if (age > 6 && age <= 16){
                 display.updatelimit("70", "110","90");
+                instancesurvey();
+                instancespo2();
                 surveyhr.updatelowerhr("70");
                 surveyhr.updateupperhr("110");
                 surveyspo2.updatespo2("90");
             }
             else if (age > 16){
                 display.updatelimit("50", "100","90");
+                instancesurvey();
+                instancespo2();
                 surveyhr.updatelowerhr("50");
                 surveyhr.updateupperhr("100");
                 surveyspo2.updatespo2("90");
@@ -1251,6 +1257,8 @@ public class Display extends javax.swing.JFrame {
 	private void alarmbreakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alarmbreakActionPerformed
        alarm_img.setIcon(new javax.swing.ImageIcon(getClass().getResource(imageList[1])));
        alarmbreak.setEnabled(false);
+       instancesurvey();
+       instancespo2();
        surveyhr.alertbreak();
        surveyspo2.alertbreak();
        updatepulse(120);
@@ -1260,6 +1268,8 @@ public class Display extends javax.swing.JFrame {
             public void run() { // Function runs every 5 MINUTES minutes.
                 alarm_img.setIcon(new javax.swing.ImageIcon(getClass().getResource(imageList[0])));
                 alarmbreak.setEnabled(true);
+                instancesurvey();
+                instancespo2();
                 surveyhr.alertbreak();
                 surveyspo2.alertbreak();
             }
@@ -1324,13 +1334,18 @@ public class Display extends javax.swing.JFrame {
         patient_cng.setEnabled(true);
         reset_limit.setEnabled(true);
     }
-    
-
+    private void instancesurvey(){
+        surveyhr = new HRSurveillance(display);
+    }
+    private void instancespo2(){        
+        surveyspo2 = new SPO2Surveillance(display);
+    }
 //----------------------------------------------------- Update Block ----------------------------------------------------//    
     protected void updatelimit(String lower_hr, String upper_hr, String spo2_val){
         pulse_lower.setText(lower_hr);
         pulse_upper.setText(upper_hr);
         spo2.setText(spo2_val);
+        instancesurvey();
         surveyhr.updatelowerhr(lower_hr);
         surveyhr.updateupperhr(upper_hr);
         surveyspo2.updatespo2(spo2_val);
@@ -1338,11 +1353,13 @@ public class Display extends javax.swing.JFrame {
 	
     protected void updatepulse_lower(String lower_hr){        
         pulse_lower.setText(lower_hr);
+        instancesurvey();
         surveyhr.updatelowerhr(lower_hr);
     }
 	
     protected void updatepulse_upper (String upper_hr){
         pulse_upper.setText(upper_hr);
+        instancesurvey();
         surveyhr.updateupperhr(upper_hr);
     }
 	
@@ -1361,6 +1378,7 @@ public class Display extends javax.swing.JFrame {
 	
     protected void updatepulse (int currenthr){
         heartrate_out.setText(Integer.toString(currenthr));
+        instancesurvey();
         surveyhr.alerthr(currenthr);
     }
 	
