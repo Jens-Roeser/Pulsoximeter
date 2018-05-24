@@ -43,25 +43,25 @@ public class DisplayTest {
     public void testUpdatelimit() {
         System.out.println("updatelimit");
         //input
-        String lower_hr = "";
-        String upper_hr = "";
-        String spo2_val = "";
+        String lower_hr = "20";
+        String upper_hr = "20";
+        String spo2_val = "20";
         Display display = new Display();
         display.updatelimit(lower_hr, upper_hr, spo2_val);
         //output
-        display.getspo2();
-        String low_out = display.pulse_lower.getText();
-        String up_out = display.pulse_upper.getText();
-        String spo2_out = display.spo2.getText();
+        String spo2_out = display.getspo2(display);
+        //String low_out = display.pulse_lower.getText();
+        //String up_out = display.pulse_upper.getText();
+        //String spo2_out = display.spo2.getText();
         //int lowerhr_out = lowerhr_int;
         //int upperhr_out = upperhr_int;
         //int spo2_out    = spo2_int;
         // TODO: ask surveillance methods
-        assertEquals(lower_hr, low_out);
-        assertEquals(upper_hr, up_out);
+        //assertEquals(lower_hr, low_out);
+        //assertEquals(upper_hr, up_out);
         assertEquals(spo2_val, spo2_out);
-        //assertEquals(lower_hr, lowerhr_int);
-        //assertEquals(upper_hr, low_out);
+        assertEquals(lower_hr, lowerhr_int);
+        assertEquals(upper_hr, low_out);
         //assertEquals(spo2_val, low_out);
     }
 

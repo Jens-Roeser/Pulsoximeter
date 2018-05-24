@@ -997,6 +997,7 @@ public class Display extends javax.swing.JFrame {
         String birthdate = gday + "." + gmonth + "." + gyear;
         int age = pat.addpatient(name, surname, sex, birthdate);
         updatepatient(name, surname, sex, birthdate, age);
+        display.Patient_UI.setVisible(false);
         display.setVisible(true);
         // if patient is initial
         if (patientinit == true){
@@ -1055,6 +1056,7 @@ public class Display extends javax.swing.JFrame {
     }//GEN-LAST:event_cancel_patientActionPerformed
 	
 	private void patient_cngActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patient_cngActionPerformed
+        display.Patient_UI.setVisible(true);
         updatepulse(200);
         updatespo2(50);
         disable_all();
@@ -1066,7 +1068,6 @@ public class Display extends javax.swing.JFrame {
         String gday = (String)day.getSelectedItem();
         String gmonth = (String)month.getSelectedItem();
         String gyear = (String)year.getSelectedItem();
-        Patient_UI.setVisible(true);
     }//GEN-LAST:event_patient_cngActionPerformed
 	
 //---------------------------------------------- Initial Limits ----------------------------------------------------------//
@@ -1346,6 +1347,7 @@ public class Display extends javax.swing.JFrame {
         pulse_upper.setText(upper_hr);
         spo2.setText(spo2_val);
         instancesurvey();
+        instancespo2();
         surveyhr.updatelowerhr(lower_hr);
         surveyhr.updateupperhr(upper_hr);
         surveyspo2.updatespo2(spo2_val);
@@ -1521,7 +1523,7 @@ public class Display extends javax.swing.JFrame {
     }
     
 //-------------------------- get Variables for testing ----------------------//
-    public String getspo2(){
+    public String getspo2(Display display){
         String spo2 = display.spo2.getText();
         return spo2;
     }
