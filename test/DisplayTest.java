@@ -16,9 +16,11 @@ import static org.junit.Assert.*;
  * @author Jens
  */
 public class DisplayTest {
+    private Display display = new Display();
     
     public DisplayTest() {
     }
+    
     
     @BeforeClass
     public static void setUpClass() {
@@ -43,26 +45,35 @@ public class DisplayTest {
     public void testUpdatelimit() {
         System.out.println("updatelimit");
         //input
-        String lower_hr = "20";
-        String upper_hr = "20";
-        String spo2_val = "20";
-        Display display = new Display();
+        String lower_hr = "30";
+        String upper_hr = "60";
+        String spo2_val = "50";
+        int lower_hrint = Integer.parseInt(lower_hr);
+        int upper_hrint = Integer.parseInt(upper_hr);
+        int spo2_valint = Integer.parseInt(spo2_val);
+        
         display.updatelimit(lower_hr, upper_hr, spo2_val);
+        
+        // TODO: evtl als Methode definieren falls öfters benötigt
+        HRSurveillance hr = display.gethrinst();
+        SPO2Surveillance sp = display.getspo2inst();
+        
         //output
         String spo2_out = display.getspo2(display);
-        //String low_out = display.pulse_lower.getText();
-        //String up_out = display.pulse_upper.getText();
-        //String spo2_out = display.spo2.getText();
-        //int lowerhr_out = lowerhr_int;
-        //int upperhr_out = upperhr_int;
-        //int spo2_out    = spo2_int;
-        // TODO: ask surveillance methods
-        //assertEquals(lower_hr, low_out);
-        //assertEquals(upper_hr, up_out);
+        String low_out = display.getlow(display);
+        String up_out = display.gethigh(display);
+        int lowhr = hr.getlowhr();
+        int uphr  = hr.gethighhr();
+        int spo2  = sp.getspo2();
+        
+        //test Textbox
         assertEquals(spo2_val, spo2_out);
-        assertEquals(lower_hr, lowerhr_int);
-        assertEquals(upper_hr, low_out);
-        //assertEquals(spo2_val, low_out);
+        assertEquals(lower_hr, low_out);
+        assertEquals(upper_hr, up_out);
+        //test Surveillance
+        assertEquals(lower_hrint, lowhr);
+        assertEquals(upper_hrint, uphr);
+        assertEquals(spo2_valint, spo2);
     }
 
     /**
@@ -71,11 +82,20 @@ public class DisplayTest {
     @Test
     public void testUpdatepulse_lower() {
         System.out.println("updatepulse_lower");
-        String lower_hr = "";
-        Display instance = new Display();
-        instance.updatepulse_lower(lower_hr);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String lower_hr = "30";
+        int lower_hrint = Integer.parseInt(lower_hr);
+        
+        display.Limit_lower(lower_hr);
+        HRSurveillance hr = display.gethrinst();
+        
+        //output
+        String low_out = display.getlow(display);
+        int lowhr = hr.getlowhr();
+        
+        //test Textbox
+        assertEquals(lower_hr, low_out);
+        //test Surveillance
+        assertEquals(lower_hrint, lowhr);
     }
 
     /**
@@ -84,11 +104,19 @@ public class DisplayTest {
     @Test
     public void testUpdatepulse_upper() {
         System.out.println("updatepulse_upper");
-        String upper_hr = "";
-        Display instance = new Display();
-        instance.updatepulse_upper(upper_hr);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String upper_hr = "60";
+        int upper_hrint = Integer.parseInt(upper_hr);
+        
+        display.Limit_upper(upper_hr);
+        HRSurveillance hr = display.gethrinst();
+        
+        int uphr  = hr.gethighhr();
+        String up_out = display.gethigh(display);
+        
+        // test Textbox
+        assertEquals(upper_hr, up_out);
+        // test Surveillance
+        assertEquals(upper_hrint, uphr);
     }
 
     /**
@@ -97,11 +125,17 @@ public class DisplayTest {
     @Test
     public void testUpdatespo2_String() {
         System.out.println("updatespo2");
-        String spo2_val = "";
-        Display instance = new Display();
-        instance.updatespo2(spo2_val);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String spo2_val = "50";
+        int spo2_valint = Integer.parseInt(spo2_val);
+        
+        display.Limit_spo2(spo2_val);
+        SPO2Surveillance sp = display.getspo2inst();
+        
+        String spo2_out = display.getspo2(display);
+        int spo2  = sp.getspo2();
+                        
+        assertEquals(spo2_val, spo2_out);
+        assertEquals(spo2_valint, spo2);
     }
 
     /**
@@ -110,15 +144,19 @@ public class DisplayTest {
     @Test
     public void testUpdatepatient() {
         System.out.println("updatepatient");
-        String name = "";
-        String surname = "";
-        String sex = "";
-        String birth = "";
-        int age = 0;
-        Display instance = new Display();
-        instance.updatepatient(name, surname, sex, birth, age);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String name = "Karl-Heinz ";
+        String surname = "Schlabunski";
+        String sex = "male";
+        String birth = "24.06.2000";
+        int age = 18;
+        display.updatepatient(name, surname, sex, birth, age);
+
+        Object[] patient = display.getname(display);
+        assertEquals(name,(String)patient[0]);
+        assertEquals(surname,(String)patient[1]);
+        assertEquals(sex,(String)patient[2]);
+        assertEquals(birth,(String)patient[3]);
+        assertEquals(Integer.toString(age),(String)patient[4]);
     }
 
     /**
@@ -137,7 +175,7 @@ public class DisplayTest {
     /**
      * Test of updatespo2 method, of class Display.
      */
-    @Test
+    /*@Test
     public void testUpdatespo2_int() {
         System.out.println("updatespo2");
         int currentspo2 = 0;
@@ -145,12 +183,12 @@ public class DisplayTest {
         instance.updatespo2(currentspo2);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
+    }*/
 
     /**
      * Test of check_init method, of class Display.
      */
-    @Test
+    /*@Test
     public void testCheck_init() {
         System.out.println("check_init");
         String lowhr = "";
@@ -162,12 +200,12 @@ public class DisplayTest {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
+    }*/
 
     /**
      * Test of alerthr method, of class Display.
      */
-    @Test
+    /*@Test
     public void testAlerthr() {
         System.out.println("alerthr");
         boolean up = false;
@@ -175,12 +213,12 @@ public class DisplayTest {
         instance.alerthr(up);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
+    }*/
 
     /**
      * Test of noalerthr method, of class Display.
      */
-    @Test
+    /*@Test
     public void testNoalerthr() {
         System.out.println("noalerthr");
         boolean up = false;
@@ -188,30 +226,29 @@ public class DisplayTest {
         instance.noalerthr(up);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
+    }*/
 
     /**
      * Test of alertspo2 method, of class Display.
      */
-    @Test
+    /*@Test
     public void testAlertspo2() {
         System.out.println("alertspo2");
         Display instance = new Display();
         instance.alertspo2();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
+    }*/
 
     /**
      * Test of noalertspo2 method, of class Display.
      */
-    @Test
+    /*@Test
     public void testNoalertspo2() {
         System.out.println("noalertspo2");
         Display instance = new Display();
         instance.noalertspo2();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
-    
+    }*/
 }
