@@ -16,8 +16,8 @@ public class HRSurveillance {
     // Alarmstate true == paused
     private boolean alarmstate = false;
     
-    HRSurveillance(Display display){//String lowerhr,String  upperhr
-        text = new Displayalert(display);
+    HRSurveillance(Displayalert display){//String lowerhr,String  upperhr
+        this.text = display;
         //this.lowerhr_int = Integer.parseInt(lowerhr);
         //this.upperhr_int = Integer.parseInt(upperhr);
     }
@@ -26,10 +26,11 @@ public class HRSurveillance {
         this.lowerhr_int = Integer.parseInt(lowerhr);
         this.upperhr_int = Integer.parseInt(upperhr);
     }
-    
+    //Update lower HR limits
     protected void updatelowerhr(String lowerhr){
         this.lowerhr_int = Integer.parseInt(lowerhr);
     }
+    //Update upper HR limits
     protected void updateupperhr(String  upperhr){
         this.upperhr_int = Integer.parseInt(upperhr);
     }
@@ -62,5 +63,14 @@ public class HRSurveillance {
         else if (hr < upperhr_int && hr > lowerhr_int){
              text.noupper_hr();
          }
+    }
+    int getlowhr() {
+        int low = lowerhr_int;
+        return low;
+    }
+
+    int gethighhr() {
+        int low = upperhr_int;
+        return low;
     }
 }

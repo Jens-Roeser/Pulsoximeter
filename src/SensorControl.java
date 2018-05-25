@@ -18,7 +18,6 @@ public class SensorControl {
         this.isRunning   =  false;
         this.currenthr   =  70;
         this.currentspo2 =  50;
-        this.display = new Display();
     }
     
     

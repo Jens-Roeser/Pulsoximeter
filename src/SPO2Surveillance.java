@@ -18,13 +18,13 @@ public class SPO2Surveillance {
     private boolean alarmstate = false;
     private Displayalert text;
     
-    SPO2Surveillance(Display display){
-        text = new Displayalert(display);
+    SPO2Surveillance(Displayalert display){
+        this.text = display;
     }
     protected void resetdefault(String spo2){
         this.spo2_int = Integer.parseInt(spo2);
     }
-    
+    //Update spo2 limits
     protected void updatespo2(String spo2){
         this.spo2_int = Integer.parseInt(spo2);
     }
@@ -50,4 +50,8 @@ public class SPO2Surveillance {
             throw new java.lang.Error("State inserted is not known");
         }
     } 
+
+    int getspo2() {
+        int low = spo2_int;
+        return low;}
 }
