@@ -21,15 +21,12 @@ import javax.swing.ComboBoxModel;
  * @author Jens
  */
 public class Display extends javax.swing.JFrame {
-    public static Display display;
+    private static Display display = null;
     private static SensorControl sensor;
     private static HRSurveillance surveyhr;
     private static SPO2Surveillance surveyspo2;
     private static PatientData pat;
-    private static NetworkAlert net;
     private static ResetLimits lim;
-    private static SoundAlert sound;
-    private static Displayalert disp;
     
 // Image for alert break needed
     private static String[] imageList =  {  "/img/alarm_on.png" , "/img/alarm_off.png"};
@@ -52,10 +49,13 @@ public class Display extends javax.swing.JFrame {
      * Creates new form Monitor
      */
     public Display() {
-        sensor = new SensorControl();
-        pat = new PatientData();
-        initCombobox();
-        initComponents();
+            sensor = new SensorControl();
+            pat = new PatientData();
+            lim = new ResetLimits();
+            surveyhr = new HRSurveillance();
+            surveyspo2 = new SPO2Surveillance();
+            initCombobox();
+            initComponents();
     }
 
     /**
@@ -890,11 +890,7 @@ public class Display extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-        display = new Display();
-        net = new NetworkAlert(display);
-        lim = new ResetLimits(display);
-        sound = new SoundAlert(display);
-        disp = new Displayalert(display);
+        display = Display.getinstance();
         display.Patient_UI.setVisible(true);
         
         /* Create and display the form */
@@ -1337,9 +1333,9 @@ public class Display extends javax.swing.JFrame {
         reset_limit.setEnabled(true);
     }
     private void instance(){
-        if (init == false){
-            surveyhr = new HRSurveillance(disp);
-            surveyspo2 = new SPO2Surveillance(disp);
+        if (init == true){
+            //surveyhr = new HRSurveillance();
+            //surveyspo2 = new SPO2Surveillance();
             init = true;
         }
     }
@@ -1387,7 +1383,7 @@ public class Display extends javax.swing.JFrame {
 	
     protected void updatepulse (int currenthr){
         heartrate_out.setText(Integer.toString(currenthr));
-        instance();
+        //instance();
         surveyhr.alerthr(currenthr);
     }
 	
@@ -1514,55 +1510,60 @@ public class Display extends javax.swing.JFrame {
 //--------------------------------------------------- alarm Block ------------------------------------------------------//
     protected void alerthr(boolean up){
         if (up == true){
-            display.HR_alert.setText("Puls zu hoch");
+            HR_alert.setText("Puls zu hoch");
         }
         else {
-            display.HR_alert.setText("Puls zu niedrig");
+            HR_alert.setText("Puls zu niedrig");
         }
-        display.HR_alert.setBackground(Color.RED);
+        HR_alert.setBackground(Color.RED);
     }
     
     protected void noalerthr (boolean up){
         if (up == true){
-            display.HR_alert.setText("");
+            HR_alert.setText("");
         }
         else {
-            display.HR_alert.setText("");
+            HR_alert.setText("");
         }
-        display.HR_alert.setBackground(Color.WHITE);
+        HR_alert.setBackground(Color.WHITE);
     }
 	
     protected void alertspo2(){
-        display.spo2_alert.setText("spo2 Wert zu niedrig");
-        display.spo2_alert.setBackground(Color.RED);
+        spo2_alert.setText("spo2 Wert zu niedrig");
+        spo2_alert.setBackground(Color.RED);
     }
     protected void noalertspo2(){
-        display.spo2_alert.setText("");
-        display.spo2_alert.setBackground(Color.WHITE);
+        spo2_alert.setText("");
+        spo2_alert.setBackground(Color.WHITE);
     }
     
 //-------------------------- get Variables for testing ----------------------//
-    public String getspo2(Display display){
-        String spo2 = display.spo2limitout.getText();
+    public String getspo2(){
+        String spo2 = spo2limitout.getText();
         return spo2;
     }
 
-    String getlow(Display display) {
-        String low = display.limitlowhrout.getText();
+    String getlow() {
+        String low = limitlowhrout.getText();
         return low;
     }
 
-    String gethigh(Display display) {
-        String low = display.limituphrout.getText();
+    String gethigh() {
+        String low = limituphrout.getText();
         return low;
     }
 
+    Display getdisplay(){
+        Display inst = display;
+        return inst;
+    }
+    
     HRSurveillance gethrinst() {
-        HRSurveillance inst = this.surveyhr;
+        HRSurveillance inst = surveyhr;
         return inst; 
     }
     SPO2Surveillance getspo2inst(){
-        SPO2Surveillance inst = this.surveyspo2;
+        SPO2Surveillance inst = surveyspo2;
         return inst;
     }
 
@@ -1580,5 +1581,26 @@ public class Display extends javax.swing.JFrame {
         patient[3] = birthdate;
         patient[4] = age;
         return patient;
+    }
+
+    String getpulse() {
+        String pulse = heartrate_out.getText();
+        return pulse;
+    }
+
+    String getalertsp() {
+        String pulse = HR_alert.getText();
+        return pulse;
+    }
+
+    String getalerthr() {
+        String pulse = spo2_alert.getText();
+        return pulse;
+    }
+    public static Display getinstance(){
+        if (display == null){
+            display = new Display();
+        }
+        return display;   
     }
 }

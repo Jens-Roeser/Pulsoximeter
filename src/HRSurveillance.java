@@ -16,10 +16,8 @@ public class HRSurveillance {
     // Alarmstate true == paused
     private boolean alarmstate = false;
     
-    HRSurveillance(Displayalert display){//String lowerhr,String  upperhr
-        this.text = display;
-        //this.lowerhr_int = Integer.parseInt(lowerhr);
-        //this.upperhr_int = Integer.parseInt(upperhr);
+    HRSurveillance(){
+        this.text = new Displayalert();
     }
 
     private void resetdefault(String lowerhr,String  upperhr){

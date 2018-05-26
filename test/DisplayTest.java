@@ -16,9 +16,10 @@ import static org.junit.Assert.*;
  * @author Jens
  */
 public class DisplayTest {
-    private Display display = new Display();
+    private Display display;
     
     public DisplayTest() {
+        display = Display.getinstance();
     }
     
     
@@ -59,9 +60,9 @@ public class DisplayTest {
         SPO2Surveillance sp = display.getspo2inst();
         
         //output
-        String spo2_out = display.getspo2(display);
-        String low_out = display.getlow(display);
-        String up_out = display.gethigh(display);
+        String spo2_out = display.getspo2();
+        String low_out = display.getlow();
+        String up_out = display.gethigh();
         int lowhr = hr.getlowhr();
         int uphr  = hr.gethighhr();
         int spo2  = sp.getspo2();
@@ -89,7 +90,7 @@ public class DisplayTest {
         HRSurveillance hr = display.gethrinst();
         
         //output
-        String low_out = display.getlow(display);
+        String low_out = display.getlow();
         int lowhr = hr.getlowhr();
         
         //test Textbox
@@ -111,7 +112,7 @@ public class DisplayTest {
         HRSurveillance hr = display.gethrinst();
         
         int uphr  = hr.gethighhr();
-        String up_out = display.gethigh(display);
+        String up_out = display.gethigh();
         
         // test Textbox
         assertEquals(upper_hr, up_out);
@@ -131,7 +132,7 @@ public class DisplayTest {
         display.Limit_spo2(spo2_val);
         SPO2Surveillance sp = display.getspo2inst();
         
-        String spo2_out = display.getspo2(display);
+        String spo2_out = display.getspo2();
         int spo2  = sp.getspo2();
                         
         assertEquals(spo2_val, spo2_out);
@@ -163,13 +164,22 @@ public class DisplayTest {
      * Test of updatepulse method, of class Display.
      */
     @Test
+    //without alert
     public void testUpdatepulse() {
         System.out.println("updatepulse");
-        int currenthr = 0;
-        Display instance = new Display();
-        instance.updatepulse(currenthr);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String lower_hr = "30";
+        String upper_hr = "90";
+        String spo2_val = "50";
+        display.updatelimit(lower_hr, upper_hr, spo2_val);
+        int currenthr = 80;
+        display.updatepulse(currenthr);
+        
+        HRSurveillance hr = display.gethrinst();
+        String pulse = display.getpulse();
+        String alerthr = display.getalerthr();
+                
+        assertEquals(Integer.toString(currenthr), pulse);
+        assertEquals(alerthr, "");
     }
 
     /**
@@ -180,7 +190,10 @@ public class DisplayTest {
         System.out.println("updatespo2");
         int currentspo2 = 0;
         Display instance = new Display();
+            SPO2Surveillance sp = display.getspo2inst();
+        String alertsp = display.getalertsp();
         instance.updatespo2(currentspo2);
+        assertEquals(alertsp, "");
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }*/

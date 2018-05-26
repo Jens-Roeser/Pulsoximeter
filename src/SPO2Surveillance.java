@@ -18,8 +18,8 @@ public class SPO2Surveillance {
     private boolean alarmstate = false;
     private Displayalert text;
     
-    SPO2Surveillance(Displayalert display){
-        this.text = display;
+    SPO2Surveillance(){
+        this.text = new Displayalert();
     }
     protected void resetdefault(String spo2){
         this.spo2_int = Integer.parseInt(spo2);
