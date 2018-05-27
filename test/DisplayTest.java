@@ -43,7 +43,7 @@ public class DisplayTest {
      * Test of updatelimit method, of class Display.
      */
     @Test
-    public void testUpdatelimit() {
+    public void testUpdatelimits() {
         System.out.println("updatelimit");
         //input
         String lower_hr = "30";
@@ -60,7 +60,7 @@ public class DisplayTest {
         SPO2Surveillance sp = display.getspo2inst();
         
         //output
-        String spo2_out = display.getspo2();
+        String spo2_out = display.getspo2limit();
         String low_out = display.getlow();
         String up_out = display.gethigh();
         int lowhr = hr.getlowhr();
@@ -81,8 +81,8 @@ public class DisplayTest {
      * Test of updatepulse_lower method, of class Display.
      */
     @Test
-    public void testUpdatepulse_lower() {
-        System.out.println("updatepulse_lower");
+    public void testPulselowerlimit() {
+        System.out.println("Pulselowerlimit");
         String lower_hr = "30";
         int lower_hrint = Integer.parseInt(lower_hr);
         
@@ -103,8 +103,8 @@ public class DisplayTest {
      * Test of updatepulse_upper method, of class Display.
      */
     @Test
-    public void testUpdatepulse_upper() {
-        System.out.println("updatepulse_upper");
+    public void testPulseupperlimit() {
+        System.out.println("Pulseupperlimit");
         String upper_hr = "60";
         int upper_hrint = Integer.parseInt(upper_hr);
         
@@ -124,15 +124,15 @@ public class DisplayTest {
      * Test of updatespo2 method, of class Display.
      */
     @Test
-    public void testUpdatespo2_String() {
-        System.out.println("updatespo2");
+    public void testUpdatespo2limit() {
+        System.out.println("updatespo2limit");
         String spo2_val = "50";
         int spo2_valint = Integer.parseInt(spo2_val);
         
         display.Limit_spo2(spo2_val);
         SPO2Surveillance sp = display.getspo2inst();
         
-        String spo2_out = display.getspo2();
+        String spo2_out = display.getspo2limit();
         int spo2  = sp.getspo2();
                         
         assertEquals(spo2_val, spo2_out);
@@ -165,8 +165,8 @@ public class DisplayTest {
      */
     @Test
     //without alert
-    public void testUpdatepulse() {
-        System.out.println("updatepulse");
+    public void testPulsenoalert() {
+        System.out.println("Pulsenoalert");
         String lower_hr = "30";
         String upper_hr = "90";
         String spo2_val = "50";
@@ -174,94 +174,194 @@ public class DisplayTest {
         int currenthr = 80;
         display.updatepulse(currenthr);
         
-        HRSurveillance hr = display.gethrinst();
         String pulse = display.getpulse();
         String alerthr = display.getalerthr();
                 
         assertEquals(Integer.toString(currenthr), pulse);
         assertEquals(alerthr, "");
     }
+    
+    /**
+     * Test of updatepulse method, of class Display.
+     */
+    @Test
+    //without alert
+    public void testPulseupperalert() {
+        System.out.println("Pulseupperalert");
+        String lower_hr = "30";
+        String upper_hr = "90";
+        String spo2_val = "50";
+        display.updatelimit(lower_hr, upper_hr, spo2_val);
+        int currenthr = 100;
+        display.updatepulse(currenthr);
+        
+        String pulse = display.getpulse();
+        String alerthr = display.getalerthr();
+                
+        assertEquals(Integer.toString(currenthr), pulse);
+        assertEquals(alerthr, "Puls zu hoch");
+    }
+    
+    /**
+     * Test of updatepulse method, of class Display.
+     */
+    @Test
+    //without alert
+    public void testPulseloweralert() {
+        System.out.println("Pulseloweralert");
+        String lower_hr = "30";
+        String upper_hr = "90";
+        String spo2_val = "50";
+        display.updatelimit(lower_hr, upper_hr, spo2_val);
+        int currenthr = 20;
+        display.updatepulse(currenthr);
+        
+        String pulse = display.getpulse();
+        String alerthr = display.getalerthr();
+                
+        assertEquals(Integer.toString(currenthr), pulse);
+        assertEquals(alerthr, "Puls zu niedrig");
+    }
+    
+    /**
+     * Test of updatepulse method, of class Display.
+     */
+    @Test
+    //without alert
+    public void testPulselowthanhigh() {
+        System.out.println("Pulse high than low");
+        String lower_hr = "30";
+        String upper_hr = "90";
+        String spo2_val = "50";
+        display.updatelimit(lower_hr, upper_hr, spo2_val);
+        int currenthr = 20;
+        display.updatepulse(currenthr);
+        String alerthr = display.getalerthr();
+        String pulse = display.getpulse();
+        assertEquals(Integer.toString(currenthr), pulse);
+        assertEquals(alerthr, "Puls zu niedrig");
+        currenthr = 100;
+        display.updatepulse(currenthr);
+        
+        pulse = display.getpulse();
+        alerthr = display.getalerthr();
+                
+        assertEquals(Integer.toString(currenthr), pulse);
+        assertEquals(alerthr, "Puls zu hoch");
+    }
+
+    /**
+     * Test of updatepulse method, of class Display.
+     */
+    @Test
+    public void testPulsealertdeac() {
+        System.out.println("Pulse low than deactivate");
+        String lower_hr = "30";
+        String upper_hr = "90";
+        String spo2_val = "50";
+        display.updatelimit(lower_hr, upper_hr, spo2_val);
+        int currenthr = 20;
+        display.updatepulse(currenthr);
+        String alerthr = display.getalerthr();
+        String pulse = display.getpulse();
+        assertEquals(Integer.toString(currenthr), pulse);
+        assertEquals(alerthr, "Puls zu niedrig");
+        
+        currenthr = 80;
+        display.updatepulse(currenthr);
+        
+        pulse = display.getpulse();
+        alerthr = display.getalerthr();        
+        assertEquals(Integer.toString(currenthr), pulse);
+        assertEquals(alerthr, "");
+    }
+     
+    /**
+     * Test of updatepulse method, of class Display.
+     */
+    @Test
+    public void testPulsealertlowdeac() {
+        System.out.println("Pulse high than deactivate");
+        String lower_hr = "30";
+        String upper_hr = "90";
+        String spo2_val = "50";
+        display.updatelimit(lower_hr, upper_hr, spo2_val);
+        int currenthr = 200;
+        display.updatepulse(currenthr);
+        String alerthr = display.getalerthr();
+        String pulse = display.getpulse();
+        assertEquals(Integer.toString(currenthr), pulse);
+        assertEquals(alerthr, "Puls zu hoch");
+        
+        currenthr = 80;
+        display.updatepulse(currenthr);
+        
+        pulse = display.getpulse();
+        alerthr = display.getalerthr();        
+        assertEquals(Integer.toString(currenthr), pulse);
+        assertEquals(alerthr, "");
+    }
+    
+    
+    // TODO: alarm deac
+    /**
+     * Test of updatespo2 method, of class Display.
+     */
+    @Test
+    public void testUpdatespo2() {
+        System.out.println("spo2 no alert");
+        String lower_hr = "30";
+        String upper_hr = "90";
+        String spo2_val = "80";
+        display.updatelimit(lower_hr, upper_hr, spo2_val);
+        int currentspo2 = 90;
+        display.updatespo2(currentspo2);
+        String spo = display.getspo2();
+        String alertsp = display.getalertsp();        
+        assertEquals(Integer.toString(currentspo2), spo);
+        assertEquals(alertsp, "");
+    }
+     
+    /**
+     * Test of updatespo2 method, of class Display.
+     */
+    @Test
+    public void testUpdatespo2alert() {
+        System.out.println("spo2 alert");
+        String lower_hr = "30";
+        String upper_hr = "90";
+        String spo2_val = "80";
+        display.updatelimit(lower_hr, upper_hr, spo2_val);
+        int currentspo2 = 75;
+        display.updatespo2(currentspo2);
+        String spo = display.getspo2();
+        String alertsp = display.getalertsp();        
+        assertEquals(Integer.toString(currentspo2), spo);
+        assertEquals(alertsp, "spo2 Wert zu niedrig");
+    }
 
     /**
      * Test of updatespo2 method, of class Display.
      */
-    /*@Test
-    public void testUpdatespo2_int() {
-        System.out.println("updatespo2");
-        int currentspo2 = 0;
-        Display instance = new Display();
-            SPO2Surveillance sp = display.getspo2inst();
-        String alertsp = display.getalertsp();
-        instance.updatespo2(currentspo2);
+    @Test
+    public void testUpdatespo2alertdeac() {
+        System.out.println("spo2 alert deac");
+        String lower_hr = "30";
+        String upper_hr = "90";
+        String spo2_val = "80";
+        display.updatelimit(lower_hr, upper_hr, spo2_val);
+        int currentspo2 = 75;
+        display.updatespo2(currentspo2);
+        String spo = display.getspo2();
+        String alertsp = display.getalertsp();        
+        assertEquals(Integer.toString(currentspo2), spo);
+        assertEquals(alertsp, "spo2 Wert zu niedrig");
+        
+        currentspo2 = 90;
+        display.updatespo2(currentspo2);
+        spo = display.getspo2();
+        alertsp = display.getalertsp();        
+        assertEquals(Integer.toString(currentspo2), spo);
         assertEquals(alertsp, "");
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }*/
-
-    /**
-     * Test of check_init method, of class Display.
-     */
-    /*@Test
-    public void testCheck_init() {
-        System.out.println("check_init");
-        String lowhr = "";
-        String uphr = "";
-        String spo2 = "";
-        Display instance = new Display();
-        boolean expResult = false;
-        boolean result = instance.check_init(lowhr, uphr, spo2);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }*/
-
-    /**
-     * Test of alerthr method, of class Display.
-     */
-    /*@Test
-    public void testAlerthr() {
-        System.out.println("alerthr");
-        boolean up = false;
-        Display instance = new Display();
-        instance.alerthr(up);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }*/
-
-    /**
-     * Test of noalerthr method, of class Display.
-     */
-    /*@Test
-    public void testNoalerthr() {
-        System.out.println("noalerthr");
-        boolean up = false;
-        Display instance = new Display();
-        instance.noalerthr(up);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }*/
-
-    /**
-     * Test of alertspo2 method, of class Display.
-     */
-    /*@Test
-    public void testAlertspo2() {
-        System.out.println("alertspo2");
-        Display instance = new Display();
-        instance.alertspo2();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }*/
-
-    /**
-     * Test of noalertspo2 method, of class Display.
-     */
-    /*@Test
-    public void testNoalertspo2() {
-        System.out.println("noalertspo2");
-        Display instance = new Display();
-        instance.noalertspo2();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }*/
+    }
 }

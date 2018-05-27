@@ -1006,28 +1006,28 @@ public class Display extends javax.swing.JFrame {
             if (patientinit == true){
                 if (age <= 1){
                     display.updatelimit("120", "190","90");
-                    instance();
+                    //instance();
                     surveyhr.updatelowerhr("120");
                     surveyhr.updateupperhr("190");
                     surveyspo2.updatespo2("90");
                 }
                 else if (age > 1 && age <= 6){
                     display.updatelimit("90", "150","90");
-                    instance();
+                    //instance();
                     surveyhr.updatelowerhr("90");
                     surveyhr.updateupperhr("150");
                     surveyspo2.updatespo2("90");
                 }
                 else if (age > 6 && age <= 16){
                     display.updatelimit("70", "110","90");
-                    instance();
+                    //instance();
                     surveyhr.updatelowerhr("70");
                     surveyhr.updateupperhr("110");
                     surveyspo2.updatespo2("90");
                 }
                 else if (age > 16){
                     display.updatelimit("50", "100","90");
-                    instance();
+                    //instance();
                     surveyhr.updatelowerhr("50");
                     surveyhr.updateupperhr("100");
                     surveyspo2.updatespo2("90");
@@ -1257,7 +1257,7 @@ public class Display extends javax.swing.JFrame {
 	private void alarmbreakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alarmbreakActionPerformed
        alarm_img.setIcon(new javax.swing.ImageIcon(getClass().getResource(imageList[1])));
        alarmbreak.setEnabled(false);
-       instance();
+       //instance();
        surveyhr.alertbreak();
        surveyspo2.alertbreak();
        updatepulse(120);
@@ -1267,7 +1267,7 @@ public class Display extends javax.swing.JFrame {
             public void run() { // Function runs every 5 MINUTES minutes.
                 alarm_img.setIcon(new javax.swing.ImageIcon(getClass().getResource(imageList[0])));
                 alarmbreak.setEnabled(true);
-                instance();
+                //instance();
                 surveyhr.alertbreak();
                 surveyspo2.alertbreak();
             }
@@ -1346,7 +1346,7 @@ public class Display extends javax.swing.JFrame {
         limitlowhrout.setText(limitlowhrtext);
         limituphrout.setText(limituphrtext);
         spo2limitout.setText(limitspo2text);
-        instance();
+        //instance();
         surveyhr.updatelowerhr(limitlowhrtext);
         surveyhr.updateupperhr(limituphrtext);
         surveyspo2.updatespo2(limitspo2text);
@@ -1355,21 +1355,21 @@ public class Display extends javax.swing.JFrame {
     // update lower puls limit
     protected void Limit_lower(String limitlowhrtext){        
         limitlowhrout.setText(limitlowhrtext);
-        instance();
+        //instance();
         surveyhr.updatelowerhr(limitlowhrtext);
     }
 	
     // update upper pulse limit
     protected void Limit_upper (String limituphrtext){
         limituphrout.setText(limituphrtext);
-        instance();
+        //instance();
         surveyhr.updateupperhr(limituphrtext);
     }
 	
     // update spo2 limit
     protected void Limit_spo2(String limitspo2text){
         spo2limitout.setText(limitspo2text); 
-        instance();
+        //instance();
         surveyspo2.updatespo2(limitspo2text);
     }
 	
@@ -1389,7 +1389,7 @@ public class Display extends javax.swing.JFrame {
 	
     protected void updatespo2(int currentspo2){
         spo2_out.setText(Integer.toString(currentspo2));
-        instance();
+        //instance();
         surveyspo2.alertspo2(currentspo2);
     }
     
@@ -1538,7 +1538,7 @@ public class Display extends javax.swing.JFrame {
     }
     
 //-------------------------- get Variables for testing ----------------------//
-    public String getspo2(){
+    public String getspo2limit(){
         String spo2 = spo2limitout.getText();
         return spo2;
     }
@@ -1587,15 +1587,20 @@ public class Display extends javax.swing.JFrame {
         String pulse = heartrate_out.getText();
         return pulse;
     }
-
-    String getalertsp() {
-        String pulse = HR_alert.getText();
+    
+    String getspo2() {
+        String pulse = spo2_out.getText();
         return pulse;
     }
 
     String getalerthr() {
-        String pulse = spo2_alert.getText();
+        String pulse = HR_alert.getText();
         return pulse;
+    }
+
+    String getalertsp() {
+        String spo = spo2_alert.getText();
+        return spo;
     }
     public static Display getinstance(){
         if (display == null){
