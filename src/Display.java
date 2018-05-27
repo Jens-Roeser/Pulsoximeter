@@ -2,6 +2,8 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
+
+To Do; Schließen-Befehl einfügen
  */
 import java.awt.Color;
 import javax.swing.JOptionPane;
@@ -209,7 +211,6 @@ public class Display extends javax.swing.JFrame {
             }
         });
 
-        spo2_ini.setEditable(false);
         spo2_ini.setBackground(new java.awt.Color(250, 250, 250));
         spo2_ini.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
         spo2_ini.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -1070,7 +1071,7 @@ public class Display extends javax.swing.JFrame {
     }//GEN-LAST:event_patient_cngActionPerformed
 	
 //---------------------------------------------- Initial Limits ----------------------------------------------------------//
-	// TODO: cheks in extra Methode aufrufen
+	
 	private void lowlim_iniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lowlim_iniActionPerformed
         String lowerfiledvalue = lowlim_ini.getText();
         try {
@@ -1257,7 +1258,6 @@ public class Display extends javax.swing.JFrame {
 	private void alarmbreakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alarmbreakActionPerformed
        alarm_img.setIcon(new javax.swing.ImageIcon(getClass().getResource(imageList[1])));
        alarmbreak.setEnabled(false);
-       //instance();
        surveyhr.alertbreak();
        surveyspo2.alertbreak();
        updatepulse(120);
@@ -1267,14 +1267,12 @@ public class Display extends javax.swing.JFrame {
             public void run() { // Function runs every 5 MINUTES minutes.
                 alarm_img.setIcon(new javax.swing.ImageIcon(getClass().getResource(imageList[0])));
                 alarmbreak.setEnabled(true);
-                //instance();
                 surveyhr.alertbreak();
                 surveyspo2.alertbreak();
             }
         },1000*60*5);
         // TODO timecheck
     }//GEN-LAST:event_alarmbreakActionPerformed
-	
 
     //----- Nötig??-----//
 	private void lowlim_iniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lowlim_iniMouseClicked
