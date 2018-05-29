@@ -19,7 +19,9 @@ import javax.swing.JOptionPane;
 class SoundAlert {
 
     private Display disp;
-        File Clap = new File("C:\\Users\\jens-\\OneDrive\\Documents\\SEMT\\Pulsoximeter\\src\\img\\20180529_002.wav");
+        String path = System.getProperty("user.dir");
+        String test = ("src\\img\\20180529_002.wav");
+        File Clap = new File(test);
         
     SoundAlert(){
     }
@@ -31,7 +33,7 @@ class SoundAlert {
           Thread.sleep(clip.getMicrosecondLength()/1000); 
        }
         catch(Exception e){
-            JOptionPane.showMessageDialog(new JFrame(), "Eingegebener Wert ist keine gültige Zahl","Warnung",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(new JFrame(), "Soundfile kann nicht eingebunden werden","Warnung",JOptionPane.ERROR_MESSAGE);
         }
             this.disp = Display.getinstance();
         disp.alertspo2();
