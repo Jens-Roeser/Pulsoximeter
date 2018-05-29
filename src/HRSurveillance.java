@@ -10,6 +10,7 @@
  */
 public class HRSurveillance {
     private Displayalert text;
+    private SoundAlert sound;
     private int lowerhr_int;
     private int upperhr_int;
     // Alarmstate false == not paused
@@ -18,6 +19,7 @@ public class HRSurveillance {
     
     HRSurveillance(){
         this.text = new Displayalert();
+        this.sound = new SoundAlert();
     }
 
     private void resetdefault(String lowerhr,String  upperhr){
@@ -46,15 +48,15 @@ public class HRSurveillance {
     protected void alerthr(int hr){
         if  (hr < lowerhr_int){
             text.lower_hralarm();
-            if (alarmstate == true){
-              // TODO Sound
+            if (alarmstate == false){
+              sound.alert();
               // TODO Network
             }
         }
         else if (hr > upperhr_int) {
             text.upper_hralarm();
             if (alarmstate == true){
-              // TODO Sound
+              sound.alert();
               // TODO Network
             }
         }

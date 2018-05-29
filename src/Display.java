@@ -51,7 +51,6 @@ public class Display extends javax.swing.JFrame {
      * Creates new form Monitor
      */
     public Display() {
-            sensor = new SensorControl();
             pat = new PatientData();
             lim = new ResetLimits();
             surveyhr = new HRSurveillance();
@@ -379,7 +378,6 @@ public class Display extends javax.swing.JFrame {
         LimitHR_upper.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         LimitHR_upper.setMinimumSize(new java.awt.Dimension(350, 350));
         LimitHR_upper.setUndecorated(true);
-        LimitHR_upper.setPreferredSize(new java.awt.Dimension(350, 350));
         LimitHR_upper.setResizable(false);
 
         return_upper.setText("Save");
@@ -440,7 +438,6 @@ public class Display extends javax.swing.JFrame {
         LimitSPO2.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         LimitSPO2.setMinimumSize(new java.awt.Dimension(350, 350));
         LimitSPO2.setUndecorated(true);
-        LimitSPO2.setPreferredSize(new java.awt.Dimension(350, 350));
         LimitSPO2.setResizable(false);
 
         spo2_val.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
@@ -636,6 +633,11 @@ public class Display extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         name_lab.setText("Patient name:");
 
@@ -782,11 +784,10 @@ public class Display extends javax.swing.JFrame {
                                     .addComponent(spo2_alert)
                                     .addComponent(HR_alert)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 4, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(spo2_out, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(heartrate_out, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(39, 39, 39)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(heartrate_out, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(spo2_out, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -864,7 +865,7 @@ public class Display extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(HR_alert, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(spo2_alert, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
@@ -897,6 +898,7 @@ public class Display extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
     
 	//-----------------------------------Main Function --------------------//
 	/**
@@ -927,12 +929,13 @@ public class Display extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         display = Display.getinstance();
+        sensor = new SensorControl();
+        SensorControl.start();
         display.Patient_UI.setVisible(true);
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                SensorControl.start();
             }
         });	
 	}
@@ -1320,6 +1323,16 @@ public class Display extends javax.swing.JFrame {
         uplim_ini.setText("");
     }//GEN-LAST:event_uplim_iniMouseClicked
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                SensorControl.end();   
+                System.exit(0);
+            }
+        });
+    }//GEN-LAST:event_formWindowClosing
+
     
 //----------------------------------------------------- general Properties -----------------------------------------------//
     private void initCombobox() {
@@ -1339,11 +1352,11 @@ public class Display extends javax.swing.JFrame {
         Display gui_monitor = new Display();
         gui_monitor.setVisible(false);
     }
-	
+    
     private void systemclose(){
+        SensorControl.end();
         WindowEvent winCloseing = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winCloseing);
-        SensorControl.end();
     }
 	
     private void disable_all(){
