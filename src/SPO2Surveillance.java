@@ -17,22 +17,24 @@ public class SPO2Surveillance {
     // Alarmstate true == paused
     private boolean alarmstate = false;
     private Displayalert text;
+    private SoundAlert sound;
     
-    SPO2Surveillance(Display display){
-        text = new Displayalert(display);
+    SPO2Surveillance(){
+        this.text = new Displayalert();
+        this.sound = new SoundAlert();
     }
     protected void resetdefault(String spo2){
         this.spo2_int = Integer.parseInt(spo2);
     }
-    
+    //Update spo2 limits
     protected void updatespo2(String spo2){
         this.spo2_int = Integer.parseInt(spo2);
     }
     protected void alertspo2 (int spo2){
         if (spo2 < spo2_int){
            text.spo2alert();
-           if (alarmstate == true){
-           // TODO: sound and Network
+           if (alarmstate == false){
+            sound.alert();
            }
         }
         else if (spo2 > spo2_int){
@@ -50,4 +52,8 @@ public class SPO2Surveillance {
             throw new java.lang.Error("State inserted is not known");
         }
     } 
+
+    int getspo2() {
+        int low = spo2_int;
+        return low;}
 }

@@ -1,4 +1,9 @@
 
+import java.io.File;
+import java.io.InputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /*
@@ -13,21 +18,27 @@ import javax.swing.JOptionPane;
  */
 class SoundAlert {
 
-    private final Display display;
-    
-    SoundAlert(Display display){
-        this.display = display;
+    private Display disp;
+        String path = System.getProperty("user.dir");
+        String test = ("src\\img\\20180529_002.wav");
+        File Clap = new File(test);
+        
+    SoundAlert(){
     }
-    
-    public void spo2alert(){
-            JOptionPane.showMessageDialog(null, "spo2 Wert zu niedrig", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+    public void alert(){
+        try{
+          Clip clip = AudioSystem.getClip();
+          clip.open(AudioSystem.getAudioInputStream(Clap));
+          clip.start();
+          Thread.sleep(clip.getMicrosecondLength()/1000); 
+       }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(new JFrame(), "Soundfile kann nicht eingebunden werden","Warnung",JOptionPane.ERROR_MESSAGE);
+        }
+            this.disp = Display.getinstance();
+        disp.alertspo2();
     }
-    
-    public void upper_hralarm(){
-            JOptionPane.showMessageDialog(null, "Puls zu hoch", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
-    }
-    
-    public void lower_hralarm(){
-            JOptionPane.showMessageDialog(null, "Puls zu niedrig", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+    public void nospo2(){
+        
     }
 }

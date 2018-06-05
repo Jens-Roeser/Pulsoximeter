@@ -10,26 +10,27 @@
  */
 public class HRSurveillance {
     private Displayalert text;
+    private SoundAlert sound;
     private int lowerhr_int;
     private int upperhr_int;
     // Alarmstate false == not paused
     // Alarmstate true == paused
     private boolean alarmstate = false;
     
-    HRSurveillance(Display display){//String lowerhr,String  upperhr
-        text = new Displayalert(display);
-        //this.lowerhr_int = Integer.parseInt(lowerhr);
-        //this.upperhr_int = Integer.parseInt(upperhr);
+    HRSurveillance(){
+        this.text = new Displayalert();
+        this.sound = new SoundAlert();
     }
 
     private void resetdefault(String lowerhr,String  upperhr){
         this.lowerhr_int = Integer.parseInt(lowerhr);
         this.upperhr_int = Integer.parseInt(upperhr);
     }
-    
+    //Update lower HR limits
     protected void updatelowerhr(String lowerhr){
         this.lowerhr_int = Integer.parseInt(lowerhr);
     }
+    //Update upper HR limits
     protected void updateupperhr(String  upperhr){
         this.upperhr_int = Integer.parseInt(upperhr);
     }
@@ -47,20 +48,29 @@ public class HRSurveillance {
     protected void alerthr(int hr){
         if  (hr < lowerhr_int){
             text.lower_hralarm();
-            if (alarmstate == true){
-              // TODO Sound
+            if (alarmstate == false){
+              sound.alert();
               // TODO Network
             }
         }
         else if (hr > upperhr_int) {
             text.upper_hralarm();
             if (alarmstate == true){
-              // TODO Sound
+              sound.alert();
               // TODO Network
             }
         }
         else if (hr < upperhr_int && hr > lowerhr_int){
              text.noupper_hr();
          }
+    }
+    int getlowhr() {
+        int low = lowerhr_int;
+        return low;
+    }
+
+    int gethighhr() {
+        int low = upperhr_int;
+        return low;
     }
 }
