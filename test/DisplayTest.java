@@ -55,7 +55,6 @@ public class DisplayTest {
         
         display.updatelimit(lower_hr, upper_hr, spo2_val);
         
-        // TODO: evtl als Methode definieren falls öfters benötigt
         HRSurveillance hr = display.gethrinst();
         SPO2Surveillance sp = display.getspo2inst();
         

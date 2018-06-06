@@ -35,10 +35,5 @@ class SoundAlert {
         catch(Exception e){
             JOptionPane.showMessageDialog(new JFrame(), "Soundfile kann nicht eingebunden werden","Warnung",JOptionPane.ERROR_MESSAGE);
         }
-            this.disp = Display.getinstance();
-        disp.alertspo2();
-    }
-    public void nospo2(){
-        
     }
 }
